@@ -83,8 +83,25 @@ jQuery(document).ready(function($) {
 		} else {
 			$('body').removeClass('small-device');  
 		} 
-		
 	});
   
- 
+ 	//login
+ 	$(#"login-form").submit(function(e){
+ 		var form = $this;
+ 		var csrftoken = $.cookie('csrftoken');
+ 		$.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: {'username': document.getElementsByName("email")[0].value,
+            		'password': document.getElementsByName("password")[0].value},
+            success: function (data) {
+                console.log('Submission was successful.');
+                console.log(data);
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            },
+        });
+ 	});
 });
