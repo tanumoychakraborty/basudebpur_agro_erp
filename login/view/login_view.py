@@ -32,8 +32,8 @@ class login_view(template):
         PARAMS = {'userName':'ARITRATEWARY',
                   'password': '1234'} 
         r = requests.get(url = URL, params = PARAMS) 
-        json_data = r.json() 
-        data = json.loads(json_data)
+        json_data = r.json()
+        #data = json.loads(json_data)
         template = jinja_template.get_template('login/page-login.html')
-        return HttpResponse(template.render(request))
+        return HttpResponse(template.render(request.GET))
         
