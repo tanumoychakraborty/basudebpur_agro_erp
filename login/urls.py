@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from login.view.login_view import login_view
+from login.view import home
 
 urlpatterns = [
     path('', login_view.as_view(), name='login'),
+    path('home/', home.home.as_view(), name='home'),
 ]

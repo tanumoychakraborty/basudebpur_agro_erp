@@ -10,6 +10,9 @@ from basudebpur_agro_erp.view.template import template
 import requests
 import json
 from login.forms.login_form import login_form
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User, Group, Permission
+from django.views import defaults
 
 
 #from login.view.util import static
@@ -28,12 +31,37 @@ class login_view(template):
         if form.is_valid():
             username = form.data['username']
             password = form.data['password']
-        URL = "http://localhost:9000/api/access-right"
-        PARAMS = {'userName':'ARITRATEWARY',
-                  'password': '1234'} 
-        r = requests.get(url = URL, params = PARAMS) 
-        json_data = r.json()
-        #data = json.loads(json_data)
-        template = jinja_template.get_template('login/page-login.html')
-        return HttpResponse(template.render(request.GET))
         
+            URL = "http://localhost:9000/api/access-right"
+            PARAMS = {'userName':username,
+                      'password': password} 
+                        
+            user = authenticate(username=username, password=password)
+            if user is None:
+                r = requests.get(url = URL, params = PARAMS) 
+                
+                if r.status_code is 200:
+                    json_data = r.json()
+                    _permissions = []
+                                            
+                    #data = json.loads(json_data)
+                    user = User.objects.create_user(username, '', password)
+                    for access in json_data['access']:
+                        map(lambda x: user.groups.add(x), Group.objects.filter(name=access['user_type']).all())
+                    
+                    user.save()
+                    user = authenticate(username=username, password=password)
+
+                    
+                else:
+                    template = jinja_template.get_template('login/page-relogin.html')
+                    return HttpResponse(template.render(request=request))
+            
+            if user.is_active:
+                request.session.set_expiry(0) #sets the exp. value of the session 
+                login(request, user) #the user is now logged in
+                template = jinja_template.get_template('home.html')
+                return HttpResponse(template.render(request=request))
+            else:
+                return HttpResponse(defaults.page_not_found(request, Exception('message', 'Error while trying to login.. Please try again..'), template_name='500.html'))
+            
