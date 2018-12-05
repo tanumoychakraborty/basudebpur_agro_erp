@@ -8,10 +8,9 @@ from django.http.response import HttpResponse
 from basudebpur_agro_erp.jinja_template import jinja_template
 from basudebpur_agro_erp.view.template import template
 import requests
-import json
 from login.forms.login_form import login_form
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import User, Group
 from django.views import defaults
 
 
@@ -64,4 +63,8 @@ class login_view(template):
                 return HttpResponse(template.render(request=request))
             else:
                 return HttpResponse(defaults.page_not_found(request, Exception('message', 'Error while trying to login.. Please try again..'), template_name='500.html'))
+            
+        else:
+            template = jinja_template.get_template('login/page-relogin.html')
+            return HttpResponse(template.render(request=request))
             

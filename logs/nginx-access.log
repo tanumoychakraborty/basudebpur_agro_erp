@@ -1,2 +1,6 @@
 127.0.0.1 - - [17/Nov/2018:23:19:08 +0530] "GET /login/ HTTP/1.1" 502 182 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0"
 127.0.0.1 - - [17/Nov/2018:23:19:09 +0530] "GET /favicon.ico HTTP/1.1" 502 182 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:63.0) Gecko/20100101 Firefox/63.0"
+127.0.0.1 - - [03/Dec/2018:19:59:51 +0530] "GET /favicon.ico HTTP/1.1" 502 182 "-" "Transmission/2.92"
+127.0.0.1 - - [03/Dec/2018:19:59:52 +0530] "GET /favicon.png HTTP/1.1" 502 182 "-" "Transmission/2.92"
+127.0.0.1 - - [03/Dec/2018:19:59:52 +0530] "GET /favicon.gif HTTP/1.1" 502 182 "-" "Transmission/2.92"
+127.0.0.1 - - [03/Dec/2018:19:59:52 +0530] "GET /favicon.jpg HTTP/1.1" 502 182 "-" "Transmission/2.92"

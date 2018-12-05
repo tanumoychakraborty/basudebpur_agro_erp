@@ -86,7 +86,7 @@ jQuery(document).ready(function($) {
 	});
   
  	//login
- 	$(#"login-form").submit(function(e){
+ 	$('#login-form').submit(function(e){
  		var form = $this;
  		var csrftoken = $.cookie('csrftoken');
  		$.ajax({

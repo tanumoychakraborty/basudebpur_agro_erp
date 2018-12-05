@@ -19,6 +19,6 @@ import login
 from django.urls.conf import include
 
 urlpatterns = [
-    path('login/', include('login.urls')),
+    path('', include('login.urls')),
     path('admin/', admin.site.urls),
 ]
