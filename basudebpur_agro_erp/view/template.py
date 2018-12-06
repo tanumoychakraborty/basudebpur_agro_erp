@@ -43,9 +43,15 @@ class template(View):
                 Group.objects.filter(name='MANAGEMENT_REP').first().name
             except AttributeError:
                 _group = Group.objects.create(name='MANAGEMENT_REP')
-                map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='USER').all())
-                map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='SALES').all())
-                map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='PURCHASE').all())
+                for _permission in Permission.objects.filter(name='USER').all():
+                    _group.permissions.add(_permission);
+                for _permission in Permission.objects.filter(name='SALES').all():
+                    _group.permissions.add(_permission);
+                for _permission in Permission.objects.filter(name='PURCHASE').all():
+                    _group.permissions.add(_permission);
+#                 map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='USER').all())
+#                 map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='SALES').all())
+#                 map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='PURCHASE').all())
                 _group.save()
             template.__seed__ = True
             

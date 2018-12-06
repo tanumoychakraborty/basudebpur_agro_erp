@@ -69,6 +69,7 @@
 
 <body>
     <!-- Left Panel -->
+    {% block sidebar %}
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -100,6 +101,7 @@
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside>
+    {% endblock %}
     <!-- /#left-panel -->
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">

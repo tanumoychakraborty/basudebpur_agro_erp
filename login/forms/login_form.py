@@ -10,5 +10,5 @@ class login_form(forms.Form):
     classdocs
     '''
 
-    username = forms.CharField
-    password = forms.PasswordInput
+    username = forms.CharField(min_length=1)
+    password = forms.CharField(min_length=1)

@@ -12,6 +12,8 @@ from login.forms.login_form import login_form
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
 from django.views import defaults
+from django.urls.base import reverse
+from django.shortcuts import redirect
 
 
 #from login.view.util import static
@@ -45,8 +47,8 @@ class login_view(template):
                                             
                     #data = json.loads(json_data)
                     user = User.objects.create_user(username, '', password)
-                    for access in json_data['access']:
-                        map(lambda x: user.groups.add(x), Group.objects.filter(name=access['user_type']).all())
+                    for _group in Group.objects.filter(name=json_data['access']).all():
+                        user.groups.add(_group)
                     
                     user.save()
                     user = authenticate(username=username, password=password)
@@ -57,10 +59,12 @@ class login_view(template):
                     return HttpResponse(template.render(request=request))
             
             if user.is_active:
-                request.session.set_expiry(0) #sets the exp. value of the session 
+                request.session.set_expiry(7200) #sets the exp. value of the session 
                 login(request, user) #the user is now logged in
-                template = jinja_template.get_template('home.html')
-                return HttpResponse(template.render(request=request))
+                request.user = user
+#                 template = jinja_template.get_template('home.html')
+#                 return HttpResponse(template.render(request=request))
+                return redirect('home',permanent=True)
             else:
                 return HttpResponse(defaults.page_not_found(request, Exception('message', 'Error while trying to login.. Please try again..'), template_name='500.html'))
             
