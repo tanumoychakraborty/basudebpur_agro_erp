@@ -12,8 +12,8 @@ from login.forms.login_form import login_form
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
 from django.views import defaults
-from django.urls.base import reverse
 from django.shortcuts import redirect
+from basudebpur_agro_erp.URLS import ACCESS_RIGHT
 
 
 #from login.view.util import static
@@ -33,13 +33,12 @@ class login_view(template):
             username = form.data['username']
             password = form.data['password']
         
-            URL = "http://localhost:9000/api/access-right"
             PARAMS = {'userName':username,
                       'password': password} 
                         
             user = authenticate(username=username, password=password)
             if user is None:
-                r = requests.get(url = URL, params = PARAMS) 
+                r = requests.get(url = ACCESS_RIGHT, params = PARAMS) 
                 
                 if r.status_code is 200:
                     json_data = r.json()
