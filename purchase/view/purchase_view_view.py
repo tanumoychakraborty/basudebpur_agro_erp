@@ -20,8 +20,7 @@ class purchase_view_view(template):
         r = requests.get(url = PURCHASE_TRANSACTION) 
         if r.status_code is 200:
             json_data = r.json()
-            #context = {'rows' : json_data['purchase_trx_details']}
             template = jinja_template.get_template('purchase/purchase-view.html')
-            return HttpResponse(template.render(request, rows=json_data['purchase_trx_details']))
+            return HttpResponse(template.render(request, data=json_data['purchase_trx_details']))
         else:
             return HttpResponse(defaults.server_error(request))

@@ -25,17 +25,7 @@
                                             <th>Weighting Number</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    {% for row in rows %}
-                                        <tr>
-                                            <td>{{ row['purchase_trx_number'] }}</td>
-                                            <td>{{ row['amount'] }}</td>
-                                            <td>{{ row['order_status'] }}</td>
-                                            <td>{{ row['order_type'] }}</td>
-                                            <td>{{ row['weighting_number'] }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
@@ -59,9 +49,17 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
-          $('#bootstrap-data-table-export').DataTable();
-      } );
+        $('#bootstrap-data-table').DataTable( {
+          				'bDestroy': true,
+                        'data':  {{ data }},
+                        'columns': [
+							            { 'data': 'purchase_trx_number' },
+							            { 'data': 'amount' },
+							            { 'data': 'order_status' },
+							            { 'data': 'order_type' },
+							            { 'data': 'weighting_number' }
+							        ]
+                    	} );
   </script>
 <!-- /.content -->
         
