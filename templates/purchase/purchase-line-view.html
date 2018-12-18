@@ -1,0 +1,107 @@
+{% extends "template.html" %}
+{% block content %}
+
+<!-- Content -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Purchase Order Number # </strong> {{ data["purchase_trx_number"] }}
+                            </div>
+                            <div class="card-body card-block">
+                            	<div class="row form-group">
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Purchase Transaction Number</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["purchase_trx_number"] }}</p>
+                                        </div>
+                                        <div class="co-12l col-md-2"><label class=" form-control-label">Status</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["order_status"] }}</p>
+                                        </div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Supplier</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["suppplier_id"] }}</p>
+                                        </div>
+                                </div>
+                            	<div class="row form-group">
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Transaction Date</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["transaction_date"] }}</p>
+                                        </div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Amount</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["amount"] }}</p>
+                                        </div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Buyer</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["buyer"] }}</p>
+                                        </div>
+                                </div>
+                            	<div class="row form-group">
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Weighting Number</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["weighting_number"] }}</p>
+                                		</div>
+                                		<div class="col-12 col-md-2"><label class=" form-control-label">Order Type</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data["order_type"] }}</p>
+                                        </div>
+                                        
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Vehicle Number</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">     </p>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+		        </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Purchase Line Details</strong>
+		                                <table class="table table-striped" id="line_table">
+		                                    <thead>
+		                                        <tr>
+		                                          <th scope="col">#</th>
+		                                          <th scope="col">Item</th>
+		                                          <th scope="col">Item Description</th>
+		                                          <th scope="col">Status</th>
+		                                          <th scope="col">Booking Unit Price</th>
+							  					  <th scope="col">Booking Unit Quantity</th>
+		                                          <th scope="col">Discount</th>
+		                                          <th scope="col">Receipt Unit Price</th>
+							  					  <th scope="col">Receipt Unit Quantity</th>
+		                                          <th scope="col">Unit Of Measure</th>
+		                                      	</tr>
+		                                  </thead>
+		                                  <tbody>
+		                                  {% for row in data["purchase_trx_lines"] %}
+		                                  	<tr>
+		                                  		<th scope="row">{{ row["line_number"] }}</th>
+		                                  		<td>{{ row["item_id"] }}</td>
+		                                  		<td>{{ row["item_description"] }}</td>
+		                                  		<td>{{ row["line_status"] }}</td>
+		                                  		<td>{{ row["booking_unit_price"] }}</td>
+		                                  		<td>{{ row["booking_quantity"] }}</td>
+		                                  		<td>{{ row["discount"] }}</td>
+		                                  		<td>{{ row["receipt_unit_price"] }}</td>
+		                                  		<td>{{ row["receipt_quantity"] }}</td>
+		                                  		<td>{{ row["unit_of_measure"] }}</td>
+		                                  	</tr>
+		                                  	{% endfor %}
+		                                  </tbody>
+		                            	</table>
+                        </div>
+                    </div>
+                </div>
+        	</div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+        
+{% endblock %}

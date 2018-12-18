@@ -1293,8 +1293,8 @@ header .form-inline {
       border: none;
       -webkit-box-shadow: none;
               box-shadow: none;
-      color: #868e96;
-      font-size: 12px;
+      color: #007bff;
+      font-size: 20px;
       padding: 0 5px; }
     .card .card-top[class*="bg"] .card-title,
     .card .card-footer[class*="bg"] .card-title {

@@ -1,0 +1,190 @@
+{% extends "template.html" %}
+{% block content %}
+
+<!-- Content -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+        <div class="content">
+            <div class="animated fadeIn">
+            	<form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                	<div class="row">
+                    	<div class="col-lg-12">
+                        	<div class="card">
+                            	<div class="card-header">
+                                	<strong>Purchase Order Details</strong>
+                            	</div>
+                            	<div class="card-body card-block">                                    
+                                    <div class="row form-group">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Transaction Number</label></div>
+                                        <div class="col-12 col-md-2"><p class="form-control-static">{{ data["purchase_trx_number"] }}</p></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Status</label></div>
+                                        <div class="col-12 col-md-2"><select class="form-control-sm form-control">
+                                                <option value="0" selected="">Received</option>
+                                                <option value="1">Closed</option>
+                                            </select>
+                                        </div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Weighting Number</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["weighting_number"] }}" class="form-control"/></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">Transaction Date</label></div>
+                                        <div class="col col-md-2 input-group">
+						                    <input type="text" class="form-control" id="transaction_date" nam="transaction_date"/>
+						                    <div class="input-group-append" data-target="#transaction_date">
+						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						                    </div>
+						                </div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Amount</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["amount"] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["buyer"] }}" class="form-control"/></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Supplier</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["suppplier_id"] }}"/></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Order Type</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["order_type"] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Vehicle Number</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="" class="form-control"></input></div>
+                                    </div>
+                            	</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    	<div class="col-lg-12">
+                        	<div class="card">
+	                            <div class="card-header">
+	                            	<div class="row form-group">
+		                                <strong class="col col-md-6">Purchase Line Details</strong>
+		                                <div class="col col-md-6" align="right">
+		                                	<button type="button" class="btn btn-success" onclick="addRow();"><i class="fa fa-plus"></i>&nbsp; Add New Line</button>
+		                                </div>
+		                            </div>
+	                            </div>
+	                            <div class="card-body card-block">                                   
+	                                    <div class="row form-group">
+	                                    	<table class="table table-striped" id="purchase_line_update_table">
+			                                    <thead>
+			                                        <tr>
+			                                          <th scope="col">#</th>
+			                                          <th scope="col">Item</th>
+			                                          <th scope="col">Item Description</th>
+			                                          <th scope="col">Status</th>
+			                                          <th scope="col">Booking Unit Price</th>
+								  					  <th scope="col">Booking Unit Quantity</th>
+			                                          <th scope="col">Discount</th>
+			                                          <th scope="col">Receipt Unit Price</th>
+								  					  <th scope="col">Receipt Unit Quantity</th>
+			                                          <th scope="col">Unit Of Measure</th>
+			                                      	</tr>
+			                                  </thead>
+			                                  <tbody>
+			                                  {% for row in data["purchase_trx_lines"] %}
+			                                  	<tr>
+			                                  		<td><strong>{{ row["line_number"] }}</strong></td>
+			                                  		<td><input type="text" value="{{ row["item_id"] }}"></td>
+			                                  		<td><input type="text" value="{{ row["item_description"] }}"></td>
+			                                  		<td><select class="form-control-sm form-control">
+                                                			<option value="0" {% if row["line_status"] == 'ENTERED' %} selected="" {% endif %}>Received</option>
+                                                			<option value="1" {% if row["line_status"] == 'CLOSED' %} selected="" {% endif %}>Closed</option>
+                                            			</select>
+                                            		</td>
+			                                  		<td><input type="text" value="{{ row["booking_unit_price"] }}"></td>
+			                                  		<td><input type="text" value="{{ row["booking_quantity"] }}"></td>
+			                                  		<td><input type="text" value="{{ row["discount"] }}"></td>
+			                                  		<td><input type="text" value="{{ row["receipt_unit_price"] }}"></td>
+			                                  		<td><input type="text" value="{{ row["receipt_quantity"] }}"></td>
+			                                  		<td><input type="text" value="{{ row["unit_of_measure"] }}"></td>
+			                                  	</tr>
+			                                  	{% endfor %}
+			                                  </tbody>
+			                            	</table>
+	                                    </div>
+	                                    <div class="row form-group">
+	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Submit</button></center></div>
+	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></center></div>
+	                                	</div>
+	                            	</div>
+                        	</div>
+                    	</div>
+            		</div>
+				</form>
+        	</div><!-- .animated -->
+    	</div><!-- .content -->
+
+<script>
+	function addRow () {
+        var myTable = document.getElementById("purchase_line_update_table");
+        var currentIndex = myTable.rows.length;
+        var currentRow = myTable.insertRow(currentIndex);
+
+        var lineNumber = document.createElement("strong");
+        lineNumber.innerHTML = currentIndex;
+
+        var item = document.createElement("input");
+        item.setAttribute("type", "text");
+
+        var itemDescription = document.createElement("input");
+        itemDescription.setAttribute("type", "text");
+
+        var lineStatus = document.createElement("select");
+        lineStatus.setAttribute("class", "form-control-sm form-control");
+        var option1 = document.createElement("option");
+        option1.innerHTML = "Received";
+        var option2 = document.createElement("option");
+        option2.innerHTML = "Closed";
+        lineStatus.appendChild(option1);
+        lineStatus.appendChild(option2);
+
+        var bookingUnitPrice = document.createElement("input");
+        bookingUnitPrice.setAttribute("type", "text");
+        
+        var bookingQuantity = document.createElement("input");
+        bookingQuantity.setAttribute("type", "text");
+        
+        var discount = document.createElement("input");
+        discount.setAttribute("type", "text");
+        
+        var receiptUnitPrice = document.createElement("input");
+        receiptUnitPrice.setAttribute("type", "text");
+        
+        var receiptQuantity = document.createElement("input");
+        receiptQuantity.setAttribute("type", "text");
+        
+        var unitOfMeasure = document.createElement("input");
+        unitOfMeasure.setAttribute("type", "text");
+
+        var currentCell = currentRow.insertCell(0);
+        currentCell.appendChild(lineNumber);
+
+        var currentCell = currentRow.insertCell(1);
+        currentCell.appendChild(item);
+        
+        var currentCell = currentRow.insertCell(2);
+        currentCell.appendChild(itemDescription);
+        
+        var currentCell = currentRow.insertCell(3);
+        currentCell.appendChild(lineStatus);
+        
+        var currentCell = currentRow.insertCell(4);
+        currentCell.appendChild(bookingUnitPrice);
+        
+        var currentCell = currentRow.insertCell(5);
+        currentCell.appendChild(bookingQuantity);
+        
+        var currentCell = currentRow.insertCell(6);
+        currentCell.appendChild(discount);
+        
+        var currentCell = currentRow.insertCell(7);
+        currentCell.appendChild(receiptUnitPrice);
+        
+        var currentCell = currentRow.insertCell(8);
+        currentCell.appendChild(receiptQuantity);
+        
+        var currentCell = currentRow.insertCell(9);
+        currentCell.appendChild(unitOfMeasure);
+        
+    }
+</script>
+
+{% endblock %}
