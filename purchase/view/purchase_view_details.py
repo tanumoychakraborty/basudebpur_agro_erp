@@ -9,6 +9,7 @@ from django.http.response import HttpResponse
 import requests
 from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION
 from django.views import defaults
+from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
 
 class purchase_view_details(template):
     '''
@@ -45,8 +46,11 @@ class purchase_view_details(template):
                         "created_by"  :  "1995",
                         "last_updated_by" : "1995"}
             json_data['purchase_trx_details'][0]["purchase_trx_lines"]= [line1,line2]
-            #template = jinja_template.get_template('purchase/purchase-line-view.html')
-            template = jinja_template.get_template('purchase/purchase-line-update.html')
+            
+            if hasUpdatePurchaseRecordAccess(request.user):
+                template = jinja_template.get_template('purchase/purchase-line-update.html')
+            else:
+                template = jinja_template.get_template('purchase/purchase-line-view.html')
             return HttpResponse(template.render(request, data=json_data['purchase_trx_details'][0]))
         else:
             return HttpResponse(defaults.server_error(request))
