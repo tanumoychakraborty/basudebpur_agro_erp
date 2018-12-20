@@ -21,6 +21,6 @@ from purchase.view.purchase_view_details import purchase_view_details
 
 urlpatterns = [
     path('', login_required(purchase_view_view.as_view()), name='purchase_view'),
-    path('<int:transaction_number>/', login_required(purchase_view_details.as_view()), name='purchase_details'),
     path('add/', login_required(purchase_add_view.as_view()), name='purchase_add'),
+    path('<str:transaction_number>/', login_required(purchase_view_details.as_view()), name='purchase_details'),
 ]
