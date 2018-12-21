@@ -86,4 +86,42 @@ jQuery(document).ready(function($) {
 	});
 	
    $('#transaction_date').datetimepicker();
+   
+   $("#purchase-add-form").submit(function(e) {
+	   
+   		var purchase_lines = new Array();
+   		$('#purchase_line_add_table tr').each(function(row, tr){
+		    purchase_lines[row]={
+		        "item" 				: $(tr).find('td:eq(1)').find('input').val(),
+		        "itemDescription" 	:$(tr).find('td:eq(2)').find('input').val(),
+		        "bookingUnitPrice" 	: $(tr).find('td:eq(4)').find('input').val(),
+		        "bookingQuantity" 	: $(tr).find('td:eq(5)').find('input').val(),
+		        "discount" 			: $(tr).find('td:eq(6)').find('input').val(),
+		        "receiptUnitPrice" 	:$(tr).find('td:eq(7)').find('input').val(),
+		        "receiptQuantity" 	: $(tr).find('td:eq(8)').find('input').val(),
+		        "unitOfMeasure" 	: $(tr).find('td:eq(9)').find('input').val()
+		    }
+		}); 
+   		var formData = {
+            'weighting_number'    : $('input[id=weighting_number]').val(),
+            'supplier'            : $('input[id=supplier]').val(),
+            'transaction_date'    : $('input[id=transaction_date]').val(),
+            'amount'    		  : $('input[id=amount]').val(),
+            'buyer'            	  : $('input[id=buyer]').val(),
+            'order_type'    	  : $('input[id=order_type]').val(),
+            'vehicle_number'      : $('input[id=vehicle_number]').val(),
+            'lines'				  : purchase_lines
+        };
+        
+        $.ajax({
+            type        : 'POST',
+            url         : '/purchase/add/',
+            data        : formData,
+            dataType    : 'json',
+            encode      : true
+        }).done(function() {
+                console.log('ok'); 
+        });
+        e.preventDefault();
+        });
 });

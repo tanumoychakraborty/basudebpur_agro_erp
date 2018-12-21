@@ -5,7 +5,7 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
         <div class="content">
             <div class="animated fadeIn">
-            	<form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+            	<form id="purchase-add-form" class="form-horizontal">
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
@@ -17,9 +17,9 @@
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Status</label></div>
                                         <div class="col-12 col-md-2"><p class="form-control-static">Received</p></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Weighting Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="weighting_number" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Supplier</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="supplier" name="text-input" class="form-control"/></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">Transaction Date</label></div>
@@ -30,15 +30,15 @@
 						                    </div>
 						                </div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Amount</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="amount" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="buyer" name="text-input" class="form-control"/></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Order Type</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="order_type" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Vehicle Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"></input></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="vehicle_number" name="text-input" class="form-control"></input></div>
                                     </div>
                             	</div>
                             </div>
@@ -57,7 +57,7 @@
 	                            </div>
 	                            <div class="card-body card-block">                                   
 	                                    <div class="row form-group">
-	                                    	<table class="table table-striped" id="purchase_line_update_table">
+	                                    	<table class="table table-striped" id="purchase_line_add_table">
 			                                    <thead>
 			                                        <tr>
 			                                          <th scope="col">#</th>
@@ -80,7 +80,7 @@
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
-	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Submit</button></center></div>
+	                                        <div class="col col-md-6"><center><button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Submit</button></center></div>
 	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></center></div>
 	                                	</div>
 	                            	</div>
@@ -93,39 +93,47 @@
 
 <script>
 	function addRow () {
-        var myTable = document.getElementById("purchase_line_update_table");
+        var myTable = document.getElementById("purchase_line_add_table");
         var currentIndex = myTable.rows.length;
-        var currentRow = myTable.insertRow(currentIndex);
+        var currentRow = myTable.insertRow(currentIndex-1);
 
         var lineNumber = document.createElement("strong");
         lineNumber.innerHTML = currentIndex-1;
 
         var item = document.createElement("input");
         item.setAttribute("type", "text");
+        item.setAttribute("id", "item");
 
         var itemDescription = document.createElement("input");
         itemDescription.setAttribute("type", "text");
+        itemDescription.setAttribute("id", "itemDescription");
 
         var lineStatus = document.createElement("label");
         lineStatus.innerHTML = "Received";
 
         var bookingUnitPrice = document.createElement("input");
         bookingUnitPrice.setAttribute("type", "text");
+        bookingUnitPrice.setAttribute("id", "bookingUnitPrice");
         
         var bookingQuantity = document.createElement("input");
         bookingQuantity.setAttribute("type", "text");
+        bookingQuantity.setAttribute("id", "bookingQuantity");
         
         var discount = document.createElement("input");
         discount.setAttribute("type", "text");
+        discount.setAttribute("id", "discount");
         
         var receiptUnitPrice = document.createElement("input");
         receiptUnitPrice.setAttribute("type", "text");
+        receiptUnitPrice.setAttribute("id", "receiptUnitPrice");
         
         var receiptQuantity = document.createElement("input");
         receiptQuantity.setAttribute("type", "text");
+        receiptQuantity.setAttribute("id", "receiptQuantity");
         
         var unitOfMeasure = document.createElement("input");
         unitOfMeasure.setAttribute("type", "text");
+        unitOfMeasure.setAttribute("id", "unitOfMeasure");
 
         var currentCell = currentRow.insertCell(0);
         currentCell.appendChild(lineNumber);

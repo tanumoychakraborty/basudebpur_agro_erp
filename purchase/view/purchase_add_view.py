@@ -19,3 +19,7 @@ class purchase_add_view(template):
         else:
             template = jinja_template.get_template('access_denied.html')
         return HttpResponse(template.render(request))
+    
+    def post(self, request):
+        data = request.POST
+        print(data)

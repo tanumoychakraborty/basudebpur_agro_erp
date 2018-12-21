@@ -123,30 +123,39 @@
 
         var item = document.createElement("input");
         item.setAttribute("type", "text");
+        item.setAttribute("id", "item");
 
         var itemDescription = document.createElement("input");
         itemDescription.setAttribute("type", "text");
+        itemDescription.setAttribute("id", "itemDescription");
 
         var lineStatus = document.createElement("label");
         lineStatus.innerHTML = "Received";
+        lineStatus.setAttribute("id", "lineStatus");
 
         var bookingUnitPrice = document.createElement("input");
         bookingUnitPrice.setAttribute("type", "text");
+        bookingUnitPrice.setAttribute("id", "bookingUnitPrice");
         
         var bookingQuantity = document.createElement("input");
         bookingQuantity.setAttribute("type", "text");
+        bookingQuantity.setAttribute("id", "bookingQuantity");
         
         var discount = document.createElement("input");
         discount.setAttribute("type", "text");
+        discount.setAttribute("id", "discount");
         
         var receiptUnitPrice = document.createElement("input");
         receiptUnitPrice.setAttribute("type", "text");
+        receiptUnitPrice.setAttribute("id", "receiptUnitPrice");
         
         var receiptQuantity = document.createElement("input");
         receiptQuantity.setAttribute("type", "text");
+        receiptQuantity.setAttribute("id", "receiptQuantity");
         
         var unitOfMeasure = document.createElement("input");
         unitOfMeasure.setAttribute("type", "text");
+        unitOfMeasure.setAttribute("id", "unitOfMeasure");
 
         var currentCell = currentRow.insertCell(0);
         currentCell.appendChild(lineNumber);
