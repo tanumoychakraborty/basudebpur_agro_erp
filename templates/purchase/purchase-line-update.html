@@ -5,7 +5,7 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
         <div class="content">
             <div class="animated fadeIn">
-            	<form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+            	<form id="purchase-update-form" class="form-horizontal">
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
@@ -14,37 +14,62 @@
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Transaction Number</label></div>
-                                        <div class="col-12 col-md-2"><p class="form-control-static">{{ data["purchase_trx_number"] }}</p></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Status</label></div>
-                                        <div class="col-12 col-md-2"><select class="form-control-sm form-control">
-                                                <option value="0" selected="">Received</option>
-                                                <option value="1">Closed</option>
+                                        <div class="col col-md-2"><label for="transaction_number" class=" form-control-label">Transaction Number</label></div>
+                                        <div class="col-12 col-md-2"><p id="transaction_number" class="form-control-static">{{ data['details']["purchase_trx_number"] }}</p></div>
+                                        <div class="col col-md-2"><label for="header_status" class=" form-control-label">Status</label></div>
+                                        <div class="col-12 col-md-2"><select id="header_status" class="form-control-sm form-control">
+                                        	{% for h_stat in data['header_status'] %}
+                                        		{% if data['details']['order_status'] == h_stat['lookup_code'] %}
+                                                <option value="{{h_stat['lookup_code']}}" selected="">{{ h_stat['meaning'] }}</option>
+                                                {% else %}
+                                                <option value="{{h_stat['lookup_code']}}" >{{ h_stat['meaning'] }}</option>
+                                                {% endif %}
+                                            {% endfor %}
                                             </select>
                                         </div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Weighting Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["weighting_number"] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="transaction_date" class=" form-control-label">Weighting Number</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="weighting_number" name="text-input" value="{{ data['details']["weighting_number"] }}" class="form-control"/></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="transaction_date" nam="transaction_date"/>
+						                    <input type="text" class="form-control" id="transaction_date" value="{{ data['details']["transaction_date"] }}">
 						                    <div class="input-group-append" data-target="#transaction_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Amount</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["amount"] }}" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["buyer"] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="amount" class=" form-control-label">Amount</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="amount" name="text-input" value="{{ data['details']["amount"] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="buyer" class=" form-control-label">Buyer</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="buyer" name="text-input" value="{{ data['details']['buyer_id'] }}" class="form-control"/></div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Supplier</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["suppplier_id"] }}" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Order Type</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="{{ data["order_type"] }}" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Vehicle Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="text-input" name="text-input" value="" class="form-control"></input></div>
+                                        <div class="col col-md-2"><label for="supplier" class="form-control-label">Supplier</label></div>
+                                        <div class="col-12 col-md-2">
+                                        	<select name="supplier" id="supplier" class="form-control-sm form-control">
+                                        	{% for supplier in data['supplier_list'] %}
+	                                        	{% if data['details']['suppplier_id'] == supplier['supplier_id'] %}
+	                                                <option value="{{ supplier['supplier_id'] }}" selected="">{{ supplier['supplier_name'] }}</option>
+	                                            {% else %}
+	                                            <option value="{{ supplier['supplier_id'] }}" >{{ supplier['supplier_name'] }}</option>
+	                                            {% endif %}
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col col-md-2"><label for="order_type" class=" form-control-label">Order Type</label></div>
+                                        <div class="col-12 col-md-2">
+                                        	<select name="order_type" id="order_type" class="form-control-sm form-control">
+                                        	{% for type in data['po_type'] %}
+                                        		{% if data['details']['order_type'] == type['lookup_code'] %}
+                                                	<option value="{{ type['lookup_code'] }}" selected="">{{ type['meaning'] }}</option>
+                                                {% else %}
+                                                	<option value="{{ type['lookup_code'] }}">{{ type['meaning'] }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col col-md-2"><label for="vehicle_number" class=" form-control-label">Vehicle Number</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="vehicle_number" name="text-input" value="{{ data['details']['vehicle_number'] }}" class="form-control"/></div>
                                     </div>
                             	</div>
                             </div>
@@ -79,30 +104,55 @@
 			                                      	</tr>
 			                                  </thead>
 			                                  <tbody>
-			                                  {% for row in data["purchase_trx_lines"] %}
+			                                  {% for row in data["details"]["purchase_trx_lines"] %}
 			                                  	<tr>
-			                                  		<td><strong>{{ row["line_number"] }}</strong></td>
-			                                  		<td><input type="text" value="{{ row["item_id"] }}"></td>
+			                                  		<td><strong value="{{ row["transaction_line_id"] }}" name="{{ row["created_by"] }}">{{ row["line_number"] }}</strong></td>
+			                                  		<td>
+			                                  		<select name="order_type" id="order_type" class="form-control-sm form-control">
+		                                        	{% for itm in data['item_list'] %}
+		                                        		{% if row['item_id'] == itm['item_id'] %}
+		                                                	<option value="{{itm['item_id']}}" selected="">{{ itm['description'] }}</option>
+		                                                {% else %}
+		                                                	<option value="{{itm['item_id']}}" >{{ itm['description'] }}</option>
+		                                                {% endif %}
+		                                            {% endfor %}
+		                                            </select>
+			                                  		</td>
 			                                  		<td><input type="text" value="{{ row["item_description"] }}"></td>
-			                                  		<td><select class="form-control-sm form-control">
-                                                			<option value="0" {% if row["line_status"] == 'ENTERED' %} selected="" {% endif %}>Received</option>
-                                                			<option value="1" {% if row["line_status"] == 'CLOSED' %} selected="" {% endif %}>Closed</option>
-                                            			</select>
+			                                  		<td><select name="order_type" id="order_type" class="form-control-sm form-control">
+		                                        	{% for l_status in data['line_status'] %}
+		                                        		{% if row['line_status'] == l_status['lookup_code'] %}
+		                                                	<option value="{{l_status['lookup_code']}}" selected="">{{ l_status['meaning'] }}</option>
+		                                                {% else %}
+		                                                	<option value="{{l_status['lookup_code']}}">{{ l_status['meaning'] }}</option>
+		                                                {% endif %}
+		                                            {% endfor %}
+		                                            </select>
                                             		</td>
 			                                  		<td><input type="text" value="{{ row["booking_unit_price"] }}"></td>
 			                                  		<td><input type="text" value="{{ row["booking_quantity"] }}"></td>
 			                                  		<td><input type="text" value="{{ row["discount"] }}"></td>
 			                                  		<td><input type="text" value="{{ row["receipt_unit_price"] }}"></td>
 			                                  		<td><input type="text" value="{{ row["receipt_quantity"] }}"></td>
-			                                  		<td><input type="text" value="{{ row["unit_of_measure"] }}"></td>
+			                                  		<td>
+			                                  		<select name="order_type" id="order_type" class="form-control-sm form-control">
+		                                        	{% for um in data['uom'] %}
+		                                        		{% if row['unit_of_measure'] == um['lookup_code'] %}
+		                                                	<option value="{{um['lookup_code']}}" selected="">{{ um['meaning'] }}</option>
+		                                                {% else %}
+		                                                	<option value="{{um['lookup_code']}}">{{ um['meaning'] }}</option>
+		                                                {% endif %}
+		                                            {% endfor %}
+		                                            </select>
+			                                  		</td>
 			                                  	</tr>
 			                                  	{% endfor %}
 			                                  </tbody>
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
-	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Submit</button></center></div>
-	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></center></div>
+	                                        <div class="col col-md-6"><center><button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Submit</button></center></div>
+	                                        <div class="col col-md-6"><center><a href="/purchase"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>
@@ -121,41 +171,59 @@
         var lineNumber = document.createElement("strong");
         lineNumber.innerHTML = currentIndex;
 
-        var item = document.createElement("input");
-        item.setAttribute("type", "text");
+        var item = document.createElement("select");
         item.setAttribute("id", "item");
+        item.setAttribute("class", "form-control");
+        {% for itm in data['item_list'] %}
+        	var option = document.createElement("option");
+	        option.value = "{{itm['item_id']}}";
+	        option.text = "{{itm['description']}}";
+	        item.appendChild(option);
+        {% endfor %}
 
         var itemDescription = document.createElement("input");
         itemDescription.setAttribute("type", "text");
         itemDescription.setAttribute("id", "itemDescription");
+        itemDescription.setAttribute("class", "form-control");
 
         var lineStatus = document.createElement("label");
-        lineStatus.innerHTML = "Received";
         lineStatus.setAttribute("id", "lineStatus");
+        lineStatus.innerHTML = "Received";
 
         var bookingUnitPrice = document.createElement("input");
         bookingUnitPrice.setAttribute("type", "text");
         bookingUnitPrice.setAttribute("id", "bookingUnitPrice");
+        bookingUnitPrice.setAttribute("class", "form-control");
         
         var bookingQuantity = document.createElement("input");
         bookingQuantity.setAttribute("type", "text");
         bookingQuantity.setAttribute("id", "bookingQuantity");
+        bookingQuantity.setAttribute("class", "form-control");
         
         var discount = document.createElement("input");
         discount.setAttribute("type", "text");
         discount.setAttribute("id", "discount");
+        discount.setAttribute("class", "form-control");
         
         var receiptUnitPrice = document.createElement("input");
         receiptUnitPrice.setAttribute("type", "text");
         receiptUnitPrice.setAttribute("id", "receiptUnitPrice");
+        receiptUnitPrice.setAttribute("class", "form-control");
         
         var receiptQuantity = document.createElement("input");
         receiptQuantity.setAttribute("type", "text");
         receiptQuantity.setAttribute("id", "receiptQuantity");
+        receiptQuantity.setAttribute("class", "form-control");
         
-        var unitOfMeasure = document.createElement("input");
-        unitOfMeasure.setAttribute("type", "text");
+        var unitOfMeasure = document.createElement("select");
         unitOfMeasure.setAttribute("id", "unitOfMeasure");
+        unitOfMeasure.setAttribute("class", "form-control");
+        {% for um in data['uom'] %}
+        	var option = document.createElement("option");
+	        option.value = "{{um['lookup_code']}}";
+	        option.text = "{{um['meaning']}}";
+	        unitOfMeasure.appendChild(option);
+        {% endfor %}
 
         var currentCell = currentRow.insertCell(0);
         currentCell.appendChild(lineNumber);

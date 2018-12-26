@@ -15,11 +15,16 @@
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Status</label></div>
-                                        <div class="col-12 col-md-2"><p class="form-control-static">Received</p></div>
+                                        <div class="col-12 col-md-2"><p id="header_status" class="form-control-static">Booked</p></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Weighting Number</label></div>
                                         <div class="col-12 col-md-2"><input type="text" id="weighting_number" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Supplier</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="supplier" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><select name="supplier" id="supplier" class="form-control-sm form-control">
+                                        	{% for supplier in data['supplier_list'] %}
+                                                <option value="{{ supplier['supplier_id'] }}">{{ supplier['supplier_name'] }}</option>
+                                            {% endfor %}
+                                            </select>
+                                    	</div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">Transaction Date</label></div>
@@ -32,13 +37,20 @@
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Amount</label></div>
                                         <div class="col-12 col-md-2"><input type="text" id="amount" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="buyer" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><p class="form-control-static" id="buyer">{{ data['user'] }}</p></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Order Type</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="order_type" name="text-input" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><select name="order_type" id="order_type" class="form-control-sm form-control">
+                                        	{% for type in data['po_type'] %}
+                                                <option value="{{ type['lookup_code'] }}">{{ type['meaning'] }}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Vehicle Number</label></div>
                                         <div class="col-12 col-md-2"><input type="text" id="vehicle_number" name="text-input" class="form-control"></input></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Transaction Number</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="purchase_trx_number" name="text-input" class="form-control"/></div>
                                     </div>
                             	</div>
                             </div>
@@ -73,15 +85,13 @@
 			                                      	</tr>
 			                                  </thead>
 			                                  <tbody>
-			                                  	<tr>
-			                                  		
-			                                  	</tr>
+			                                  	
 			                                  </tbody>
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
 	                                        <div class="col col-md-6"><center><button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Submit</button></center></div>
-	                                        <div class="col col-md-6"><center><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></center></div>
+	                                        <div class="col col-md-6"><center><a href="/purchase"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>
@@ -95,18 +105,25 @@
 	function addRow () {
         var myTable = document.getElementById("purchase_line_add_table");
         var currentIndex = myTable.rows.length;
-        var currentRow = myTable.insertRow(currentIndex-1);
+        var currentRow = myTable.insertRow(currentIndex);
 
         var lineNumber = document.createElement("strong");
-        lineNumber.innerHTML = currentIndex-1;
+        lineNumber.innerHTML = currentIndex;
 
-        var item = document.createElement("input");
-        item.setAttribute("type", "text");
+        var item = document.createElement("select");
         item.setAttribute("id", "item");
+        item.setAttribute("class", "form-control");
+        {% for itm in data['item_list'] %}
+        	var option = document.createElement("option");
+	        option.value = "{{itm['item_id']}}";
+	        option.text = "{{itm['description']}}";
+	        item.appendChild(option);
+        {% endfor %}
 
         var itemDescription = document.createElement("input");
         itemDescription.setAttribute("type", "text");
         itemDescription.setAttribute("id", "itemDescription");
+        itemDescription.setAttribute("class", "form-control");
 
         var lineStatus = document.createElement("label");
         lineStatus.innerHTML = "Received";
@@ -114,26 +131,37 @@
         var bookingUnitPrice = document.createElement("input");
         bookingUnitPrice.setAttribute("type", "text");
         bookingUnitPrice.setAttribute("id", "bookingUnitPrice");
+        bookingUnitPrice.setAttribute("class", "form-control");
         
         var bookingQuantity = document.createElement("input");
         bookingQuantity.setAttribute("type", "text");
         bookingQuantity.setAttribute("id", "bookingQuantity");
+        bookingQuantity.setAttribute("class", "form-control");
         
         var discount = document.createElement("input");
         discount.setAttribute("type", "text");
         discount.setAttribute("id", "discount");
+        discount.setAttribute("class", "form-control");
         
         var receiptUnitPrice = document.createElement("input");
         receiptUnitPrice.setAttribute("type", "text");
         receiptUnitPrice.setAttribute("id", "receiptUnitPrice");
+        receiptUnitPrice.setAttribute("class", "form-control");
         
         var receiptQuantity = document.createElement("input");
         receiptQuantity.setAttribute("type", "text");
         receiptQuantity.setAttribute("id", "receiptQuantity");
+        receiptQuantity.setAttribute("class", "form-control");
         
-        var unitOfMeasure = document.createElement("input");
-        unitOfMeasure.setAttribute("type", "text");
+        var unitOfMeasure = document.createElement("select");
         unitOfMeasure.setAttribute("id", "unitOfMeasure");
+        unitOfMeasure.setAttribute("class", "form-control");
+        {% for um in data['uom'] %}
+        	var option = document.createElement("option");
+	        option.value = "{{um['lookup_code']}}";
+	        option.text = "{{um['meaning']}}";
+	        unitOfMeasure.appendChild(option);
+        {% endfor %}
 
         var currentCell = currentRow.insertCell(0);
         currentCell.appendChild(lineNumber);

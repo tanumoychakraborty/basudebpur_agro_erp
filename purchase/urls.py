@@ -18,9 +18,11 @@ from purchase.view.purchase_view_view import purchase_view_view
 from purchase.view.purchase_add_view import purchase_add_view
 from django.contrib.auth.decorators import login_required
 from purchase.view.purchase_view_details import purchase_view_details
+from purchase.view.purchase_update_view import purchase_update_view
 
 urlpatterns = [
     path('', login_required(purchase_view_view.as_view()), name='purchase_view'),
     path('add/', login_required(purchase_add_view.as_view()), name='purchase_add'),
+    path('update/', login_required(purchase_update_view.as_view()), name='purchase_update'),
     path('<str:transaction_number>/', login_required(purchase_view_details.as_view()), name='purchase_details'),
 ]

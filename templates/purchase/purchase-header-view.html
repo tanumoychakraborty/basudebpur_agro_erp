@@ -16,17 +16,18 @@
                             </div>
                             <div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Transaction Number</label></div>
-                                        <div class="col col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Status</label></div>
-                                        <div class="col col-md-2"><select class="form-control-sm form-control">
-                                                <option value="0" selected="">Received</option>
-                                                <option value="1">Closed</option>
+                                        <div class="col col-md-2"><label for="transaction_number" class=" form-control-label">Transaction Number</label></div>
+                                        <div class="col col-md-2"><input type="text" id="transaction_number" name="text-input" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="header_status" class=" form-control-label">Status</label></div>
+                                        <div class="col col-md-2"><select id="header_status" class="form-control-sm form-control">
+                                        	{% for h_status in data['header_status'] %}
+                                                <option value="{{ h_status['lookup_code'] }}">{{ h_status['meaning'] }}</option>
+                                            {% endfor %}
                                             </select>
                                         </div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">From Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="transaction_date" nam="transaction_date"/>
+						                    <input type="text" class="form-control" id="from_transaction_date" nam="transaction_date"/>
 						                    <div class="input-group-append" data-target="#transaction_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
@@ -34,24 +35,29 @@
                                         
                                     </div>
                                     <div class="row form-group">
-                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label">Supplier</label></div>
-                                        <div class="col col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
-                                        <div class="col col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">To Transaction Date</label></div>
+                                    	<div class="col col-md-2"><label for="supplier" class=" form-control-label">Supplier</label></div>
+                                        <div class="col col-md-2"><select name="supplier" id="supplier" class="form-control-sm form-control">
+                                        	{% for supplier in data['supplier_list'] %}
+                                                <option value="{{ supplier['supplier_id'] }}">{{ supplier['supplier_name'] }}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col col-md-2"><label for="buyer" class=" form-control-label">Buyer</label></div>
+                                        <div class="col col-md-2"><input type="text" id="buyer" name="text-input" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="to_transaction_date">To Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="transaction_date" nam="transaction_date"/>
+						                    <input type="text" class="form-control" id="to_transaction_date" nam="transaction_date"/>
 						                    <div class="input-group-append" data-target="#transaction_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
                                     </div>
                                     <div class="row form-group">
-                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label">Weighting Number</label></div>
-                                        <div class="col col-md-2"><input type="text" id="text-input" name="text-input" class="form-control"/></div>
+                                    	<div class="col col-md-2"><label for="weighting_number" class=" form-control-label">Weighting Number</label></div>
+                                        <div class="col col-md-2"><input type="text" id="weighting_number" name="text-input" class="form-control"/></div>
                                     </div>
                                     <div class="row form-group">
-	                                    <div class="col col-md-12"><center><button type="button" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp; Search</button></center></div>
+	                                    <div class="col col-md-12"><center><button type="button" id="po_search_btn" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp; Search</button></center></div>
 	                                </div>
                             </div>
                         </div>
@@ -109,7 +115,7 @@
     <script type="text/javascript">
         $('#bootstrap-data-table').DataTable( {
           				'bDestroy': true,
-                        'data':  {{ data }},
+                        'data':  {{ data['pos'] }},
                         'columns': [
 							            { 'data': 'purchase_trx_number' },
 							            { 'data': 'transaction_date' },
@@ -127,6 +133,51 @@
             							}
         							}],   
                     	} );
+                    	
+       $("#po_search_btn").on("click", function(e) {
+	   		var formData = {
+	   			weighting_number    	: $('input[id=weighting_number]').val(),
+	            purchase_trx_number  	: $('p[id=transaction_number]').val(),
+	            order_status  			: $('#header_status option:selected').val(),
+	            supplier_id            	: $('#supplier option:selected').val(),
+	            from_creation_date    	: $('input[id=from_transaction_date]').val(),
+	            to_creation_date    	: $('input[id=to_transaction_date]').val(),
+	            buyer_id            	: $('input[id=buyer]').val()
+	        };
+	        
+	        $.ajax({
+	            type        : 'POST',
+	            url         : '/purchase/',
+	            data        : JSON.stringify(formData),
+	            dataType    : 'json',
+	            encode      : true,
+	            success		: function(data){
+	            					$('#bootstrap-data-table').DataTable( {
+				          				'bDestroy': true,
+				                        'data':  data,
+				                        'columns': [
+											            { 'data': 'purchase_trx_number' },
+											            { 'data': 'transaction_date' },
+											            { 'data': 'supplier_name' },
+											            { 'data': 'amount' },
+											            { 'data': 'order_type' },
+											            { 'data': 'order_status' },
+											            { 'data': 'weighting_number' }
+											        ],
+										"columnDefs": [{
+				            							"targets": 0,
+				            							"render": function ( data, type, row, meta ) {
+				                						var itemID = row[0];                   
+				                						return '<a href="/purchase/' + data + '"><font color="DodgerBlue">' + data + '</font></a>';
+				            							}
+				        							}],   
+	                    			} );
+	            				}
+	        }).done(function() {
+	                console.log('ok'); 
+	        });
+	        e.preventDefault();
+	    });
   </script>
 <!-- /.content -->
         
