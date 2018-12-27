@@ -26,12 +26,17 @@ class supplier_update_view(template):
                 data['enabled_flag'] = 'N'
             data['last_updated_by'] = request.user.username
             if data['effective_from']:
+                data['effective_from'] = data['effective_from'].replace('/', '-')
                 data['effective_from'] = data['effective_from'].split(' ')[0]
             if data['effective_to']:
+                data['effective_to'] = data['effective_to'].replace('/', '-')
                 data['effective_to'] = data['effective_to'].split(' ')[0]
             for line in data['supplier_master_sites']:
                 line['last_updated_by'] = request.user.username
+                if 'supplier_site_id' not in line.keys():
+                    line['created_by'] = request.user.username
                 if line['inactive_date']:
+                    line['inactive_date'] = line['inactive_date'].replace('/', '-')
                     line['inactive_date'] = line['inactive_date'].split(' ')[0]
             
             jsondata = json.dumps(data)

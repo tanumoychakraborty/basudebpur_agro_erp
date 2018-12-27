@@ -52,6 +52,16 @@ class purchase_add_view(template):
                 line['line_status'] = 'BOOKED'
                 line['created_by'] = request.user.username
                 line['last_updated_by'] = request.user.username
+                if line['booking_unit_price'] == '':
+                    line.pop('booking_unit_price')
+                if line['booking_quantity'] == '':
+                    line.pop('booking_quantity')
+                if line['discount'] == '':
+                    line.pop('discount')
+                if line['receipt_unit_price'] == '':
+                    line.pop('receipt_unit_price')
+                if line['receipt_quantity'] == '':
+                    line.pop('receipt_quantity')
             jsondata = json.dumps(data)
             
             r = requests.post(url = PURCHASE_TRANSACTION, json = jsondata) 

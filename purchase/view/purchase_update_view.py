@@ -26,7 +26,22 @@ class purchase_update_view(template):
             data['last_updated_by'] = request.user.username
             data['transaction_date'] = data['transaction_date'].replace(' ','T')
             for line in data['purchase_trx_lines']:
+                if line['booking_unit_price'] == '':
+                    line.pop('booking_unit_price')
+                if line['booking_quantity'] == '':
+                    line.pop('booking_quantity')
+                if line['discount'] == '':
+                    line.pop('discount')
+                if line['receipt_unit_price'] == '':
+                    line.pop('receipt_unit_price')
+                if line['receipt_quantity'] == '':
+                    line.pop('receipt_quantity')
                 line['last_updated_by'] = request.user.username
+                if 'transaction_line_id' not in line.keys():
+                    line['line_status'] = 'BOOKED'
+                    line['created_by'] = request.user.username
+                    
+            
             jsondata = json.dumps(data)
             r = requests.put('{}'.format(PURCHASE_TRANSACTION), json = jsondata) 
             if r.status_code is 200:
