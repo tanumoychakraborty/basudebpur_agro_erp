@@ -17,3 +17,4 @@ def hasUpdatePurchaseRecordAccess(user):
             if permission.codename == 'PURCHASE_all' or permission.codename == 'PURCHASE_update':
                 return True
     return False                
+         

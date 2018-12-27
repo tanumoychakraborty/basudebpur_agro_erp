@@ -38,6 +38,13 @@ class template(View):
                 Permission.objects.create(name='PURCHASE', content_type_id=6, codename='PURCHASE_view')
                 Permission.objects.create(name='PURCHASE', content_type_id=6, codename='PURCHASE_update')
                 Permission.objects.create(name='PURCHASE', content_type_id=6, codename='PURCHASE_create')
+            try:
+                Permission.objects.filter(name='SUPPLIER').first().name
+            except AttributeError:
+                Permission.objects.create(name='SUPPLIER', content_type_id=6, codename='SUPPLIER_all')
+                Permission.objects.create(name='SUPPLIER', content_type_id=6, codename='SUPPLIER_view')
+                Permission.objects.create(name='SUPPLIER', content_type_id=6, codename='SUPPLIER_update')
+                Permission.objects.create(name='SUPPLIER', content_type_id=6, codename='SUPPLIER_create')
                 
             try:
                 Group.objects.filter(name='MANAGEMENT_REP').first().name
@@ -48,6 +55,8 @@ class template(View):
                 for _permission in Permission.objects.filter(name='SALES').all():
                     _group.permissions.add(_permission);
                 for _permission in Permission.objects.filter(name='PURCHASE').all():
+                    _group.permissions.add(_permission);
+                for _permission in Permission.objects.filter(name='SUPPLIER').all():
                     _group.permissions.add(_permission);
 #                 map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='USER').all())
 #                 map(lambda x: _group.permissions.add(x), Permission.objects.filter(name='SALES').all())

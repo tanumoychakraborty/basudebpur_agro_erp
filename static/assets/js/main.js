@@ -86,6 +86,8 @@ jQuery(document).ready(function($) {
 	});
 	
    $('#transaction_date').datetimepicker();
+   $('#effective_from').datetimepicker();
+   $('#effective_to').datetimepicker();
    
    $("#purchase-add-form").submit(function(e) {
 	   
@@ -179,5 +181,87 @@ jQuery(document).ready(function($) {
         e.preventDefault();
     });
     
+    
+    $("#supplier-add-form").submit(function(e) {
+	   
+   		var supplier_lines = new Array();
+   		$('#supplier_site_add_table tr').each(function(row, tr){
+		    supplier_lines[row-1]={
+		        supplier_site_code 		: $(tr).find('td:eq(1)').find('input').val(),
+		        supplier_site_address 	: $(tr).find('td:eq(2)').find('input').val(),
+		        phone_number1		 	: $(tr).find('td:eq(3)').find('input').val(),
+		        phone_number2		 	: $(tr).find('td:eq(4)').find('input').val(),
+		        email				 	: $(tr).find('td:eq(5)').find('input').val(),
+		        inactive_date 			: $(tr).find('td:eq(6)').find('input').val()
+		    }
+		}); 
+   		var formData = {
+            supplier_code	    	: $('input[id=supplier_code]').val(),
+            supplier_name         	: $('input[id=supplier_name]').val(),
+            supplier_type		    : $('#supplier_type option:selected').val(),
+            description    		  	: $('input[id=description]').val(),
+            effective_from         	: $('input[id=effective_from]').val(),
+            enabled_flag    	  	: $('input[id="enabled"]:checked').val,
+            remarks			        : $('input[id=remarks]').val(),
+            effective_to         	: $('input[id=effective_to]').val(),
+            supplier_master_sites	: supplier_lines
+        };
+        
+        $.ajax({
+            type        : 'POST',
+            url         : '/supplier/add/',
+            data        : JSON.stringify(formData),
+            dataType    : 'json',
+            encode      : true,
+            success		: function(data){
+            				location.href = "http://localhost:8000/supplier/";
+            			  }
+        }).done(function() {
+                console.log('ok'); 
+        });
+        e.preventDefault();
+    });
+    
+    $("#supplier-update-form").submit(function(e) {
+	   
+   		var supplier_lines = new Array();
+   		$('#supplier_site_update_table tr').each(function(row, tr){
+		    supplier_lines[row-1]={
+		    	supplier_site_id		: $(tr).find('td:eq(0)').find('input').attr('name'),
+		        supplier_site_code 		: $(tr).find('td:eq(0)').find('input').val(),
+		        supplier_site_address 	: $(tr).find('td:eq(1)').find('input').val(),
+		        phone_number1		 	: $(tr).find('td:eq(2)').find('input').val(),
+		        phone_number2		 	: $(tr).find('td:eq(3)').find('input').val(),
+		        email				 	: $(tr).find('td:eq(4)').find('input').val(),
+		        inactive_date 			: $(tr).find('td:eq(5)').find('input').val()
+		    }
+		}); 
+   		var formData = {
+   			supplier_id				: $('input[id=supplier_code]').attr('name'),
+            supplier_code	    	: $('input[id=supplier_code]').val(),
+            supplier_name         	: $('input[id=supplier_name]').val(),
+            supplier_type		    : $('#supplier_type option:selected').val(),
+            description    		  	: $('input[id=description]').val(),
+            effective_from         	: $('input[id=effective_from]').val(),
+            enabled_flag    	  	: $('input[id="enabled"]:checked'),
+            remarks			        : $('input[id=remarks]').val(),
+            effective_to         	: $('input[id=effective_to]').val(),
+            supplier_master_sites	: supplier_lines
+        };
+        
+        $.ajax({
+            type        : 'PUT',
+            url         : '/supplier/update/',
+            data        : JSON.stringify(formData),
+            dataType    : 'json',
+            encode      : true,
+            success		: function(data){
+            				location.href = "http://localhost:8000/supplier/";
+            			  }
+        }).done(function() {
+                console.log('ok'); 
+        });
+        e.preventDefault();
+    });
     
 });
