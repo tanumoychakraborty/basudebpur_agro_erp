@@ -37,13 +37,16 @@ class supplier_add_view(template):
             else:
                 data['enabled_flag'] = 'N'
             if data['effective_from']:
+                data['effective_from'] = data['effective_from'].replace('/', '-')
                 data['effective_from'] = data['effective_from'].split(' ')[0]
             if data['effective_to']:
                 data['effective_to'] = data['effective_to'].split(' ')[0]
             for line in data['supplier_master_sites']:
+                data['effective_to'] = data['effective_to'].replace('/', '-')
                 line['created_by'] = request.user.username
                 line['last_updated_by'] = request.user.username
                 if line['inactive_date']:
+                    line['inactive_date'] = line['inactive_date'].replace('/', '-')
                     line['inactive_date'] = line['inactive_date'].split(' ')[0]
             jsondata = json.dumps(data)
             
