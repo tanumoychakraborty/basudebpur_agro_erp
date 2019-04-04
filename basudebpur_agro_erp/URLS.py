@@ -3,7 +3,8 @@ Created on 08-Dec-2018
 
 @author: tanumoy
 '''
-API = 'http://localhost:9000'
+from basudebpur_agro_erp.endpoints import API
+
 ACCESS_RIGHT = API+'/api/access-right'
 PURCHASE_TRANSACTION = API+'/api/purchase_trx/'
 PURCHASE_ORDER_TYPE = API + '/api/common_lookups?lookupName=PURCHASE_ORDER_TYPE'
