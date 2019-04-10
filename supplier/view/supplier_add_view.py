@@ -51,9 +51,8 @@ class supplier_add_view(template):
             jsondata = json.dumps(data)
             print('jsondata >>>>>>>>>>>>>>> '+jsondata)
             print('SUPPLIER >>>>>>>>>>>>>>> '+SUPPLIER)
-            r = requests.post(url = SUPPLIER, json = jsondata) 
-            print('response code>>>>>>>>>>>>>>> '+str(r))
-            print('response text>>>>>>>>>>>>>>> '+r.text)
+            headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+            r = requests.post(url = SUPPLIER, json = jsondata, headers=headers) ]
             print('response >>>>>>>>>>>>>>> '+str(r.json()))
             if r.status_code is 200:
                 to_json = {'message':'ok'}
