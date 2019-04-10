@@ -53,7 +53,7 @@ class supplier_add_view(template):
             print('SUPPLIER >>>>>>>>>>>>>>> '+SUPPLIER)
             headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
             r = requests.post(url = SUPPLIER, json = jsondata, headers=headers)
-            print('response >>>>>>>>>>>>>>> '+str(r.json()))
+            print('response >>>>>>>>>>>>>>> '+r.text)
             if r.status_code is 200:
                 to_json = {'message':'ok'}
                 return HttpResponse(json.dumps(to_json))
