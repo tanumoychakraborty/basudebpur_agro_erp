@@ -50,6 +50,7 @@ class supplier_add_view(template):
                     line['inactive_date'] = line['inactive_date'].replace('/', '-')
                     line['inactive_date'] = line['inactive_date'].split(' ')[0]
             jsondata = json.dumps(data)
+            print('data >>>>>>>>>>>>>>> '+data)
             print('jsondata >>>>>>>>>>>>>>> '+jsondata)
             print('SUPPLIER >>>>>>>>>>>>>>> '+SUPPLIER)
             r = requests.post(url = SUPPLIER, json = jsondata)
