@@ -52,9 +52,9 @@ class supplier_add_view(template):
             print('jsondata >>>>>>>>>>>>>>> '+jsondata)
             print('SUPPLIER >>>>>>>>>>>>>>> '+SUPPLIER)
             r = requests.post(url = SUPPLIER, json = jsondata) 
-            print('response code>>>>>>>>>>>>>>> '+r.status_code)
-            print('response >>>>>>>>>>>>>>> '+r.reason)
+            print('response code>>>>>>>>>>>>>>> '+str(r))
             print('response text>>>>>>>>>>>>>>> '+r.text)
+            print('response >>>>>>>>>>>>>>> '+r.reason)
             if r.status_code is 200:
                 to_json = {'message':'ok'}
                 return HttpResponse(json.dumps(to_json))
