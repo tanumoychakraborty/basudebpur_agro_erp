@@ -50,10 +50,8 @@ class supplier_add_view(template):
                     line['inactive_date'] = line['inactive_date'].replace('/', '-')
                     line['inactive_date'] = line['inactive_date'].split(' ')[0]
             jsondata = json.dumps(data)
-            print('data >>>>>>>>>>>>>>> '+jsondata)
-            print('jsondata >>>>>>>>>>>>>>> '+jsondata)
-            print('SUPPLIER >>>>>>>>>>>>>>> '+SUPPLIER)
-            r = requests.post(url = SUPPLIER, json = str(data))
+            
+            r = requests.post(url = SUPPLIER, json = jsondata)
             print('response >>>>>>>>>>>>>>> '+r.text)
             if r.status_code is 200:
                 to_json = {'message':'ok'}
