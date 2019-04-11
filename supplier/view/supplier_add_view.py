@@ -57,9 +57,9 @@ class supplier_add_view(template):
                 to_json = {'message':'ok'}
                 return HttpResponse(json.dumps(to_json))
             else:
-                template = jinja_template.get_template('internal_server_error.html')
+                template = jinja_template.get_template('./internal_server_error.html')
                 return HttpResponse(template.render(request))
         else:
-            template = jinja_template.get_template('access_denied.html')
+            template = jinja_template.get_template('./access_denied.html')
             return HttpResponse(template.render(request))
         
