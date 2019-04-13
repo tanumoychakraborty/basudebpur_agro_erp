@@ -85,6 +85,10 @@ jQuery(document).ready(function($) {
 		} 
 	});
 	
+	// Customizations
+	
+	var host = "http://35.244.52.236:80"
+	
    $('#transaction_date').datetimepicker();
    $('#effective_from').datetimepicker();
    $('#effective_to').datetimepicker();
@@ -125,7 +129,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/purchase/";
+            				location.href = host+"/purchase/";
             			  }
         }).done(function() {
                 console.log('ok'); 
@@ -173,7 +177,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/purchase/";
+            				location.href = host+"/purchase/";
             			  }
         }).done(function() {
                 console.log('ok'); 
@@ -214,7 +218,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/supplier/";
+            				location.href = host+"/supplier/";
             			  }
         }).done(function() {
                 console.log('ok'); 
@@ -256,7 +260,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/supplier/";
+            				location.href = host+"/supplier/";
             			  }
         }).done(function() {
                 console.log('ok'); 
