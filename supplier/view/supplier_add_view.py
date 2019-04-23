@@ -50,14 +50,14 @@ class supplier_add_view(template):
                     #line['inactive_date'] = line['inactive_date'].split(' ')[0]
             jsondata = json.dumps(data)
             
-            r = requests.post(url = SUPPLIER, json = jsondata) 
+            r = requests.post(url = SUPPLIER, json = jsondata)
             if r.status_code is 200:
                 to_json = {'message':'ok'}
                 return HttpResponse(json.dumps(to_json))
             else:
-                template = jinja_template.get_template('internal_server_error.html')
+                template = jinja_template.get_template('./internal_server_error.html')
                 return HttpResponse(template.render(request))
         else:
-            template = jinja_template.get_template('access_denied.html')
+            template = jinja_template.get_template('./access_denied.html')
             return HttpResponse(template.render(request))
         

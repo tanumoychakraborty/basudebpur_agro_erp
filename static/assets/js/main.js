@@ -84,7 +84,8 @@ jQuery(document).ready(function($) {
 			$('body').removeClass('small-device');  
 		} 
 	});
-	
+			
+	// Customizations
 	var host = "http://localhost:8000"
    
    $("#purchase-add-form").submit(function(e) {
