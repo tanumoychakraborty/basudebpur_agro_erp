@@ -20,24 +20,24 @@ class supplier_update_view(template):
     def put(self, request):
         if hasUpdateSupplierAccess(request.user):
             data = json.loads(request.body)
-            if 'enabled_flag' in data.keys():
+            if data['enabled_flag']:
                 data['enabled_flag'] = 'Y'
             else:
                 data['enabled_flag'] = 'N'
             data['last_updated_by'] = request.user.username
             if data['effective_from']:
                 data['effective_from'] = data['effective_from'].replace('/', '-')
-                data['effective_from'] = data['effective_from'].split(' ')[0]
+                #data['effective_from'] = data['effective_from'].split(' ')[0]
             if data['effective_to']:
                 data['effective_to'] = data['effective_to'].replace('/', '-')
-                data['effective_to'] = data['effective_to'].split(' ')[0]
+                #data['effective_to'] = data['effective_to'].split(' ')[0]
             for line in data['supplier_master_sites']:
                 line['last_updated_by'] = request.user.username
                 if 'supplier_site_id' not in line.keys():
                     line['created_by'] = request.user.username
                 if line['inactive_date']:
                     line['inactive_date'] = line['inactive_date'].replace('/', '-')
-                    line['inactive_date'] = line['inactive_date'].split(' ')[0]
+                    #line['inactive_date'] = line['inactive_date'].split(' ')[0]
             
             jsondata = json.dumps(data)
             r = requests.put(SUPPLIER, json = jsondata) 

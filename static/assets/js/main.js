@@ -85,9 +85,7 @@ jQuery(document).ready(function($) {
 		} 
 	});
 	
-   $('#transaction_date').datetimepicker();
-   $('#effective_from').datetimepicker();
-   $('#effective_to').datetimepicker();
+	var host = "http://localhost:8000"
    
    $("#purchase-add-form").submit(function(e) {
 	   
@@ -125,7 +123,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/purchase/";
+            				location.href = host+"/purchase/";
             			  }
         }).done(function() {
                 console.log('ok'); 
@@ -173,7 +171,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/purchase/";
+            				location.href = host+"/purchase/";
             			  }
         }).done(function() {
                 console.log('ok'); 
@@ -201,9 +199,9 @@ jQuery(document).ready(function($) {
             supplier_type		    : $('#supplier_type option:selected').val(),
             description    		  	: $('input[id=description]').val(),
             effective_from         	: $('input[id=effective_from]').val(),
-            enabled_flag    	  	: $('input[id="enabled"]:checked').val,
+            enabled_flag    	  	: $('#enabled').is(':checked'),
             remarks			        : $('input[id=remarks]').val(),
-            effective_to         	: $('input[id=effective_to]').val(),
+            effective_to         	: $('input[name=effective_to]').val(),
             supplier_master_sites	: supplier_lines
         };
         
@@ -214,7 +212,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/supplier/";
+            				location.href = host+"/supplier/";
             			  }
         }).done(function() {
                 console.log('ok'); 
@@ -243,9 +241,9 @@ jQuery(document).ready(function($) {
             supplier_type		    : $('#supplier_type option:selected').val(),
             description    		  	: $('input[id=description]').val(),
             effective_from         	: $('input[id=effective_from]').val(),
-            enabled_flag    	  	: $('input[id="enabled"]:checked'),
+            enabled_flag    	  	: $('#enabled').is(':checked'),
             remarks			        : $('input[id=remarks]').val(),
-            effective_to         	: $('input[id=effective_to]').val(),
+            effective_to         	: $('input[name=effective_to]').val(),
             supplier_master_sites	: supplier_lines
         };
         
@@ -256,7 +254,7 @@ jQuery(document).ready(function($) {
             dataType    : 'json',
             encode      : true,
             success		: function(data){
-            				location.href = "http://localhost:8000/supplier/";
+            				location.href = host+"/supplier/";
             			  }
         }).done(function() {
                 console.log('ok'); 

@@ -3,6 +3,15 @@
 
 <!-- Content -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>$(function() {
+    $( "#effective_from" ).datepicker();
+    $( "#effective_to" ).datepicker();
+    $( "[name='inactive_date']" ).each(function(){$(this).datepicker();});
+});
+</script>
         <div class="content">
             <div class="animated fadeIn">
             	<form id="supplier-add-form" class="form-horizontal">
@@ -79,7 +88,7 @@
 			                                          <th scope="col">Supplier Site Code</th>
 			                                          <th scope="col">Address</th>
 			                                          <th scope="col">Phone Number 1</th>
-			                                          <th scope="col">Phone Number 1</th>
+			                                          <th scope="col">Phone Number 2</th>
 								  					  <th scope="col">Email</th>
 			                                          <th scope="col">Inactive Date</th>
 			                                      	</tr>
@@ -137,7 +146,7 @@
         
         var inactive_date = document.createElement("input");
         inactive_date.setAttribute("type", "text");
-        inactive_date.setAttribute("id", "inactive_date");
+        inactive_date.setAttribute("name", "inactive_date");
         inactive_date.setAttribute("class", "form-control");
 
         var currentCell = currentRow.insertCell(0);
@@ -159,7 +168,8 @@
         currentCell.appendChild(email);
         
         var currentCell = currentRow.insertCell(6);
-        currentCell.appendChild(inactive_date);        
+        currentCell.appendChild(inactive_date);    
+        $( "[name='inactive_date']" ).each(function(){$(this).datepicker();});
     }
 </script>
 
