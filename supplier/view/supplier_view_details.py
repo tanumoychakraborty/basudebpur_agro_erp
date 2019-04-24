@@ -31,11 +31,12 @@ class supplier_view_details(template):
                 if 'effective_to' in supplier_details:
                     supplier_details['effective_to'] = json_data['effective_to'].replace('-', '/')
                     supplier_details['effective_to'] = supplier_details['effective_to'].split(' ')[0]
-                for line in supplier_details['supplier_master_sites']:
-                    line['last_updated_by'] = request.user.username
-                    if 'inactive_date' in line:
-                        line['inactive_date'] = line['inactive_date'].replace('-', '/')
-                        line['inactive_date'] = line['inactive_date'].split(' ')[0]
+                if 'supplier_master_sites' in supplier_details:
+                    for line in supplier_details['supplier_master_sites']:
+                        line['last_updated_by'] = request.user.username
+                        if 'inactive_date' in line:
+                            line['inactive_date'] = line['inactive_date'].replace('-', '/')
+                            line['inactive_date'] = line['inactive_date'].split(' ')[0]
                 
                 data= {'supplier_code' : supplier_type['lookup_details'],
                        'details' : json_data['supplier_details'][0]}
