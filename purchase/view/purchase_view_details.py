@@ -33,7 +33,7 @@ class purchase_view_details(template):
                 po_header_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)
                 po_type = json.loads(requests.get(PURCHASE_ORDER_TYPE).text)
                 supplier_list = json.loads(requests.get(SUPPLIER_LIST).text)
-                if json_data['purchase_trx_details'][0]['transaction_date']:
+                if 'transaction_date' in json_data['purchase_trx_details'][0]:
                     json_data['purchase_trx_details'][0]['transaction_date'] = json_data['purchase_trx_details'][0]['transaction_date'].replace('/', '-')
                     json_data['purchase_trx_details'][0]['transaction_date'] = json_data['purchase_trx_details'][0]['transaction_date'].split(' ')[0]
             
