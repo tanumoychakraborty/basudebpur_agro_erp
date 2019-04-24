@@ -29,7 +29,7 @@ class supplier_view_details(template):
                     supplier_details['effective_from'] = supplier_details['effective_from'].replace('-', '/')
                     supplier_details['effective_from'] = supplier_details['effective_from'].split(' ')[0]
                 if 'effective_to' in supplier_details:
-                    supplier_details['effective_to'] = json_data['effective_to'].replace('-', '/')
+                    supplier_details['effective_to'] = supplier_details['effective_to'].replace('-', '/')
                     supplier_details['effective_to'] = supplier_details['effective_to'].split(' ')[0]
                 if 'supplier_master_sites' in supplier_details:
                     for line in supplier_details['supplier_master_sites']:
