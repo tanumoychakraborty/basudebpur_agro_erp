@@ -46,8 +46,8 @@ class purchase_add_view(template):
             data['order_status'] = 'BOOKED'
             data['created_by'] = request.user.username
             data['last_updated_by'] = request.user.username
-            if data['transaction_date']:
-                data['transaction_date'] = data['transaction_date'].replace('/', '-')
+#             if data['transaction_date']:
+#                 data['transaction_date'] = data['transaction_date'].replace('/', '-')
             for line in data['purchase_trx_lines']:
                 line['line_status'] = 'BOOKED'
                 line['created_by'] = request.user.username

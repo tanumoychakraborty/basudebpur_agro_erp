@@ -24,7 +24,7 @@ class purchase_update_view(template):
         if hasUpdatePurchaseRecordAccess(request.user):
             data = json.loads(request.body)
             data['last_updated_by'] = request.user.username
-            data['transaction_date'] = data['transaction_date'].replace('/', '-')
+            #data['transaction_date'] = data['transaction_date'].replace('/', '-')
             for line in data['purchase_trx_lines']:
                 if line['booking_unit_price'] == '':
                     line.pop('booking_unit_price')

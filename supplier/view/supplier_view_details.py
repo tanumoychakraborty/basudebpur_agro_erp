@@ -25,16 +25,16 @@ class supplier_view_details(template):
             
             if hasUpdateSupplierAccess(request.user):
                 supplier_type = json.loads(requests.get(SUPPLIER_TYPE).text)
-                if 'effective_from' in supplier_details:
-                    supplier_details['effective_from'] = supplier_details['effective_from'].replace('-', '/')
+                if supplier_details['effective_from']:
+                    #supplier_details['effective_from'] = supplier_details['effective_from'].replace('-', '/')
                     supplier_details['effective_from'] = supplier_details['effective_from'].split(' ')[0]
-                if 'effective_to' in supplier_details:
-                    supplier_details['effective_to'] = json_data['effective_to'].replace('-', '/')
+                if supplier_details['effective_to']:
+                    #supplier_details['effective_to'] = supplier_details['effective_to'].replace('-', '/')
                     supplier_details['effective_to'] = supplier_details['effective_to'].split(' ')[0]
                 for line in supplier_details['supplier_master_sites']:
                     line['last_updated_by'] = request.user.username
-                    if 'inactive_date' in line:
-                        line['inactive_date'] = line['inactive_date'].replace('-', '/')
+                    if line['inactive_date']:
+                        #line['inactive_date'] = line['inactive_date'].replace('-', '/')
                         line['inactive_date'] = line['inactive_date'].split(' ')[0]
                 
                 data= {'supplier_code' : supplier_type['lookup_details'],
