@@ -202,7 +202,7 @@ jQuery(document).ready(function($) {
             effective_from         	: $('input[id=effective_from]').val(),
             enabled_flag    	  	: $('#enabled').is(':checked'),
             remarks			        : $('input[id=remarks]').val(),
-            effective_to         	: $('input[name=effective_to]').val(),
+            effective_to         	: $('input[id=effective_to]').val(),
             supplier_master_sites	: supplier_lines
         };
         
@@ -244,7 +244,7 @@ jQuery(document).ready(function($) {
             effective_from         	: $('input[id=effective_from]').val(),
             enabled_flag    	  	: $('#enabled').is(':checked'),
             remarks			        : $('input[id=remarks]').val(),
-            effective_to         	: $('input[name=effective_to]').val(),
+            effective_to         	: $('input[id=effective_to]').val(),
             supplier_master_sites	: supplier_lines
         };
         

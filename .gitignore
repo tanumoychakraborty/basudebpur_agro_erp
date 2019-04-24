@@ -2,4 +2,5 @@ db.sqlite3
 .project
 .pydevproject
 Pipfile.lock
-*.pyc
+**.pyc
+**__pycache__

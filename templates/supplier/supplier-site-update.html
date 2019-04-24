@@ -7,9 +7,9 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>$(function() {
-    $( "#effective_from" ).datepicker();
-    $( "#effective_to" ).datepicker();
-    $( "[name='inactive_date']" ).each(function(){$(this).datepicker();});
+    $( "#effective_from" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#effective_to" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "[name='inactive_date']" ).each(function(){$(this).datepicker({ dateFormat: 'yy-mm-dd' });});
 });
 </script>
         <div class="content">
@@ -161,7 +161,7 @@
         inactive_date.setAttribute("type", "text");
         inactive_date.setAttribute("name", "inactive_date");
         inactive_date.setAttribute("class", "form-control");
-        inactive_date.click(function(event){$(this).datepicker();});
+        //inactive_date.click(function(event){$(this).datepicker();});
 
         var currentCell = currentRow.insertCell(0);
         currentCell.appendChild(site_code);
@@ -180,7 +180,7 @@
         
         var currentCell = currentRow.insertCell(5);
         currentCell.appendChild(inactive_date);
-        $( "[name='inactive_date']" ).each(function(){$(this).datepicker();});
+        $( "[name='inactive_date']" ).each(function(){$(this).datepicker({ dateFormat: 'yy-mm-dd' });});
     }
 </script>
 
