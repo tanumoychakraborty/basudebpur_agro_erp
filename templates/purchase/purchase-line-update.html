@@ -55,7 +55,7 @@
                                         <div class="col-12 col-md-2">
                                         	<select name="supplier" id="supplier" class="form-control-sm form-control">
                                         	{% for supplier in data['supplier_list'] %}
-	                                        	{% if data['details']['suppplier_id'] == supplier['supplier_id'] %}
+	                                        	{% if data['details']['supplier_id'] == supplier['supplier_id'] %}
 	                                                <option value="{{ supplier['supplier_id'] }}" selected="">{{ supplier['supplier_name'] }}</option>
 	                                            {% else %}
 	                                            <option value="{{ supplier['supplier_id'] }}" >{{ supplier['supplier_name'] }}</option>
