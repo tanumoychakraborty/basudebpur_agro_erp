@@ -13,6 +13,7 @@ from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, ITEM_LIST,\
     PURCHASE_ORDER_TYPE, SUPPLIER_LIST
 import requests
 from django.shortcuts import redirect
+import random
 
 class purchase_add_view(template):
     '''
@@ -43,25 +44,20 @@ class purchase_add_view(template):
     def post(self, request):
         if hasAddPurchaseRecordAccess(request.user):
             data = json.loads(request.body)
-            data['order_status'] = 'BOOKED'
+            data['order_status'] = 'OPEN'
+            data['purchase_trx_number'] = 'PO_'+ str(random.randint(0, 1000))
             data['created_by'] = request.user.username
             data['last_updated_by'] = request.user.username
 #             if data['transaction_date']:
 #                 data['transaction_date'] = data['transaction_date'].replace('/', '-')
             for line in data['purchase_trx_lines']:
-                line['line_status'] = 'BOOKED'
                 line['created_by'] = request.user.username
                 line['last_updated_by'] = request.user.username
                 if line['booking_unit_price'] == '':
                     line.pop('booking_unit_price')
                 if line['booking_quantity'] == '':
                     line.pop('booking_quantity')
-                if line['discount'] == '':
-                    line.pop('discount')
-                if line['receipt_unit_price'] == '':
-                    line.pop('receipt_unit_price')
-                if line['receipt_quantity'] == '':
-                    line.pop('receipt_quantity')
+                
             jsondata = json.dumps(data)
             
             r = requests.post(url = PURCHASE_TRANSACTION, json = jsondata) 

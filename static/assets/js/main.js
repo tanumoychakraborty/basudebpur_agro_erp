@@ -95,25 +95,15 @@ jQuery(document).ready(function($) {
 		    purchase_lines[row-1]={
 		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
 		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
-		        item_description 	: $(tr).find('td:eq(2)').find('input').val(),
-		        line_status		 	: $(tr).find('td:eq(3)').find('option:selected').val(),
-		        booking_unit_price 	: $(tr).find('td:eq(4)').find('input').val(),
-		        booking_quantity 	: $(tr).find('td:eq(5)').find('input').val(),
-		        discount 			: $(tr).find('td:eq(6)').find('input').val(),
-		        receipt_unit_price 	: $(tr).find('td:eq(7)').find('input').val(),
-		        receipt_quantity 	: $(tr).find('td:eq(8)').find('input').val(),
-		        unit_of_measure		: $(tr).find('td:eq(9)').find('option:selected').val()
+		        booking_unit_price 	: $(tr).find('td:eq(2)').find('input').val(),
+		        booking_quantity 	: $(tr).find('td:eq(3)').find('input').val(),
+		        unit_of_measure		: $(tr).find('td:eq(4)').find('option:selected').val()
 		    }
 		}); 
    		var formData = {
-            weighting_number    : $('input[id=weighting_number]').val(),
             supplier_id         : $('#supplier option:selected').val(),
             transaction_date    : $('input[id=transaction_date]').val(),
-            amount    		  	: $('input[id=amount]').val(),
             buyer_id          	: $('p[id=buyer]').text(),
-            order_type    	  	: $('#order_type option:selected').val(),
-            vehicle_number      : $('input[id=vehicle_number]').val(),
-            purchase_trx_number : $('input[id=purchase_trx_number]').val(),
             purchase_trx_lines	: purchase_lines
         };
         
@@ -141,27 +131,18 @@ jQuery(document).ready(function($) {
 		    	created_by			: $(tr).find('td:eq(0)').find('strong').attr('name'),
 		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
 		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
-		        item_description 	: $(tr).find('td:eq(2)').find('input').val(),
-		        line_status		 	: $(tr).find('td:eq(3)').find('option:selected').val(),
-		        booking_unit_price 	: $(tr).find('td:eq(4)').find('input').val(),
-		        booking_quantity 	: $(tr).find('td:eq(5)').find('input').val(),
-		        discount 			: $(tr).find('td:eq(6)').find('input').val(),
-		        receipt_unit_price 	: $(tr).find('td:eq(7)').find('input').val(),
-		        receipt_quantity 	: $(tr).find('td:eq(8)').find('input').val(),
-		        unit_of_measure		: $(tr).find('td:eq(9)').find('option:selected').val()
+		        booking_unit_price 	: $(tr).find('td:eq(2)').find('input').val(),
+		        booking_quantity 	: $(tr).find('td:eq(3)').find('input').val(),
+		        unit_of_measure		: $(tr).find('td:eq(4)').find('option:selected').val()
 		    }
 		}); 
    		var formData = {
-   			purchase_trx_number : $('p[id=transaction_number]').text(),
-   			weighting_number    : $('input[id=weighting_number]').val(),
+   			purchase_trx_number : $('#transaction_number').text(),
             order_status  		: $('#header_status option:selected').val(),
             supplier_id         : $('#supplier option:selected').val(),
             transaction_date    : $('input[id=transaction_date]').val(),
-            amount    		  	: $('input[id=amount]').val(),
-            buyer_id            : $('input[id=buyer]').val(),
-            order_type    	  	: $('#order_type option:selected').val(),
-            vehicle_number      : $('input[id=vehicle_number]').val(),
-            created_by			: $('input[id=buyer]').val(),
+            buyer_id            : $('input[id=buyer]').attr('name'),
+            created_by			: $('input[id=buyer]').attr('name'),
             purchase_trx_lines	: purchase_lines
         };
         

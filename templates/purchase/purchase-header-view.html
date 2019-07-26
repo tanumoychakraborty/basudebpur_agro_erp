@@ -4,6 +4,15 @@
 <!-- Content -->
 <link rel="stylesheet" href="{{ static('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>$(function() {
+	$.noConflict();
+    $( "#from_transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#to_transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+});
+</script>
         <div class="content">
         <!-- table -->
         <div class="animated fadeIn">
@@ -25,10 +34,10 @@
                                             {% endfor %}
                                             </select>
                                         </div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="transaction_date">From Transaction Date</label></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="from_transaction_date">From Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="from_transaction_date" nam="transaction_date"/>
-						                    <div class="input-group-append" data-target="#transaction_date">
+						                    <input type="text" class="form-control" id="from_transaction_date" nam="from_transaction_date"/>
+						                    <div class="input-group-append" data-target="#from_transaction_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
@@ -46,15 +55,11 @@
                                         <div class="col col-md-2"><input type="text" id="buyer" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="to_transaction_date">To Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="to_transaction_date" nam="transaction_date"/>
-						                    <div class="input-group-append" data-target="#transaction_date">
+						                    <input type="text" class="form-control" id="to_transaction_date" nam="to_transaction_date"/>
+						                    <div class="input-group-append" data-target="#to_transaction_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
-                                    </div>
-                                    <div class="row form-group">
-                                    	<div class="col col-md-2"><label for="weighting_number" class=" form-control-label">Weighting Number</label></div>
-                                        <div class="col col-md-2"><input type="text" id="weighting_number" name="text-input" class="form-control"/></div>
                                     </div>
                                     <div class="row form-group">
 	                                    <div class="col col-md-12"><center><button type="button" id="po_search_btn" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp; Search</button></center></div>
@@ -83,10 +88,7 @@
                                             <th>Purchase Transaction Number</th>
                                             <th>Transaction Date</th>
                                             <th>Supplier</th>
-                                            <th>Amount</th>
-                                            <th>Order Type</th>
                                             <th>Status</th>
-                                            <th>Weighting Number</th>
                                         </tr>
                                     </thead>
                                     
@@ -112,7 +114,7 @@
     <script src="{{ static('assets/js/init/datatables-init.js') }}"></script>
 
 
-    <script type="text/javascript">
+    <script>
         $('#bootstrap-data-table').DataTable( {
           				'bDestroy': true,
                         'data':  {{ data['pos'] }},
@@ -120,10 +122,7 @@
 							            { 'data': 'purchase_trx_number' },
 							            { 'data': 'transaction_date' },
 							            { 'data': 'supplier_name' },
-							            { 'data': 'amount' },
-							            { 'data': 'order_type' },
 							            { 'data': 'order_status' },
-							            { 'data': 'weighting_number' }
 							        ],
 						"columnDefs": [{
             							"targets": 0,
@@ -136,7 +135,6 @@
                     	
        $("#po_search_btn").on("click", function(e) {
 	   		var formData = {
-	   			weighting_number    	: $('input[id=weighting_number]').val(),
 	            purchase_trx_number  	: $('p[id=transaction_number]').val(),
 	            order_status  			: $('#header_status option:selected').val(),
 	            supplier_id            	: $('#supplier option:selected').val(),
@@ -162,7 +160,6 @@
 											            { 'data': 'amount' },
 											            { 'data': 'order_type' },
 											            { 'data': 'order_status' },
-											            { 'data': 'weighting_number' }
 											        ],
 										"columnDefs": [{
 				            							"targets": 0,

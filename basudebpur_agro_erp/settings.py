@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sa*f1t9zu!xj2(chp!w2lvekrcvh!r3-k%8j3_mx_w8#dthj=r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['35.244.52.236','localhost']
 
@@ -56,6 +56,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'basudebpur_agro_erp.urls'
 
 TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.jinja2.Jinja2',
+#         'DIRS': [],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'environment': {'basudebpur_agro_erp.jinja2.Environment'},
+#         },
+#     },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -69,14 +77,6 @@ TEMPLATES = [
             ],
         },
     },
-#     {
-#         'BACKEND': 'django.template.backends.jinja2.Jinja2',
-#         'DIRS': [],
-#         'APP_DIRS': True,
-#         'OPTIONS': {
-#             'environment': {'basudebpur_agro_erp.jinja2.Environment'},
-#         },
-#     },
 ]
 
 WSGI_APPLICATION = 'basudebpur_agro_erp.wsgi.application'
