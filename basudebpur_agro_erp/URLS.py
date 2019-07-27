@@ -7,6 +7,8 @@ from basudebpur_agro_erp.endpoints import API
 
 ACCESS_RIGHT = API+'/api/access-right'
 PURCHASE_TRANSACTION = API+'/api/purchase_trx/'
+RECEIPT = API+'/api/receipt/'
+RECEIPT_SEARCH = API+ '/api/receipt?'
 PURCHASE_ORDER_TYPE = API + '/api/common_lookups?lookupName=PURCHASE_ORDER_TYPE'
 PURCHASE_ORDER_HEADER_STATUS = API + '/api/common_lookups?lookupName=PURCHASE_ORDER_HEADER_STATUS'
 PURCHASE_ORDER_LINES_STATUS = API + '/api/common_lookups?lookupName=PURCHASE_ORDER_LINES_STATUS'

@@ -33,6 +33,10 @@ class purchase_view_details(template):
                 if 'transaction_date' in json_data['purchase_trx_details'][0]:
                     #json_data['purchase_trx_details'][0]['transaction_date'] = json_data['purchase_trx_details'][0]['transaction_date'].replace('/', '-')
                     json_data['purchase_trx_details'][0]['transaction_date'] = json_data['purchase_trx_details'][0]['transaction_date'].split(' ')[0]
+                if 'receipt_details' in json_data['purchase_trx_details'][0]:
+                    for row in json_data['purchase_trx_details'][0]['receipt_details']:
+                        row['receipt_date'] = row['receipt_date'].split(' ')[0]
+                        row['challan_date'] = row['challan_date'].split(' ')[0]
                 data= {'user' : request.user.username,
                        'po_type' : po_type['purchaseOrderType'],
                        'supplier_list' : supplier_list['supplierLists'],
@@ -52,6 +56,13 @@ class purchase_view_details(template):
                     
                 return HttpResponse(template.render(request, data=data))
             else:
+                if 'transaction_date' in json_data['purchase_trx_details'][0]:
+                    #json_data['purchase_trx_details'][0]['transaction_date'] = json_data['purchase_trx_details'][0]['transaction_date'].replace('/', '-')
+                    json_data['purchase_trx_details'][0]['transaction_date'] = json_data['purchase_trx_details'][0]['transaction_date'].split(' ')[0]
+                if 'receipt_details' in json_data['purchase_trx_details'][0]:
+                    for row in json_data['purchase_trx_details'][0]['receipt_details']:
+                        row['receipt_date'] = row['receipt_date'].split(' ')[0]
+                        row['challan_date'] = row['challan_date'].split(' ')[0]
                 template = jinja_template.get_template('purchase/purchase-line-view.html')
                 return HttpResponse(template.render(request, data=json_data['purchase_trx_details'][0]))
         else:

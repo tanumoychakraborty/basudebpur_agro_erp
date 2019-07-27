@@ -244,4 +244,84 @@ jQuery(document).ready(function($) {
         e.preventDefault();
     });
     
+    
+	$("#purchase-receipt-add-form").submit(function(e) {
+	   
+		var purchase_receipt_lines = new Array();
+		var trx_number = $('strong[id=purchase_receipt]').attr('name');
+		$('#purchase_receipt_line_add_table tr').each(function(row, tr){
+			purchase_receipt_lines[row-1]={
+		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
+		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
+		        weighting_number	: $(tr).find('td:eq(2)').find('input').val(),
+		        load_unload_area 	: $(tr).find('td:eq(3)').find('input').val(),
+		        quantity 			: $(tr).find('td:eq(4)').find('input').val(),
+		        unit_of_measure		: $(tr).find('td:eq(5)').find('option:selected').val(),
+		        unit_price 			: $(tr).find('td:eq(6)').find('input').val(),
+		        discount 			: $(tr).find('td:eq(7)').find('input').val(),
+		        receipt_line_status	: $(tr).find('td:eq(8)').find('option:selected').val()
+		    }
+		}); 
+		var formData = {
+			vehicle_number         	: $('input[id=truck_numer]').val(),
+			receipt_date		    : $('input[id=purchase_receipt_date]').val(),
+			challan_number     		: $('p[id=chalan_number]').text(),
+	        receipt_lines			: purchase_receipt_lines
+	    };
+    
+	    $.ajax({
+	        type        : 'POST',
+	        url         : '/purchase/add_receipt/'+trx_number+'/',
+	        data        : JSON.stringify(formData),
+	        dataType    : 'json',
+	        encode      : true,
+	        success		: function(data){
+	        				location.href = host+'/purchase/'+trx_number+'/';
+	        			  }
+	    }).done(function() {
+	            console.log('ok'); 
+	    });
+	    e.preventDefault();
+	});
+	
+	$("#purchase-receipt-update-form").submit(function(e) {
+		   
+		var purchase_receipt_lines = new Array();
+		var trx_number = $('strong[id=purchase_receipt]').attr('name');
+		var receipt_header_id = $('p[id=chalan_number]').attr('name');
+		$('#purchase_receipt_line_add_table tr').each(function(row, tr){
+			purchase_receipt_lines[row-1]={
+		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
+		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
+		        weighting_number	: $(tr).find('td:eq(2)').find('input').val(),
+		        load_unload_area 	: $(tr).find('td:eq(3)').find('input').val(),
+		        quantity 			: $(tr).find('td:eq(4)').find('input').val(),
+		        unit_of_measure		: $(tr).find('td:eq(5)').find('option:selected').val(),
+		        unit_price 			: $(tr).find('td:eq(6)').find('input').val(),
+		        discount 			: $(tr).find('td:eq(7)').find('input').val(),
+		        receipt_line_status	: $(tr).find('td:eq(8)').find('option:selected').val()
+		    }
+		}); 
+		var formData = {
+			vehicle_number         	: $('input[id=truck_numer]').val(),
+			receipt_date		    : $('input[id=purchase_receipt_date]').val(),
+			challan_number     		: $('p[id=chalan_number]').text(),
+			receipt_header_id		: receipt_header_id,
+	        receipt_lines			: purchase_receipt_lines
+	    };
+    
+	    $.ajax({
+	        type        : 'PUT',
+	        url         : '/purchase/'+trx_number+'/update_receipt/'+receipt_header_id+'/',
+	        data        : JSON.stringify(formData),
+	        dataType    : 'json',
+	        encode      : true,
+	        success		: function(data){
+	        				location.href = host+'/purchase/'+trx_number+'/';
+	        			  }
+	    }).done(function() {
+	            console.log('ok'); 
+	    });
+	    e.preventDefault();
+	});
 });

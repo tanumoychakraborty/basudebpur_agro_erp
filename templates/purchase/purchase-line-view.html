@@ -63,7 +63,7 @@
 		                                      <th scope="col">Item</th>
 		                                      <th scope="col">Booking Unit Price</th>
 							  				  <th scope="col">Booking Unit Quantity</th>
-		                                      <th scope="col">Unit Of Measure</th>
+		                                      <th scope="col">Unit</th>
 		                                    </tr>
 		                                </thead>
 		                                <tbody>
@@ -87,12 +87,57 @@
 		                                </tbody>
 		                            </table>
                         		</div>
-	                        	<div class="row form-group">
-			                        <div class="col col-md-6"><center><a href="/purchase/add_receipt/{{ data['details']["purchase_trx_number"] }}"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Add Chalan</button></a></center></div>
-			                        <div class="col col-md-6"><center><a href="/purchase"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
-		                		</div>
 	                		</div>
                     	</div>
+                	</div>
+        		</div>
+        		{% if data['details']['receipt_details'] %}
+        		<div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                            	<div class="row form-group">
+                                	<strong class="card-title">Receipt Details</strong>
+                                </div>
+                            </div>
+                            <div class="card-body card-block">                                   
+	                            <div class="row form-group">
+		                        	<table class="table table-striped" id="line_table">
+		                                <thead>
+		                                    <tr>
+		                                      <th scope="col">Challan</th>
+			                                  <th scope="col">Receipt</th>
+			                                  <th scope="col">Vehicle</th>
+								              <th scope="col">Challan Date</th>
+			                                  <th scope="col">Receipt Date</th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                  {% for row in data['details']["receipt_details"] %}
+		                                	<tr>
+		                                  		<td><strong><a href="/purchase/{{ data['details']["purchase_trx_number"] }}/update_receipt/{{ row['receipt_header_id'] }}/">{{ row["challan_number"] }}</a></strong></td>
+			                                  	<td>{{ row["receipt_number"] }}</td>
+			                                  	<td>{{ row["vehicle_number"] }}</td>
+			                                  	<td>{{ row["challan_date"] }}</td>
+			                                  	<td>{{ row["receipt_date"] }}</td>
+		                                  	</tr>
+		                                  	{% endfor %}
+		                                </tbody>
+		                            </table>
+                        		</div>
+	                		</div>
+                    	</div>
+                	</div>
+        		</div>
+        		{% endif %}
+        		<div class="row">
+                    <div class="col-lg-12">
+                                                       
+	                            <div class="row form-group">
+			                        <div class="col col-md-6"><center><a href="/purchase/{{ data['details']["purchase_trx_number"] }}/add_receipt/"><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Add Chalan</button></a></center></div>
+			                        <div class="col col-md-6"><center><a href="/purchase"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
+		                		</div>
+	                		
                 	</div>
         		</div>
     		</div><!-- .animated -->

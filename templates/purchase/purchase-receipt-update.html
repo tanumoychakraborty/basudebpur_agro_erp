@@ -12,7 +12,7 @@
 </script>
         <div class="content">
             <div class="animated fadeIn">
-            	<form id="purchase-receipt-add-form" class="form-horizontal">
+            	<form id="purchase-receipt-update-form" class="form-horizontal">
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
@@ -22,12 +22,12 @@
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control"></input></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control" value="{{ data['details']['vehicle_number'] }}"></input></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Chalan Numer</label></div>
-                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">XXXX</p></div>
+                                        <div class="col-12 col-md-2"><p id="chalan_number" name="{{ data['details']['receipt_header_id'] }}" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
                                     	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="purchase_receipt_date">Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="purchase_receipt_date" nam="purchase_receipt_date"/>
+						                    <input type="text" class="form-control" id="purchase_receipt_date" value="{{ data['details']['challan_date'] }}"/>
 						                    <div class="input-group-append" data-target="#purchase_receipt_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
@@ -70,7 +70,47 @@
 			                                      	</tr>
 			                                  </thead>
 			                                  <tbody>
-			                                  	
+			                                  	{% for row in data['details']['receipt_lines'] %}
+			                                  	<td><strong>{{ row['line_number'] }}</strong></td>
+			                                  	<td>
+				                                  	<select id="item" class="form-control-sm form-control">
+			                                        	{% for itm in data['item_list'] %}
+			                                        		{% if row['item_id'] == itm['lookup_code'] %}
+			                                                	<option value="{{itm['lookup_code']}}" selected="">{{ itm['description'] }}</option>
+			                                                {% else %}
+			                                                	<option value="{{itm['lookup_code']}}" >{{ itm['description'] }}</option>
+			                                                {% endif %}
+			                                            {% endfor %}
+		                                            </select>
+												</td>
+			                                  	<td><input type="text" class="form-control" value="{{ row["weighting_number"] }}"></td>
+			                                  	<td><input type="text" class="form-control" value="{{ row["load_unload_area"] }}"></td>
+			                                  	<td><input type="text" class="form-control" value="{{ row["quantity"] }}"></td>
+			                                  	<td>
+				                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
+			                                        	{% for um in data['uom'] %}
+			                                        		{% if row['unit_of_measure'] == um['lookup_code'] %}
+			                                                	<option value="{{um['lookup_code']}}" selected="">{{ um['meaning'] }}</option>
+			                                                {% else %}
+			                                                	<option value="{{um['lookup_code']}}">{{ um['meaning'] }}</option>
+			                                                {% endif %}
+		                                            	{% endfor %}
+		                                            </select>
+												</td>
+			                                  	<td><input type="text" class="form-control" value="{{ row["unit_price"] }}"></td>
+			                                  	<td><input type="text" class="form-control" value="{{ row["discount"] }}"></td>
+			                                  	<td>
+				                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
+			                                        	{% for status in data['po_receipt_statuses'] %}
+			                                        		{% if row['status'] == status['lookup_code'] %}
+			                                                	<option value="{{status['lookup_code']}}" selected="">{{ status['meaning'] }}</option>
+			                                                {% else %}
+			                                                	<option value="{{status['lookup_code']}}">{{ status['meaning'] }}</option>
+			                                                {% endif %}
+		                                            	{% endfor %}
+		                                            </select>
+												</td>
+			                                  	{% endfor %}
 			                                  </tbody>
 			                            	</table>
 	                                    </div>
@@ -112,7 +152,7 @@
 
         var unloadingNumber = document.createElement("input");
         unloadingNumber.setAttribute("type", "text");
-        unloadingNumber.setAttribute("id", "unloadingNumber");
+        unloadingNumber.setAttribute("id", "unloadingArea");
         unloadingNumber.setAttribute("class", "form-control");
         
         var bookingQuantity = document.createElement("input");
