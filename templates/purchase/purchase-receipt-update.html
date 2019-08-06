@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>$(function() {
-    $( "#purchase_receipt_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#challan_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });
 </script>
         <div class="content">
@@ -16,19 +16,20 @@
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
-                            	<div class="card-header">
+                            	<div class="card-header" id="card-header">
+                            		
                                 	<strong id="purchase_receipt" name="{{ data['transaction_number'] }}">Purchase Receipt</strong>
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
                                         <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control" value="{{ data['details']['vehicle_number'] }}"></input></div>
-                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Chalan Numer</label></div>
+                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Challan Numer</label></div>
                                         <div class="col-12 col-md-2"><p id="chalan_number" name="{{ data['details']['receipt_header_id'] }}" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
-                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="purchase_receipt_date">Transaction Date</label></div>
+                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="challan_date">Chalan Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="purchase_receipt_date" value="{{ data['details']['challan_date'] }}"/>
-						                    <div class="input-group-append" data-target="#purchase_receipt_date">
+						                    <input type="text" class="form-control" id="challan_date" value="{{ data['details']['challan_date'] }}"/>
+						                    <div class="input-group-append" data-target="#challan_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
@@ -75,10 +76,10 @@
 			                                  	<td>
 				                                  	<select id="item" class="form-control-sm form-control">
 			                                        	{% for itm in data['item_list'] %}
-			                                        		{% if row['item_id'] == itm['lookup_code'] %}
-			                                                	<option value="{{itm['lookup_code']}}" selected="">{{ itm['description'] }}</option>
+			                                        		{% if row['item_id'] == itm['item_id'] %}
+			                                                	<option value="{{itm['item_id']}}" selected="">{{ itm['description'] }}</option>
 			                                                {% else %}
-			                                                	<option value="{{itm['lookup_code']}}" >{{ itm['description'] }}</option>
+			                                                	<option value="{{itm['item_id']}}" >{{ itm['description'] }}</option>
 			                                                {% endif %}
 			                                            {% endfor %}
 		                                            </select>

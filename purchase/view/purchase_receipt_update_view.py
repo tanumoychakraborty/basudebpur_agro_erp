@@ -52,7 +52,6 @@ class purchase_receipt_update_view(template):
     def put(self, request, transaction_number, receipt_header_id):
         if hasAddPurchaseRecordAccess(request.user):
             data = json.loads(request.body)
-            data['challan_date'] = data['receipt_date']
             data['source_transaction_header_id'] = transaction_number
             data['source_transaction_type'] = 'PURCHASE'            
             data['last_updated_by'] = request.user.username
@@ -69,7 +68,10 @@ class purchase_receipt_update_view(template):
             r = requests.put(url = RECEIPT, json = jsondata) 
             if r.status_code is 200:
                 to_json = {'message':'ok'}
-                return HttpResponse(json.dumps(to_json))
+                return HttpResponse(json.dumps(to_json), status = 200)
+            elif r.status_code == 422:
+                to_json = json.loads(r.content)['errors']
+                return HttpResponse(json.dumps(to_json), status = 422)
             else:
                 template = jinja_template.get_template('internal_server_error.html')
                 return HttpResponse(template.render(request))

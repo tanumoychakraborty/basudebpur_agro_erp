@@ -304,7 +304,7 @@ jQuery(document).ready(function($) {
 		}); 
 		var formData = {
 			vehicle_number         	: $('input[id=truck_numer]').val(),
-			receipt_date		    : $('input[id=purchase_receipt_date]').val(),
+			challan_date		    : $('input[id=challan_date]').val(),
 			challan_number     		: $('p[id=chalan_number]').text(),
 			receipt_header_id		: receipt_header_id,
 	        receipt_lines			: purchase_receipt_lines
@@ -318,9 +318,27 @@ jQuery(document).ready(function($) {
 	        encode      : true,
 	        success		: function(data){
 	        				location.href = host+'/purchase/'+trx_number+'/';
-	        			  }
+	        			  },
+	    	error		: function(jqXHR, exception){
+	    					if(jqXHR.status == 422){
+	    						var card = document.getElementById('card-header');
+	    						var htmlcode = '';
+	    						Object.keys(jqXHR.responseJSON).forEach(function(key){
+	    							var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+	    							var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+	    							 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+	    							 				text+
+	    							 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+	    							 '                                               <span aria-hidden="true">X</span>  '  + 
+	    							 '                                           </button>  '  + 
+	    							 '                                      </div>  ' ; 
+	    							htmlcode += htmlcd;
+	    						});
+	    						card.innerHTML = htmlcode;
+	    					}
+	    	}
 	    }).done(function() {
-	            console.log('ok'); 
+	        console.log('ok'); 
 	    });
 	    e.preventDefault();
 	});
