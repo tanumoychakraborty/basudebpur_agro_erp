@@ -16,7 +16,7 @@
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
-                            	<div class="card-header">
+                            	<div class="card-header" id="card-header">
                                 	<strong id="purchase_receipt" name="{{ data['transaction_number'] }}">Purchase Receipt</strong>
                             	</div>
                             	<div class="card-body card-block">                                    
@@ -24,7 +24,7 @@
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
                                         <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control"></input></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Chalan Numer</label></div>
-                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">XXXX</p></div>
+                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">{{ data['challan_number'] }}</p></div>
                                     	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="purchase_receipt_date">Transaction Date</label></div>
                                         <div class="col col-md-2 input-group">
 						                    <input type="text" class="form-control" id="purchase_receipt_date" nam="purchase_receipt_date"/>

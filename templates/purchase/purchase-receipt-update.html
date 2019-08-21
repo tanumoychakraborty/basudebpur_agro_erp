@@ -23,12 +23,12 @@
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control" value="{{ data['details']['vehicle_number'] }}"></input></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control" {% if data['details']['vehicle_number'] %} value="{{ data['details']['vehicle_number'] }}" {% endif %}></input></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Challan Numer</label></div>
-                                        <div class="col-12 col-md-2"><p id="chalan_number" name="{{ data['details']['receipt_header_id'] }}" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
+                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
                                     	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="challan_date">Chalan Date</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="challan_date" value="{{ data['details']['challan_date'] }}"/>
+						                    <input type="text" class="form-control" id="challan_date" {% if data['details']['vehicle_number'] %} value="{{ data['details']['challan_date'] }}" {% endif %}/>
 						                    <div class="input-group-append" data-target="#challan_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
@@ -71,47 +71,51 @@
 			                                      	</tr>
 			                                  </thead>
 			                                  <tbody>
+			                                  {% if data['details']['receipt_lines'] %} 
 			                                  	{% for row in data['details']['receipt_lines'] %}
-			                                  	<td><strong>{{ row['line_number'] }}</strong></td>
-			                                  	<td>
-				                                  	<select id="item" class="form-control-sm form-control">
-			                                        	{% for itm in data['item_list'] %}
-			                                        		{% if row['item_id'] == itm['item_id'] %}
-			                                                	<option value="{{itm['item_id']}}" selected="">{{ itm['description'] }}</option>
-			                                                {% else %}
-			                                                	<option value="{{itm['item_id']}}" >{{ itm['description'] }}</option>
-			                                                {% endif %}
-			                                            {% endfor %}
-		                                            </select>
-												</td>
-			                                  	<td><input type="text" class="form-control" value="{{ row["weighting_number"] }}"></td>
-			                                  	<td><input type="text" class="form-control" value="{{ row["load_unload_area"] }}"></td>
-			                                  	<td><input type="text" class="form-control" value="{{ row["quantity"] }}"></td>
-			                                  	<td>
-				                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
-			                                        	{% for um in data['uom'] %}
-			                                        		{% if row['unit_of_measure'] == um['lookup_code'] %}
-			                                                	<option value="{{um['lookup_code']}}" selected="">{{ um['meaning'] }}</option>
-			                                                {% else %}
-			                                                	<option value="{{um['lookup_code']}}">{{ um['meaning'] }}</option>
-			                                                {% endif %}
-		                                            	{% endfor %}
-		                                            </select>
-												</td>
-			                                  	<td><input type="text" class="form-control" value="{{ row["unit_price"] }}"></td>
-			                                  	<td><input type="text" class="form-control" value="{{ row["discount"] }}"></td>
-			                                  	<td>
-				                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
-			                                        	{% for status in data['po_receipt_statuses'] %}
-			                                        		{% if row['status'] == status['lookup_code'] %}
-			                                                	<option value="{{status['lookup_code']}}" selected="">{{ status['meaning'] }}</option>
-			                                                {% else %}
-			                                                	<option value="{{status['lookup_code']}}">{{ status['meaning'] }}</option>
-			                                                {% endif %}
-		                                            	{% endfor %}
-		                                            </select>
-												</td>
+			                                  	<tr>
+				                                  	<td><strong value="{{ row['receipt_line_id'] }}">{{ row['line_number'] }}</strong></td>
+				                                  	<td>
+					                                  	<select id="item" class="form-control-sm form-control">
+				                                        	{% for itm in data['item_list'] %}
+				                                        		{% if row['item_id'] == itm['item_id'] %}
+				                                                	<option value="{{itm['item_id']}}" selected="">{{ itm['description'] }}</option>
+				                                                {% else %}
+				                                                	<option value="{{itm['item_id']}}" >{{ itm['description'] }}</option>
+				                                                {% endif %}
+				                                            {% endfor %}
+			                                            </select>
+													</td>
+				                                  	<td><input type="text" class="form-control" value="{{ row["weighing_number"] }}"></td>
+				                                  	<td><input type="text" class="form-control" value="{{ row["load_unload_area"] }}"></td>
+				                                  	<td><input type="text" class="form-control" value="{{ row["quantity"] }}"></td>
+				                                  	<td>
+					                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
+				                                        	{% for um in data['uom'] %}
+				                                        		{% if row['unit_of_measure'] == um['lookup_code'] %}
+				                                                	<option value="{{um['lookup_code']}}" selected="">{{ um['meaning'] }}</option>
+				                                                {% else %}
+				                                                	<option value="{{um['lookup_code']}}">{{ um['meaning'] }}</option>
+				                                                {% endif %}
+			                                            	{% endfor %}
+			                                            </select>
+													</td>
+				                                  	<td><input type="text" class="form-control" value="{{ row["unit_price"] }}"></td>
+				                                  	<td><input type="text" class="form-control" value="{{ row["discount"] }}"></td>
+				                                  	<td>
+					                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
+				                                        	{% for status in data['po_receipt_statuses'] %}
+				                                        		{% if row['receipt_line_status'] == status['lookup_code'] %}
+				                                                	<option value="{{status['lookup_code']}}" selected="">{{ status['meaning'] }}</option>
+				                                                {% else %}
+				                                                	<option value="{{status['lookup_code']}}">{{ status['meaning'] }}</option>
+				                                                {% endif %}
+			                                            	{% endfor %}
+			                                            </select>
+													</td>
+												</tr>
 			                                  	{% endfor %}
+			                                  	{% endif %}
 			                                  </tbody>
 			                            	</table>
 	                                    </div>

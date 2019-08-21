@@ -45,7 +45,7 @@ class purchase_add_view(template):
         if hasAddPurchaseRecordAccess(request.user):
             data = json.loads(request.body)
             data['order_status'] = 'OPEN'
-            data['purchase_trx_number'] = 'PO_'+ str(random.randint(0, 1000))
+            #data['purchase_trx_number'] = 'PO_'+ str(random.randint(0, 1000))
             data['created_by'] = request.user.username
             data['last_updated_by'] = request.user.username
 #             if data['transaction_date']:

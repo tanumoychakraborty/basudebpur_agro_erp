@@ -20,13 +20,13 @@ class purchase_receipt_update_view(template):
     classdocs
     '''
 
-    def get(self, request, transaction_number, receipt_header_id):
+    def get(self, request, transaction_number, challan_number):
         if hasAddPurchaseRecordAccess(request.user):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #            po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
             po_receipt_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)
-            receipt_details = json.loads(requests.get(RECEIPT_SEARCH+'receipt_header_id='+receipt_header_id).text)
+            receipt_details = json.loads(requests.get(RECEIPT_SEARCH+'challan_number='+challan_number).text)
             if receipt_details['receipt_details'][0]['challan_date']:
                 receipt_details['receipt_details'][0]['challan_date'] = receipt_details['receipt_details'][0]['challan_date'].split(' ')[0]
 #             po_type = json.loads(requests.get(PURCHASE_ORDER_TYPE).text)
@@ -49,11 +49,11 @@ class purchase_receipt_update_view(template):
             template = jinja_template.get_template('access_denied.html')
             return HttpResponse(template.render(request))
      
-    def put(self, request, transaction_number, receipt_header_id):
+    def put(self, request, transaction_number, challan_number):
         if hasAddPurchaseRecordAccess(request.user):
             data = json.loads(request.body)
-            data['source_transaction_header_id'] = transaction_number
-            data['source_transaction_type'] = 'PURCHASE'            
+            #data['source_transaction_header_id'] = transaction_number
+            #data['source_transaction_type'] = 'PURCHASE'            
             data['last_updated_by'] = request.user.username
             
             for line in data['receipt_lines']:
@@ -62,6 +62,11 @@ class purchase_receipt_update_view(template):
                     line.pop('unit_price')
                 if line['quantity'] == '':
                     line.pop('quantity')
+                if line['discount'] == '':
+                    line.pop('discount')
+                if 'receipt_line_id' in line.keys():
+                    if line['receipt_line_id'] == '':
+                        line.pop('receipt_line_id')
                 
             jsondata = json.dumps(data)
             

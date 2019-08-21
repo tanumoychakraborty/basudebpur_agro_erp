@@ -115,7 +115,26 @@ jQuery(document).ready(function($) {
             encode      : true,
             success		: function(data){
             				location.href = host+"/purchase/";
-            			  }
+            			  },
+            error		: function(jqXHR, exception){
+            				if(jqXHR.status == 422){
+                 	 		var card = document.getElementById('card-header');
+           					var htmlcode = '';
+           					Object.keys(jqXHR.responseJSON).forEach(function(key){
+           						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+           						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+           						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+           						 				text+
+           						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+           						 '                                               <span aria-hidden="true">X</span>  '  + 
+           						 '                                           </button>  '  + 
+           						 '                                      </div>  ' ; 
+           						htmlcode += htmlcd;
+           		    			});
+           					htmlcode += card.innerHTML;
+           					card.innerHTML = htmlcode;
+           		    		}
+           		    	}
         }).done(function() {
                 console.log('ok'); 
         });
@@ -128,7 +147,6 @@ jQuery(document).ready(function($) {
    		$('#purchase_line_update_table tr').each(function(row, tr){
 		    purchase_lines[row-1]={
 		    	transaction_line_id : $(tr).find('td:eq(0)').find('strong').attr('value'),
-		    	created_by			: $(tr).find('td:eq(0)').find('strong').attr('name'),
 		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
 		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
 		        booking_unit_price 	: $(tr).find('td:eq(2)').find('input').val(),
@@ -142,7 +160,6 @@ jQuery(document).ready(function($) {
             supplier_id         : $('#supplier option:selected').val(),
             transaction_date    : $('input[id=transaction_date]').val(),
             buyer_id            : $('input[id=buyer]').attr('name'),
-            created_by			: $('input[id=buyer]').attr('name'),
             purchase_trx_lines	: purchase_lines
         };
         
@@ -154,7 +171,26 @@ jQuery(document).ready(function($) {
             encode      : true,
             success		: function(data){
             				location.href = host+"/purchase/";
-            			  }
+            			  },
+            error		: function(jqXHR, exception){
+            				if(jqXHR.status == 422){
+                 	 		var card = document.getElementById('card-header');
+           					var htmlcode = '';
+           					Object.keys(jqXHR.responseJSON).forEach(function(key){
+           						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+           						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+           						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+           						 				text+
+           						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+           						 '                                               <span aria-hidden="true">X</span>  '  + 
+           						 '                                           </button>  '  + 
+           						 '                                      </div>  ' ; 
+           						htmlcode += htmlcd;
+           		    			});
+           					htmlcode += card.innerHTML;
+       		    			card.innerHTML = htmlcode;
+            				}
+           		    	}
         }).done(function() {
                 console.log('ok'); 
         });
@@ -195,7 +231,26 @@ jQuery(document).ready(function($) {
             encode      : true,
             success		: function(data){
             				location.href = host+"/supplier/";
-            			  }
+            			  },
+            error		: function(jqXHR, exception){
+             	 			if(jqXHR.status == 422){
+             	 				var card = document.getElementById('card-header');
+       							var htmlcode = '';
+       							Object.keys(jqXHR.responseJSON).forEach(function(key){
+       								var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+       								var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+       								 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+       								 				text+
+       								 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+       								 '                                               <span aria-hidden="true">X</span>  '  + 
+       								 '                                           </button>  '  + 
+       								 '                                      </div>  ' ; 
+       								htmlcode += htmlcd;
+       		    					});
+       							htmlcode += card.innerHTML;
+       		    				card.innerHTML = htmlcode;
+       		    			}
+       		    		}
         }).done(function() {
                 console.log('ok'); 
         });
@@ -237,7 +292,26 @@ jQuery(document).ready(function($) {
             encode      : true,
             success		: function(data){
             				location.href = host+"/supplier/";
-            			  }
+            			  },
+             error		: function(jqXHR, exception){
+            	 			if(jqXHR.status == 422){
+            	 				var card = document.getElementById('card-header');
+  		    					var htmlcode = '';
+  		    					Object.keys(jqXHR.responseJSON).forEach(function(key){
+  		    						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+  		    						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+  		    						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+  		    						 				text+
+  		    						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+  		    						 '                                               <span aria-hidden="true">X</span>  '  + 
+  		    						 '                                           </button>  '  + 
+  		    						 '                                      </div>  ' ; 
+  		    						htmlcode += htmlcd;
+  		    					});
+  		    					htmlcode += card.innerHTML;
+  		    					card.innerHTML = htmlcode;
+  		    				}
+  		    			}
         }).done(function() {
                 console.log('ok'); 
         });
@@ -253,7 +327,7 @@ jQuery(document).ready(function($) {
 			purchase_receipt_lines[row-1]={
 		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
 		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
-		        weighting_number	: $(tr).find('td:eq(2)').find('input').val(),
+		        weighing_number	: $(tr).find('td:eq(2)').find('input').val(),
 		        load_unload_area 	: $(tr).find('td:eq(3)').find('input').val(),
 		        quantity 			: $(tr).find('td:eq(4)').find('input').val(),
 		        unit_of_measure		: $(tr).find('td:eq(5)').find('option:selected').val(),
@@ -271,13 +345,32 @@ jQuery(document).ready(function($) {
     
 	    $.ajax({
 	        type        : 'POST',
-	        url         : '/purchase/add_receipt/'+trx_number+'/',
+	        url         : '/purchase/'+trx_number+'/add_receipt/',
 	        data        : JSON.stringify(formData),
 	        dataType    : 'json',
 	        encode      : true,
 	        success		: function(data){
 	        				location.href = host+'/purchase/'+trx_number+'/';
-	        			  }
+	        			  },
+	        error		: function(jqXHR, exception){
+	        				if(jqXHR.status == 422){
+		    					var card = document.getElementById('card-header');
+		    					var htmlcode = '';
+		    					Object.keys(jqXHR.responseJSON).forEach(function(key){
+		    						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+		    						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+		    						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+		    						 				text+
+		    						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+		    						 '                                               <span aria-hidden="true">X</span>  '  + 
+		    						 '                                           </button>  '  + 
+		    						 '                                      </div>  ' ; 
+		    						htmlcode += htmlcd;
+		    					});
+		    					htmlcode += card.innerHTML;
+		    					card.innerHTML = htmlcode;
+		    				}
+		    			}
 	    }).done(function() {
 	            console.log('ok'); 
 	    });
@@ -288,12 +381,13 @@ jQuery(document).ready(function($) {
 		   
 		var purchase_receipt_lines = new Array();
 		var trx_number = $('strong[id=purchase_receipt]').attr('name');
-		var receipt_header_id = $('p[id=chalan_number]').attr('name');
+		var challan_number = $('p[id=chalan_number]').text();
 		$('#purchase_receipt_line_add_table tr').each(function(row, tr){
 			purchase_receipt_lines[row-1]={
 		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
+		    	receipt_line_id	 	: $(tr).find('td:eq(0)').find('strong').attr('value'),
 		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
-		        weighting_number	: $(tr).find('td:eq(2)').find('input').val(),
+		        weighing_number		: $(tr).find('td:eq(2)').find('input').val(),
 		        load_unload_area 	: $(tr).find('td:eq(3)').find('input').val(),
 		        quantity 			: $(tr).find('td:eq(4)').find('input').val(),
 		        unit_of_measure		: $(tr).find('td:eq(5)').find('option:selected').val(),
@@ -305,14 +399,13 @@ jQuery(document).ready(function($) {
 		var formData = {
 			vehicle_number         	: $('input[id=truck_numer]').val(),
 			challan_date		    : $('input[id=challan_date]').val(),
-			challan_number     		: $('p[id=chalan_number]').text(),
-			receipt_header_id		: receipt_header_id,
+			challan_number     		: challan_number,
 	        receipt_lines			: purchase_receipt_lines
 	    };
     
 	    $.ajax({
 	        type        : 'PUT',
-	        url         : '/purchase/'+trx_number+'/update_receipt/'+receipt_header_id+'/',
+	        url         : '/purchase/'+trx_number+'/update_receipt/'+challan_number+'/',
 	        data        : JSON.stringify(formData),
 	        dataType    : 'json',
 	        encode      : true,
@@ -334,9 +427,10 @@ jQuery(document).ready(function($) {
 	    							 '                                      </div>  ' ; 
 	    							htmlcode += htmlcd;
 	    						});
+	    						htmlcode += card.innerHTML;
 	    						card.innerHTML = htmlcode;
 	    					}
-	    	}
+	    				}
 	    }).done(function() {
 	        console.log('ok'); 
 	    });

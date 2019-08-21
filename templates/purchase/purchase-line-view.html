@@ -115,7 +115,7 @@
 		                                <tbody>
 		                                  {% for row in data['details']["receipt_details"] %}
 		                                	<tr>
-		                                  		<td><strong><a href="/purchase/{{ data['details']["purchase_trx_number"] }}/update_receipt/{{ row['receipt_header_id'] }}/">{{ row["challan_number"] }}</a></strong></td>
+		                                  		<td><strong><a href="/purchase/{{ data['details']["purchase_trx_number"] }}/update_receipt/{{ row['challan_number'] }}/">{{ row["challan_number"] }}</a></strong></td>
 			                                  	<td>{{ row["receipt_number"] }}</td>
 			                                  	<td>{{ row["vehicle_number"] }}</td>
 			                                  	<td>{{ row["challan_date"] }}</td>
