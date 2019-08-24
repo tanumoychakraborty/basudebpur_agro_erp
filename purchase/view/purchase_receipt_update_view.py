@@ -9,7 +9,7 @@ import random
 from django.http.response import HttpResponse
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE, \
-    PURCHASE_ORDER_HEADER_STATUS, RECEIPT, RECEIPT_SEARCH
+    RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH
 from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
@@ -24,30 +24,25 @@ class purchase_receipt_update_view(template):
         if hasAddPurchaseRecordAccess(request.user):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
-#            po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
-            po_receipt_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)
+            po_receipt_statuses = json.loads(requests.get(RECEIPT_LINE_STATUS).text)
             receipt_details = json.loads(requests.get(RECEIPT_SEARCH+'challan_number='+challan_number).text)
             if receipt_details['receipt_details'][0]['challan_date']:
                 receipt_details['receipt_details'][0]['challan_date'] = receipt_details['receipt_details'][0]['challan_date'].split(' ')[0]
-#             po_type = json.loads(requests.get(PURCHASE_ORDER_TYPE).text)
-#             supplier_list = json.loads(requests.get(SUPPLIER_LIST).text)
-#             
-#             data= {'user' : request.user.username,
-#                    'po_type' : po_type['purchaseOrderType'],
-#                    'supplier_list' : supplier_list['supplierLists'],
-#                    'item_list' : item_list['itemDetailsList'],
-#                    'uom' : uom['UnitOfMeasure']
-#                    }
             data = {'transaction_number': transaction_number,
                     'item_list': item_list['itemDetailsList'],
                     'uom' : uom['UnitOfMeasure'],
-                    'po_receipt_statuses' : po_receipt_statuses['purchaseOrderHeaderStatus'],
+                    'po_receipt_statuses' : po_receipt_statuses['lookup_details'],
                     'details' : receipt_details['receipt_details'][0]}
-            template = jinja_template.get_template('purchase/purchase-receipt-update.html')
-            return HttpResponse(template.render(request, data=data))
+            if receipt_details['receipt_details'][0]['receipt_header_status'] == 'CANCEL':
+                template = jinja_template.get_template('purchase/purchase-receipt-view-only.html')
+                return HttpResponse(template.render(request, data=data))
+            else:
+                template = jinja_template.get_template('purchase/purchase-receipt-update.html')
+                return HttpResponse(template.render(request, data=data))
         else:
             template = jinja_template.get_template('access_denied.html')
             return HttpResponse(template.render(request))
+        
      
     def put(self, request, transaction_number, challan_number):
         if hasAddPurchaseRecordAccess(request.user):

@@ -10,7 +10,7 @@ from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRe
 import json
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE,\
-    PURCHASE_ORDER_HEADER_STATUS, RECEIPT, CREATE_CHALLAN
+    PURCHASE_ORDER_HEADER_STATUS, RECEIPT, CREATE_CHALLAN, RECEIPT_LINE_STATUS
 import random
 
 class purchase_receipt_add_view(template):
@@ -23,7 +23,7 @@ class purchase_receipt_add_view(template):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #            po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
-            po_receipt_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)
+            po_receipt_statuses = json.loads(requests.get(RECEIPT_LINE_STATUS).text)
 #             po_type = json.loads(requests.get(PURCHASE_ORDER_TYPE).text)
 #             supplier_list = json.loads(requests.get(SUPPLIER_LIST).text)
 #             
@@ -42,7 +42,7 @@ class purchase_receipt_add_view(template):
             data = {'transaction_number': transaction_number,
                     'item_list': item_list['itemDetailsList'],
                     'uom' : uom['UnitOfMeasure'],
-                    'po_receipt_statuses' : po_receipt_statuses['purchaseOrderHeaderStatus'],
+                    'po_receipt_statuses' : po_receipt_statuses['lookup_details'],
                     'details' :  challan_data}
             template = jinja_template.get_template('purchase/purchase-receipt-update.html')
             return HttpResponse(template.render(request, data=data))

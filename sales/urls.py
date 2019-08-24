@@ -19,10 +19,12 @@ from sales.view.sales_add_view import sales_add_view
 from django.contrib.auth.decorators import login_required
 from sales.view.sales_view_details import sales_view_details
 from sales.view.sales_update_view import sales_update_view
+from sales.view.print_sales_challan import print_sales_challan
 
 urlpatterns = [
     path('', login_required(sales_view_view.as_view()), name='sales_view'),
     path('add/', login_required(sales_add_view.as_view()), name='sales_add'),
     path('update/', login_required(sales_update_view.as_view()), name='sales_update'),
     path('<str:transaction_number>/', login_required(sales_view_details.as_view()), name='sales_details'),
+    path('<str:transaction_number>/print_challan', login_required(print_sales_challan.as_view()), name='sales_details')
 ]

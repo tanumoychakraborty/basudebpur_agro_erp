@@ -21,17 +21,19 @@
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control"></input></div>
-                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Chalan Numer</label></div>
-                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">{{ data['challan_number'] }}</p></div>
-                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="purchase_receipt_date">Transaction Date</label></div>
-                                        <div class="col col-md-2 input-group">
+                                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Truck Number</label></div>
+                                        <div class="col-12 col-md-4"><input type="text" id="truck_numer" class="form-control"></input></div>
+                                        <div class="col col-md-4"><label for="text-input" class="form-control-label">Chalan Numer</label></div>
+                                        <div class="col-12 col-md-4"><p id="chalan_number" class="form-control-static">{{ data['challan_number'] }}</p></div>
+                                    	<div class="col col-md-4"><label for="text-input" class=" form-control-label" for="purchase_receipt_date">Transaction Date</label></div>
+                                        <div class="col col-md-4 input-group">
 						                    <input type="text" class="form-control" id="purchase_receipt_date" nam="purchase_receipt_date"/>
 						                    <div class="input-group-append" data-target="#purchase_receipt_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
+						                <div class="col col-md-4"><label for="text-input" class="form-control-label">Chalan Numer</label></div>
+                                        <div class="col-12 col-md-4"><p id="chalan_number" class="form-control-static">{{ data['details']['receipt_header_status'] }}</p></div>
                                     </div>
                                     <!-- <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>

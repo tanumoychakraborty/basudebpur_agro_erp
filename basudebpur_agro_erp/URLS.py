@@ -15,6 +15,7 @@ PURCHASE_ORDER_LINES_STATUS = API + '/api/common_lookups?lookupName=PURCHASE_ORD
 UNIT_OF_MEASURE = API + '/api/common_lookups?lookupName=UNIT_OF_MEASURE'
 ITEM_LIST = API + '/api/inventory_items?OperationType=ITEM_LIST'
 SUPPLIER_TYPE = API + '/api/common_lookups?lookupName=SUPPLIER_TYPE'
+RECEIPT_LINE_STATUS = API + '/api/common_lookups?lookupName=RECEIPT_LINE_STATUS'
 SUPPLIER_LIST = API + '/api/supplier_master?OperationType=SUPPLIER_LIST'
 SUPPLIER_SEARCH = API + '/api/supplier_master?OperationType=SUPPLIER_MASTER_SEARCH'
 SUPPLIER = API + '/api/supplier_master'

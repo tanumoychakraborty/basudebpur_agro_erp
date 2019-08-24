@@ -22,17 +22,19 @@
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control" {% if data['details']['vehicle_number'] %} value="{{ data['details']['vehicle_number'] }}" {% endif %}></input></div>
-                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Challan Numer</label></div>
-                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
-                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="challan_date">Chalan Date</label></div>
-                                        <div class="col col-md-2 input-group">
+                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Truck Number</label></div>
+                                        <div class="col-12 col-md-3"><input type="text" id="truck_numer" class="form-control" {% if data['details']['vehicle_number'] %} value="{{ data['details']['vehicle_number'] }}" {% endif %}></input></div>
+                                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Challan Numer</label></div>
+                                        <div class="col-12 col-md-3"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
+                                    	<div class="col col-md-3"><label for="text-input" class=" form-control-label" for="challan_date">Chalan Date</label></div>
+                                        <div class="col col-md-3 input-group">
 						                    <input type="text" class="form-control" id="challan_date" {% if data['details']['vehicle_number'] %} value="{{ data['details']['challan_date'] }}" {% endif %}/>
 						                    <div class="input-group-append" data-target="#challan_date">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
 						                </div>
+						                <div class="col col-md-3"><label for="text-input" class="form-control-label">Status</label></div>
+                                        <div class="col-12 col-md-3"><p id="status" class="form-control-static">{{ data['details']['receipt_header_status'] }}</p></div>
                                     </div>
                                     <!-- <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
@@ -120,8 +122,9 @@
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
-	                                        <div class="col col-md-6"><center><button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp; Save</button></center></div>
-	                                        <div class="col col-md-6"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
+	                                        <div class="col col-md-4"><center><button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp; Save</button></center></div>
+	                                        <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
+	                                        <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}/cancel_receipt/{{ data['details']['challan_number'] }}"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel Challan</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>
