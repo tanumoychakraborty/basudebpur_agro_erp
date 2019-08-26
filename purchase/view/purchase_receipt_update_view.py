@@ -33,12 +33,13 @@ class purchase_receipt_update_view(template):
                     'uom' : uom['UnitOfMeasure'],
                     'po_receipt_statuses' : po_receipt_statuses['lookup_details'],
                     'details' : receipt_details['receipt_details'][0]}
-            if receipt_details['receipt_details'][0]['receipt_header_status'] == 'CANCEL':
-                template = jinja_template.get_template('purchase/purchase-receipt-view-only.html')
-                return HttpResponse(template.render(request, data=data))
-            else:
+            if receipt_details['receipt_details'][0]['receipt_header_status'] == 'OPEN':
                 template = jinja_template.get_template('purchase/purchase-receipt-update.html')
-                return HttpResponse(template.render(request, data=data))
+                
+            else:
+                template = jinja_template.get_template('purchase/purchase-receipt-view-only.html')
+                
+            return HttpResponse(template.render(request, data=data))
         else:
             template = jinja_template.get_template('access_denied.html')
             return HttpResponse(template.render(request))

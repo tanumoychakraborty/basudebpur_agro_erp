@@ -109,17 +109,17 @@
 			                                  <th scope="col">Receipt</th>
 			                                  <th scope="col">Vehicle</th>
 								              <th scope="col">Challan Date</th>
-			                                  <th scope="col">Receipt Date</th>
+			                                  <th scope="col">Status</th>
 		                                    </tr>
 		                                </thead>
 		                                <tbody>
 		                                  {% for row in data['details']["receipt_details"] %}
 		                                	<tr>
 		                                  		<td><strong><a href="/purchase/{{ data['details']["purchase_trx_number"] }}/update_receipt/{{ row['challan_number'] }}/">{{ row["challan_number"] }}</a></strong></td>
-			                                  	<td>{{ row["receipt_number"] }}</td>
-			                                  	<td>{{ row["vehicle_number"] }}</td>
-			                                  	<td>{{ row["challan_date"] }}</td>
-			                                  	<td>{{ row["receipt_date"] }}</td>
+			                                  	<td>{% if row["receipt_number"] is not none %} {{ row["receipt_number"] }} {% endif %}</td>
+			                                  	<td>{% if row["vehicle_number"] is not none %} {{ row["vehicle_number"] }} {% endif %}</td>
+			                                  	<td>{% if row["challan_date"] is not none %} {{ row["challan_date"] }} {% endif %}</td>
+			                                  	<td>{{ row["receipt_header_status"] }}</td>
 		                                  	</tr>
 		                                  	{% endfor %}
 		                                </tbody>
