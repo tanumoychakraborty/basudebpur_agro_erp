@@ -22,14 +22,18 @@
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Truck Number</label></div>
-                                        <div class="col-12 col-md-3"><p id="truck_numer" class="form-control-static">{% if data['details']['vehicle_number'] %} {{ data['details']['vehicle_number'] }} {% endif %}</p></div>
-                                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Challan Numer</label></div>
-                                        <div class="col-12 col-md-3"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
-                                    	<div class="col col-md-3"><label for="text-input" class=" form-control-label" for="challan_date">Chalan Date</label></div>
-                                        <div class="col col-md-3 input-group"><p id="truck_numer" class="form-control-static">{{ data['details']['challan_date'] }}</p></div>
-						                <div class="col col-md-3"><label for="text-input" class="form-control-label">Status</label></div>
-                                        <div class="col-12 col-md-3"><p id="status" class="form-control-static">{{ data['details']['receipt_header_status'] }}</p></div>
+                                        <div class="col col-md-4"><label for="text-input" class=" form-control-label">Truck Number</label></div>
+                                        <div class="col-12 col-md-4"><p id="truck_numer" class="form-control-static">{% if data['details']['vehicle_number'] %} {{ data['details']['vehicle_number'] }} {% endif %}</p></div>
+                                        <div class="col col-md-4"><label for="text-input" class="form-control-label">Challan Numer</label></div>
+                                        <div class="col-12 col-md-4"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
+                                    	<div class="col col-md-4"><label for="text-input" class=" form-control-label" for="challan_date">Chalan Date</label></div>
+                                        <div class="col-12 col-md-4"><p id="truck_numer" class="form-control-static">{{ data['details']['challan_date'] }}</p></div>
+						                <div class="col col-md-4"><label for="text-input" class="form-control-label">Status</label></div>
+                                        <div class="col-12 col-md-4"><p id="status" class="form-control-static">{{ data['details']['receipt_header_status'] }}</p></div>
+                                        <div class="col col-md-4"><label for="text-input" class="form-control-label">Bata</label></div>
+                                        <div class="col-12 col-md-4"><p id="bata" class="form-control-static">{{ data['details']['bata'] }}</p></div>
+                                        <div class="col col-md-4"><label for="text-input" class="form-control-label">Receipt Date</label></div>
+                                        <div class="col-12 col-md-4"><p id="bata" class="form-control-static">{{ data['details']['receipt_date'] }}</p></div>
                                     </div>
                                     <!-- <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>

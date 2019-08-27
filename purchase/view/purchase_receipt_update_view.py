@@ -51,6 +51,8 @@ class purchase_receipt_update_view(template):
             #data['source_transaction_header_id'] = transaction_number
             #data['source_transaction_type'] = 'PURCHASE'            
             data['last_updated_by'] = request.user.username
+            if data['bata'] == '':
+                data.pop('bata')
             
             for line in data['receipt_lines']:
                 line['last_updated_by'] = request.user.username

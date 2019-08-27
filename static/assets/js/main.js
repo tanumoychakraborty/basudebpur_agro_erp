@@ -340,6 +340,7 @@ jQuery(document).ready(function($) {
 			vehicle_number         	: $('input[id=truck_numer]').val(),
 			receipt_date		    : $('input[id=purchase_receipt_date]').val(),
 			challan_number     		: $('p[id=chalan_number]').text(),
+			bata		     		: $('p[id=bata]').text(),
 	        receipt_lines			: purchase_receipt_lines
 	    };
     
@@ -399,6 +400,7 @@ jQuery(document).ready(function($) {
 		var formData = {
 			vehicle_number         	: $('input[id=truck_numer]').val(),
 			challan_date		    : $('input[id=challan_date]').val(),
+			bata		     		: $('p[id=bata]').text(),
 			challan_number     		: challan_number,
 	        receipt_lines			: purchase_receipt_lines
 	    };
