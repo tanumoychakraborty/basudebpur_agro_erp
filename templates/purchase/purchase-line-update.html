@@ -126,8 +126,9 @@
             		<div class="row">
                     	<div class="col-lg-12">
 	                                    <div class="row form-group">
-		                                    <div class="col col-md-6"><center><button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp; Save</button></center></div>
-		                                    <div class="col col-md-6"><center><a href="/purchase"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
+		                                    <div class="col col-md-4"><center><button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp; Save</button></center></div>
+		                                    <div class="col col-md-4"><center><a href="/purchase"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back </button></a></center></div>
+		                                    <div class="col col-md-4"><center><a href="/purchase/{{ data['details']["purchase_trx_number"] }}/close_po/"><button type="button" class="btn btn-danger"><i class="fa fa-remove"></i>&nbsp; Close PO </button></a></center></div>
 	                                	</div>
                     	</div>
             		</div>

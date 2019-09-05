@@ -39,6 +39,11 @@ class purchase_receipt_add_view(template):
             data['source_transaction_header_id'] = transaction_number
             data['source_transaction_type'] = 'PURCHASE'  
             challan_data = json.loads(requests.post(RECEIPT, json=data).text)
+            if challan_data['challan_date']:
+                challan_data['challan_date'] = challan_data['challan_date'].split(' ')[0]
+            if 'receipt_date' in challan_data.keys():
+                if challan_data['receipt_date']:
+                    challan_data['receipt_date'] = challan_data['receipt_date'].split(' ')[0]
             data = {'transaction_number': transaction_number,
                     'item_list': item_list['itemDetailsList'],
                     'uom' : uom['UnitOfMeasure'],

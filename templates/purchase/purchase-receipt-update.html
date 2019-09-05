@@ -22,21 +22,24 @@
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-3"><label for="text-input" class=" form-control-label">Truck Number</label></div>
-                                        <div class="col-12 col-md-3"><input type="text" id="truck_numer" class="form-control" {% if data['details']['vehicle_number'] %} value="{{ data['details']['vehicle_number'] }}" {% endif %}></input></div>
-                                        <div class="col col-md-3"><label for="text-input" class="form-control-label">Challan Numer</label></div>
-                                        <div class="col-12 col-md-3"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
-                                    	<div class="col col-md-3"><label for="text-input" class=" form-control-label" for="challan_date">Challan Date</label></div>
-                                        <div class="col col-md-3 input-group">
-						                    <input type="text" class="form-control" id="challan_date" {% if data['details']['vehicle_number'] %} value="{{ data['details']['challan_date'] }}" {% endif %}/>
-						                    <div class="input-group-append" data-target="#challan_date">
-						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-						                    </div>
-						                </div>
-						                <div class="col col-md-3"><label for="text-input" class="form-control-label">Status</label></div>
-                                        <div class="col-12 col-md-3"><p id="status" class="form-control-static">{{ data['details']['receipt_header_status'] }}</p></div>
-                                        <div class="col col-md-4"><label for="text-input" class="form-control-label">Bata</label></div>
-                                        <div class="col-12 col-md-4"><p id="bata" class="form-control-static">{{ data['details']['bata'] }}</p></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class="form-control-label">Challan Numer</label></div>
+                                        <div class="col-12 col-md-2"><p id="chalan_number" class="form-control-static">{{ data['details']['challan_number'] }}</p></div>
+                                    	<div class="col-12 col-md-2"><label for="text-input" class=" form-control-label" for="challan_date">Challan Date</label></div>
+                                        <div class="col-12 col-md-2 input-group"><p id="chalan_date" class="form-control-static">{{ data['details']['challan_date'] }}</p></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class="form-control-label">Status</label></div>
+                                        <div class="col-12 col-md-2"><p id="status" class="form-control-static">{{ data['details']['receipt_header_status'] }}</p></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class=" form-control-label">Truck Number</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="truck_numer" class="form-control" {% if data['details']['vehicle_number'] %} value="{{ data['details']['vehicle_number'] }}" {% endif %}></input></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class=" form-control-label">Net Weight (Kg)</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="net_weight" class="form-control" {% if data['details']['net_weight'] %} value="{{ data['details']['net_weight'] }}" {% endif %}></input></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class="form-control-label">Bata</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="bata" class="form-control" {% if data['details']['bata'] %} value="{{ data['details']['bata'] }}" {% endif %}></input></div>
+						                <div class="col-12 col-md-2"><label for="text-input" class="form-control-label">Average Weight (Kg)</label></div>
+                                        <div class="col-12 col-md-2"><p id="average_weight" class="form-control-static">{{ data['details']['average_weight'] }}</p></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class="form-control-label">Total Bags</label></div>
+                                        <div class="col-12 col-md-2"><p id="total_bags" class="form-control-static">{{ data['details']['total_bags'] }}</p></div>
+                                        <div class="col-12 col-md-2"><label for="text-input" class=" form-control-label" for="receipt_date">Receipt Date</label></div>
+                                        <div class="col-12 col-md-2 input-group"><p id="receipt_date" class="form-control-static">{{ data['details']['receipt_date'] }}</p></div>
                                     </div>
                                     <!-- <div class="row form-group">
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Buyer</label></div>
@@ -65,10 +68,11 @@
 			                                        <tr>
 			                                          <th scope="col">#</th>
 			                                          <th scope="col">Item</th>
+			                                          <th scope="col">Description</th>
 			                                          <th scope="col">TR Number</th>
 			                                          <th scope="col">Unloading Area</th>
-								  					  <th scope="col">Quantity</th>
-			                                          <th scope="col">Unit</th>
+								  					  <th scope="col">Bags</th>
+			                                          <th scope="col">Quantity (Kg)</th>
 			                                          <th scope="col">Rate</th>
 			                                          <th scope="col">Discount</th>
 			                                          <th scope="col">Status</th>
@@ -90,20 +94,11 @@
 				                                            {% endfor %}
 			                                            </select>
 													</td>
+													<td><input type="text" class="form-control" value="{{ row["description"] }}"></td>
 				                                  	<td><input type="text" class="form-control" value="{{ row["weighing_number"] }}"></td>
 				                                  	<td><input type="text" class="form-control" value="{{ row["load_unload_area"] }}"></td>
-				                                  	<td><input type="text" class="form-control" value="{{ row["quantity"] }}"></td>
-				                                  	<td>
-					                                  	<select id="unitOfMeasure" class="form-control-sm form-control">
-				                                        	{% for um in data['uom'] %}
-				                                        		{% if row['unit_of_measure'] == um['lookup_code'] %}
-				                                                	<option value="{{um['lookup_code']}}" selected="">{{ um['meaning'] }}</option>
-				                                                {% else %}
-				                                                	<option value="{{um['lookup_code']}}">{{ um['meaning'] }}</option>
-				                                                {% endif %}
-			                                            	{% endfor %}
-			                                            </select>
-													</td>
+				                                  	<td><input type="text" class="form-control" value="{{ row["number_of_bags"] }}"></td>
+				                                  	<td>{{ row["quantity"] }}</td>
 				                                  	<td><input type="text" class="form-control" value="{{ row["unit_price"] }}"></td>
 				                                  	<td><input type="text" class="form-control" value="{{ row["discount"] }}"></td>
 				                                  	<td>
@@ -124,9 +119,10 @@
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
-	                                        <div class="col col-md-4"><center><button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp; Save</button></center></div>
-	                                        <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back</button></a></center></div>
-	                                        <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}/cancel_receipt/{{ data['details']['challan_number'] }}"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel Challan</button></a></center></div>
+	                                        <div class="col col-md-3"><center><button type="submit" class="btn btn-success"><i class="fa fa-save"></i>&nbsp; Save</button></center></div>
+	                                        <div class="col col-md-3"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back</button></a></center></div>
+	                                        <div class="col col-md-3"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Challan</button></a></center></div>
+	                                        <div class="col col-md-3"><center><a href="/purchase/{{ data['transaction_number'] }}/cancel_receipt/{{ data['details']['challan_number'] }}"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel Challan</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>
@@ -155,6 +151,11 @@
 	        item.appendChild(option);
         {% endfor %}
         
+        var description = document.createElement("input");
+        description.setAttribute("type", "text");
+        description.setAttribute("id", "description");
+        description.setAttribute("class", "form-control");
+        
         var weighingNumber = document.createElement("input");
         weighingNumber.setAttribute("type", "text");
         weighingNumber.setAttribute("id", "weighingNumber");
@@ -165,20 +166,10 @@
         unloadingNumber.setAttribute("id", "unloadingArea");
         unloadingNumber.setAttribute("class", "form-control");
         
-        var bookingQuantity = document.createElement("input");
-        bookingQuantity.setAttribute("type", "text");
-        bookingQuantity.setAttribute("id", "bookingQuantity");
-        bookingQuantity.setAttribute("class", "form-control");
-        
-        var unitOfMeasure = document.createElement("select");
-        unitOfMeasure.setAttribute("id", "unitOfMeasure");
-        unitOfMeasure.setAttribute("class", "form-control");
-        {% for um in data['uom'] %}
-        	var option = document.createElement("option");
-	        option.value = "{{um['lookup_code']}}";
-	        option.text = "{{um['meaning']}}";
-	        unitOfMeasure.appendChild(option);
-        {% endfor %}
+        var number_of_bags = document.createElement("input");
+        number_of_bags.setAttribute("type", "text");
+        number_of_bags.setAttribute("id", "number_of_bags");
+        number_of_bags.setAttribute("class", "form-control");
         
         var bookingUnitPrice = document.createElement("input");
         bookingUnitPrice.setAttribute("type", "text");
@@ -207,24 +198,26 @@
         currentCell.appendChild(item);
         
         var currentCell = currentRow.insertCell(2);
-        currentCell.appendChild(weighingNumber);
+        currentCell.appendChild(description);
         
         var currentCell = currentRow.insertCell(3);
-        currentCell.appendChild(unloadingNumber);
+        currentCell.appendChild(weighingNumber);
         
         var currentCell = currentRow.insertCell(4);
-        currentCell.appendChild(bookingQuantity);
+        currentCell.appendChild(unloadingNumber);
         
         var currentCell = currentRow.insertCell(5);
-        currentCell.appendChild(unitOfMeasure);
+        currentCell.appendChild(number_of_bags);
         
         var currentCell = currentRow.insertCell(6);
+      
+        var currentCell = currentRow.insertCell(7);
         currentCell.appendChild(bookingUnitPrice);
         
-        var currentCell = currentRow.insertCell(7);
+        var currentCell = currentRow.insertCell(8);
         currentCell.appendChild(discount);
         
-        var currentCell = currentRow.insertCell(8);
+        var currentCell = currentRow.insertCell(9);
         currentCell.appendChild(receiptLineStatus);
         
     }

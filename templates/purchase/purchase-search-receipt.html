@@ -1,0 +1,193 @@
+{% extends "template.html" %}
+{% block content %}
+
+<!-- Content -->
+<link rel="stylesheet" href="{{ static('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>$(function() {
+	$.noConflict();
+    $( "#from_challan_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#to_challan_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#from_receipt_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#to_receipt_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+});
+</script>
+        <div class="content">
+        <!-- table -->
+        <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Filter Receipt / Challan</strong>
+                            </div>
+                            <div class="card-body card-block">                                    
+                                    <div class="row form-group">
+                                        <div class="col col-md-2"><label for="challan_number" class=" form-control-label">Challan Number</label></div>
+                                        <div class="col col-md-2"><input type="text" id="challan_number" name="text-input" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="purchase_number" class=" form-control-label">Receipt Number</label></div>
+                                        <div class="col col-md-2"><input type="text" id="purchase_number" name="text-input" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="header_status" class=" form-control-label">Status</label></div>
+                                        <div class="col col-md-2"><select id="header_status" class="form-control-sm form-control">
+                                        	{% for h_status in data['header_status'] %}
+                                                <option value="{{ h_status['lookup_code'] }}">{{ h_status['meaning'] }}</option>
+                                            {% endfor %}
+                                            </select>
+                                        </div>                                        
+                                    </div>
+                                    <div class="row form-group">
+                                    	<div class="col col-md-2"><label for="text-input" class=" form-control-label" for="from_challan_date">From Challan Date</label></div>
+                                        <div class="col col-md-2 input-group">
+						                    <input type="text" class="form-control" id="from_challan_date" nam="from_challan_date"/>
+						                    <div class="input-group-append" data-target="#from_challan_date">
+						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						                    </div>
+						                </div>
+						                <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="to_challan_date">To Challan Date</label></div>
+                                        <div class="col col-md-2 input-group">
+						                    <input type="text" class="form-control" id="to_challan_date" nam="to_challan_date"/>
+						                    <div class="input-group-append" data-target="#to_challan_date">
+						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						                    </div>
+						                </div>
+						                <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="from_receipt_date">From Receipt Date</label></div>
+                                        <div class="col col-md-2 input-group">
+						                    <input type="text" class="form-control" id="from_receipt_date" nam="from_receipt_date"/>
+						                    <div class="input-group-append" data-target="#from_receipt_date">
+						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						                    </div>
+						                </div>
+						            </div>
+						            <div class="row form-group">
+						                <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="to_receipt_date">To Receipt Date</label></div>
+                                        <div class="col col-md-2 input-group">
+						                    <input type="text" class="form-control" id="to_receipt_date" nam="to_receipt_date"/>
+						                    <div class="input-group-append" data-target="#to_receipt_date">
+						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						                    </div>
+						                </div>
+                                    </div>
+                                    <div class="row form-group">
+	                                    <div class="col col-md-12"><center><button type="button" id="receipt_search_btn" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp; Search</button></center></div>
+	                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        <!-- table -->
+        <!-- table -->
+        <div class="animated fadeIn">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Purchase Records</strong>
+                            </div>
+                            <div class="card-body">
+                                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Challan #</th>
+                                            <th>Receipt #</th>
+                                            <th>Vehicle #</th>
+                                            <th>Challan Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        <!-- table -->
+        </div>
+    <script src="{{ static('assets/js/lib/data-table/datatables.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/jszip.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+    <script src="{{ static('assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+    <script src="{{ static('assets/js/init/datatables-init.js') }}"></script>
+
+
+    <script>
+        $('#bootstrap-data-table').DataTable( {
+          				'bDestroy': true,
+                        'data':  {{ data['pos'] }},
+                        'columns': [
+							            { 'data': 'challan_number' },
+							            { 'data': 'receipt_number' },
+							            { 'data': 'vehicle_number' },
+							            { 'data': 'challan_date' },
+							            { 'data': 'receipt_header_status' },
+							        ],
+						"columnDefs": [{
+            							"targets": 0,
+            							"render": function ( data, type, row, meta ) {
+		                						var itemID = row[0];                   
+		                						return '<a href="/purchase/' + row['source_transaction_header_id'] + '/update_receipt/' + data + '"><font color="DodgerBlue">' + data + '</font></a>';
+	            							}
+        							}],   
+                    	} );
+                    	
+       $("#receipt_search_btn").on("click", function(e) {
+	   		var formData = {
+	            purchase_trx_number  	: $('p[id=transaction_number]').val(),
+	            order_status  			: $('#header_status option:selected').val(),
+	            supplier_id            	: $('#supplier option:selected').val(),
+	            from_creation_date    	: $('input[id=from_transaction_date]').val(),
+	            to_creation_date    	: $('input[id=to_transaction_date]').val(),
+	            buyer_id            	: $('input[id=buyer]').val()
+	        };
+	        
+	        $.ajax({
+	            type        : 'POST',
+	            url         : '/purchase/',
+	            data        : JSON.stringify(formData),
+	            dataType    : 'json',
+	            encode      : true,
+	            success		: function(data){
+	            					$('#bootstrap-data-table').DataTable( {
+				          				'bDestroy': true,
+				                        'data':  data,
+				                        'columns': [
+											            { 'data': 'purchase_trx_number' },
+											            { 'data': 'transaction_date' },
+											            { 'data': 'supplier_name' },
+											            { 'data': 'amount' },
+											            { 'data': 'order_type' },
+											            { 'data': 'order_status' },
+											        ],
+										"columnDefs": [{
+				            							"targets": 0,
+				            							"render": function ( data, type, row, meta ) {
+				                						var itemID = row[0];                   
+				                						return '<a href="/purchase/' + row['source_transaction_header_id'] + '/update_receipt/' + data + '"><font color="DodgerBlue">' + data + '</font></a>';
+				            							}
+				        							}],   
+	                    			} );
+	            				}
+	        }).done(function() {
+	                console.log('ok'); 
+	        });
+	        e.preventDefault();
+	    });
+  </script>
+<!-- /.content -->
+        
+{% endblock %}

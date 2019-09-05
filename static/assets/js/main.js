@@ -388,19 +388,21 @@ jQuery(document).ready(function($) {
 		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
 		    	receipt_line_id	 	: $(tr).find('td:eq(0)').find('strong').attr('value'),
 		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
-		        weighing_number		: $(tr).find('td:eq(2)').find('input').val(),
-		        load_unload_area 	: $(tr).find('td:eq(3)').find('input').val(),
-		        quantity 			: $(tr).find('td:eq(4)').find('input').val(),
-		        unit_of_measure		: $(tr).find('td:eq(5)').find('option:selected').val(),
-		        unit_price 			: $(tr).find('td:eq(6)').find('input').val(),
-		        discount 			: $(tr).find('td:eq(7)').find('input').val(),
-		        receipt_line_status	: $(tr).find('td:eq(8)').find('option:selected').val()
+		        description			: $(tr).find('td:eq(2)').find('input').val(),
+		        weighing_number		: $(tr).find('td:eq(3)').find('input').val(),
+		        load_unload_area 	: $(tr).find('td:eq(4)').find('input').val(),
+		        number_of_bags		: $(tr).find('td:eq(5)').find('input').val(),
+		        unit_price 			: $(tr).find('td:eq(7)').find('input').val(),
+		        discount 			: $(tr).find('td:eq(8)').find('input').val(),
+		        receipt_line_status	: $(tr).find('td:eq(9)').find('option:selected').val()
 		    }
 		}); 
 		var formData = {
 			vehicle_number         	: $('input[id=truck_numer]').val(),
 			challan_date		    : $('input[id=challan_date]').val(),
-			bata		     		: $('p[id=bata]').text(),
+			bata		     		: $('input[id=bata]').val(),
+			net_weight	     		: $('input[id=net_weight]').val(),
+			average_weight     		: $('input[id=average_weight]').val(),
 			challan_number     		: challan_number,
 	        receipt_lines			: purchase_receipt_lines
 	    };

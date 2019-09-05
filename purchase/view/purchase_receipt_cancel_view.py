@@ -32,10 +32,20 @@ class purchase_receipt_cancel_view(template):
                 receipt_details['receipt_details'][0].pop('receipt_lines')
             if 'receipt_date' in receipt_details['receipt_details'][0].keys():
                 receipt_details['receipt_details'][0].pop('receipt_date')
+            if 'receipt_number' in receipt_details['receipt_details'][0].keys():
+                receipt_details['receipt_details'][0].pop('receipt_number')
             if 'challan_date' in receipt_details['receipt_details'][0].keys():
                 receipt_details['receipt_details'][0].pop('challan_date')
             if 'last_update_date' in receipt_details['receipt_details'][0].keys():
                 receipt_details['receipt_details'][0].pop('last_update_date')
+            if 'bata' in receipt_details['receipt_details'][0].keys():
+                receipt_details['receipt_details'][0].pop('bata')
+            if 'net_weight' in receipt_details['receipt_details'][0].keys():
+                receipt_details['receipt_details'][0].pop('net_weight')
+            if 'average_weight' in receipt_details['receipt_details'][0].keys():
+                receipt_details['receipt_details'][0].pop('average_weight')
+            if 'total_bags' in receipt_details['receipt_details'][0].keys():
+                receipt_details['receipt_details'][0].pop('total_bags')
             jsondata = json.dumps(receipt_details['receipt_details'][0])
             r = requests.put(url = RECEIPT, json = jsondata) 
             if r.status_code is 200:
