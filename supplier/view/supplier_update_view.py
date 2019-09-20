@@ -25,6 +25,10 @@ class supplier_update_view(template):
             else:
                 data['enabled_flag'] = 'N'
             data['last_updated_by'] = request.user.username
+            if data['effective_from'] == '':
+                data.pop('effective_from')
+            if data['effective_to'] == '':
+                data.pop('effective_to')
 #             if data['effective_from']:
 #                 data['effective_from'] = data['effective_from'].replace('/', '-')
 #                 #data['effective_from'] = data['effective_from'].split(' ')[0]

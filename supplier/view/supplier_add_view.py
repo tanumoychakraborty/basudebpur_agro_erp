@@ -32,6 +32,10 @@ class supplier_add_view(template):
             data = json.loads(request.body)
             data['created_by'] = request.user.username
             data['last_updated_by'] = request.user.username
+            if data['effective_from'] == '':
+                data.pop('effective_from')
+            if data['effective_to'] == '':
+                data.pop('effective_to')
             if data['enabled_flag']:
                 data['enabled_flag'] = 'Y'
             else:

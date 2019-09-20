@@ -8,7 +8,7 @@ from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
 from basudebpur_agro_erp.URLS import SALES_TRANSACTION
-from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasUpdateSalesRecordAccess
 import json
 from django.shortcuts import redirect
 
@@ -23,7 +23,7 @@ class sales_close_view(template):
         if r.status_code is 200:
             json_data = r.json()
             
-            if hasUpdatePurchaseRecordAccess(request.user):
+            if hasUpdateSalesRecordAccess(request.user):
                 data = json_data['sales_trx_details'][0]
                 data['last_updated_by'] = request.user.username
                 if 'receipt_details' in data.keys():

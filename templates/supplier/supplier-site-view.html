@@ -10,50 +10,47 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Purchase Order Number # </strong> {{ data["purchase_trx_number"] }}
+                                <strong>Supplier Details</strong>
                             </div>
                             <div class="card-body card-block">
                             	<div class="row form-group">
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Purchase Transaction Number</label></div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Supplier Code</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["purchase_trx_number"] }}</p>
+                                            <p class="form-control-static">{{ data['details']["supplier_code"] }}</p>
                                         </div>
-                                        <div class="co-12l col-md-2"><label class=" form-control-label">Status</label></div>
+                                        <div class="co-12l col-md-2"><label class=" form-control-label">Supplier Name</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["order_status"] }}</p>
+                                            <p class="form-control-static">{{ data['details']["supplier_name"] }}</p>
                                         </div>
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Supplier</label></div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Supplier Type</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["suppplier_id"] }}</p>
-                                        </div>
-                                </div>
-                            	<div class="row form-group">
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Transaction Date</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["transaction_date"] }}</p>
-                                        </div>
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Amount</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["amount"] }}</p>
-                                        </div>
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Buyer</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data['buyer_id'] }}</p>
+                                            <p class="form-control-static">{% for s_type in data['supplier_code'] %}
+                                        					{% if data['details']['supplier_code'] == s_type['lookup_code'] %}
+                                        					{{ s_type['meaning'] }}</p>
                                         </div>
                                 </div>
                             	<div class="row form-group">
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Weighting Number</label></div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Description</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["weighing_number"] }}</p>
+                                            <p class="form-control-static">{{ data['details']["description"] }}</p>
+                                        </div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Effective From</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data['details']["effective_from"] }}</p>
+                                        </div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Enabled</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">data['details']["enabled_flag"]</p>
+                                        </div>
+                                </div>
+                            	<div class="row form-group">
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Remarks</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data['details']['remarks'] }}</p>
                                 		</div>
-                                		<div class="col-12 col-md-2"><label class=" form-control-label">Order Type</label></div>
+                                		<div class="col-12 col-md-2"><label class=" form-control-label">Effective To</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["order_type"] }}</p>
-                                        </div>
-                                        
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Vehicle Number</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">     </p>
+                                            <p class="form-control-static">{{ data['details']["effective_to"] }}</p>
                                         </div>
                                 </div>
                             </div>
@@ -64,39 +61,41 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Purchase Line Details</strong>
+                            	<div class="row form-group">
+                                	<strong class="card-title">Supplier Site Details</strong>
 		                                <table class="table table-striped" id="line_table">
 		                                    <thead>
 		                                        <tr>
-		                                          <th scope="col">#</th>
-		                                          <th scope="col">Item</th>
-		                                          <th scope="col">Item Description</th>
-		                                          <th scope="col">Status</th>
-		                                          <th scope="col">Booking Unit Price</th>
-							  					  <th scope="col">Booking Unit Quantity</th>
-		                                          <th scope="col">Discount</th>
-		                                          <th scope="col">Receipt Unit Price</th>
-							  					  <th scope="col">Receipt Unit Quantity</th>
-		                                          <th scope="col">Unit</th>
+		                                          <th scope="col">Supplier Site Code</th>
+			                                          <th scope="col">Address</th>
+			                                          <th scope="col">Phone Number 1</th>
+			                                          <th scope="col">Phone Number 2</th>
+								  					  <th scope="col">Email</th>
+			                                          <th scope="col">Inactive Date</th>
 		                                      	</tr>
 		                                  </thead>
 		                                  <tbody>
-		                                  {% for row in data["purchase_trx_lines"] %}
+		                                  {% for row in data["details"]["supplier_master_sites"] %}
 		                                  	<tr>
-		                                  		<th scope="row">{{ row["line_number"] }}</th>
-		                                  		<td>{{ row["item_id"] }}</td>
-		                                  		<td>{{ row["item_description"] }}</td>
-		                                  		<td>{{ row["line_status"] }}</td>
-		                                  		<td>{{ row["booking_unit_price"] }}</td>
-		                                  		<td>{{ row["booking_quantity"] }}</td>
-		                                  		<td>{{ row["discount"] }}</td>
-		                                  		<td>{{ row["receipt_unit_price"] }}</td>
-		                                  		<td>{{ row["receipt_quantity"] }}</td>
-		                                  		<td>{{ row["unit_of_measure"] }}</td>
+		                                  		<th scope="row">{{ row["supplier_site_code"] }}</th>
+		                                  		<td>{ row["supplier_site_address"] }}</td>
+		                                  		<td>{{ row["phone_number1"] }}</td>
+		                                  		<td>{{ row["phone_number2"] }}</td>
+		                                  		<td>{{ row["email"] }}</td>
+		                                  		<td>{{ row["inactive_date"] }}</td>
 		                                  	</tr>
-		                                  	{% endfor %}
-		                                  </tbody>
-		                            	</table>
+		                                {% endfor %}
+		                                </tbody>
+		                            </table>
+		                        </div>
+		                       <div class="row">
+			                    <div class="col-lg-12">
+				                            <div class="row form-group">
+						                        <div class="col col-md-4"><center><a href="/supplier/"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back </button></a></center></div>
+					                		</div>
+				                		
+			                	</div>
+			        		</div>	
                         </div>
                     </div>
                 </div>

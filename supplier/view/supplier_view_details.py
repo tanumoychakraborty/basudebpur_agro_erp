@@ -22,29 +22,28 @@ class supplier_view_details(template):
         if r.status_code is 200:
             json_data = r.json()
             supplier_details = json_data['supplier_details'][0]
+            supplier_type = json.loads(requests.get(SUPPLIER_TYPE).text)
+            if supplier_details['effective_from']:
+                #supplier_details['effective_from'] = supplier_details['effective_from'].replace('-', '/')
+                supplier_details['effective_from'] = supplier_details['effective_from'].split(' ')[0]
+            if supplier_details['effective_to']:
+                #supplier_details['effective_to'] = supplier_details['effective_to'].replace('-', '/')
+                supplier_details['effective_to'] = supplier_details['effective_to'].split(' ')[0]
+            for line in supplier_details['supplier_master_sites']:
+                line['last_updated_by'] = request.user.username
+                if line['inactive_date']:
+                    #line['inactive_date'] = line['inactive_date'].replace('-', '/')
+                    line['inactive_date'] = line['inactive_date'].split(' ')[0]
             
-            if hasUpdateSupplierAccess(request.user):
-                supplier_type = json.loads(requests.get(SUPPLIER_TYPE).text)
-                if supplier_details['effective_from']:
-                    #supplier_details['effective_from'] = supplier_details['effective_from'].replace('-', '/')
-                    supplier_details['effective_from'] = supplier_details['effective_from'].split(' ')[0]
-                if supplier_details['effective_to']:
-                    #supplier_details['effective_to'] = supplier_details['effective_to'].replace('-', '/')
-                    supplier_details['effective_to'] = supplier_details['effective_to'].split(' ')[0]
-                for line in supplier_details['supplier_master_sites']:
-                    line['last_updated_by'] = request.user.username
-                    if line['inactive_date']:
-                        #line['inactive_date'] = line['inactive_date'].replace('-', '/')
-                        line['inactive_date'] = line['inactive_date'].split(' ')[0]
-                
-                data= {'supplier_code' : supplier_type['lookup_details'],
+            data= {'supplier_code' : supplier_type['lookup_details'],
                        'details' : json_data['supplier_details'][0]}
-                
+            
+            if hasUpdateSupplierAccess(request.user):                
                 template = jinja_template.get_template('supplier/supplier-site-update.html')
                 return HttpResponse(template.render(request, data=data))
             else:
                 template = jinja_template.get_template('supplier/supplier-site-view.html')
-                return HttpResponse(template.render(request, data=json_data[0]))
+                return HttpResponse(template.render(request, data=data))
         else:
             template = jinja_template.get_template('internal_server_error.html')
             return HttpResponse(template.render(request))

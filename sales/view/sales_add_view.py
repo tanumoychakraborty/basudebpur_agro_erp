@@ -6,7 +6,7 @@ Created on 08-Dec-2018
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
-from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 import json
 from basudebpur_agro_erp.URLS import SALES_TRANSACTION, ITEM_LIST,\
     UNIT_OF_MEASURE, SALES_ORDER_TYPE, CUSTOMER_LIST
@@ -19,7 +19,7 @@ class sales_add_view(template):
     '''
 
     def get(self, request):
-        if hasAddPurchaseRecordAccess(request.user):
+        if hasAddSalesRecordAccess(request.user):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #             po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
@@ -40,7 +40,7 @@ class sales_add_view(template):
             return HttpResponse(template.render(request))
     
     def post(self, request):
-        if hasAddPurchaseRecordAccess(request.user):
+        if hasAddSalesRecordAccess(request.user):
             data = json.loads(request.body)
             data['order_status'] = 'OPEN'
             data['created_by'] = request.user.username

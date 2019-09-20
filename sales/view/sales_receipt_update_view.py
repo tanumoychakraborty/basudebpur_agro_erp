@@ -10,7 +10,7 @@ from django.http.response import HttpResponse
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE, \
     RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH
-from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from basudebpur_agro_erp.util import clearDictionary, isFloat
@@ -22,7 +22,7 @@ class sales_receipt_update_view(template):
     '''
 
     def get(self, request, transaction_number, challan_number):
-        if hasAddPurchaseRecordAccess(request.user):
+        if hasAddSalesRecordAccess(request.user):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
             so_receipt_statuses = json.loads(requests.get(RECEIPT_LINE_STATUS).text)
@@ -54,7 +54,7 @@ class sales_receipt_update_view(template):
         
      
     def put(self, request, transaction_number, challan_number):
-        if hasAddPurchaseRecordAccess(request.user):
+        if hasAddSalesRecordAccess(request.user):
             data = json.loads(request.body)
             #data['source_transaction_header_id'] = transaction_number
             #data['source_transaction_type'] = 'PURCHASE'            

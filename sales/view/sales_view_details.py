@@ -11,7 +11,7 @@ from basudebpur_agro_erp.URLS import SALES_TRANSACTION, ITEM_LIST,\
     UNIT_OF_MEASURE, SALES_ORDER_TYPE, CUSTOMER_LIST,\
     PURCHASE_ORDER_LINES_STATUS, PURCHASE_ORDER_HEADER_STATUS
 from django.views import defaults
-from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasUpdateSalesRecordAccess
 import json
 
 class sales_view_details(template):
@@ -26,7 +26,7 @@ class sales_view_details(template):
             json_data = r.json()
             
             
-            if hasUpdatePurchaseRecordAccess(request.user):
+            if hasUpdateSalesRecordAccess(request.user):
                 item_list = json.loads(requests.get(ITEM_LIST).text)
                 uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
                 po_line_statuses = json.loads(requests.get(PURCHASE_ORDER_LINES_STATUS).text)

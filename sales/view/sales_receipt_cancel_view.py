@@ -10,7 +10,7 @@ from django.http.response import HttpResponse
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE, \
     RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH
-from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.shortcuts import redirect
@@ -22,7 +22,7 @@ class sales_receipt_cancel_view(template):
     '''
 
     def get(self, request, transaction_number, challan_number):
-        if hasAddPurchaseRecordAccess(request.user):
+        if hasAddSalesRecordAccess(request.user):
             receipt_details = json.loads(requests.get(RECEIPT_SEARCH+'challan_number='+challan_number).text)
             receipt_details['receipt_details'][0]['receipt_header_status'] = 'CANCEL'
             receipt_details['receipt_details'][0].pop('created_by')

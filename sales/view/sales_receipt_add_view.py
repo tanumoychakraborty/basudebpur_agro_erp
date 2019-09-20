@@ -6,7 +6,7 @@ Created on 17-Jul-2019
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
-from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 import json
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE,\
@@ -19,7 +19,7 @@ class sales_receipt_add_view(template):
     '''
 
     def get(self, request, transaction_number):
-        if hasAddPurchaseRecordAccess(request.user):
+        if hasAddSalesRecordAccess(request.user):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #            po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)

@@ -7,7 +7,7 @@ Created on 25-Dec-2018
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse, HttpResponseRedirect
-from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
+from basudebpur_agro_erp.permission.sales_permissions import hasUpdateSalesRecordAccess
 import json
 from basudebpur_agro_erp.URLS import SALES_TRANSACTION
 import requests
@@ -20,7 +20,7 @@ class sales_update_view(template):
     '''
     
     def put(self, request):
-        if hasUpdatePurchaseRecordAccess(request.user):
+        if hasUpdateSalesRecordAccess(request.user):
             data = json.loads(request.body)
             data['last_updated_by'] = request.user.username
             #data['transaction_date'] = data['transaction_date'].replace('/', '-')
