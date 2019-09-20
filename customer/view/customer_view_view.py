@@ -7,24 +7,24 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import RECEIPT, RECEIPT_HEADER_STATUS
+from basudebpur_agro_erp.URLS import CUSTOMER_SEARCH, CUSTOMER_TYPE
 from django.views import defaults
 import json
+from basudebpur_agro_erp.util import clearDictionary
 
-class receipt_view_view(template):
+class customer_view_view(template):
     '''
     classdocs
     '''
 
     def get(self, request):
-        receipt_header_statuses = json.loads(requests.get(RECEIPT_HEADER_STATUS).text)
-        r = requests.get(url = RECEIPT) 
+        customer_type = json.loads(requests.get(CUSTOMER_TYPE).text)
+        r = requests.get(url = CUSTOMER_SEARCH) 
         if r.status_code is 200:
             json_data = r.json()
-            data= {'header_status' : receipt_header_statuses['lookup_details'],
-                   'pos' : json_data['receipt_details']
-                   }
-            template = jinja_template.get_template('purchase/purchase-search-receipt.html')
+            data= {'customer_type' : customer_type['lookup_details'],
+                   'customers' : clearDictionary(json_data['customer_details'], '')}
+            template = jinja_template.get_template('customer/customer-header-view.html')
             return HttpResponse(template.render(request, data=data))
         else:
             return HttpResponse(defaults.server_error(request))
@@ -35,10 +35,10 @@ class receipt_view_view(template):
         for key, value in data.items():
             if value == '':
                 search_params.pop(key)
-        r = requests.get(url = RECEIPT, params=search_params) 
+        r = requests.get(url = CUSTOMER_SEARCH, params=search_params) 
         if r.status_code is 200:
             json_data = r.json()
-            return HttpResponse(json.dumps(json_data['receipt_details']))
+            return HttpResponse(json.dumps(json_data['customer_details']))
         else:
             return HttpResponse(defaults.server_error(request))
                 

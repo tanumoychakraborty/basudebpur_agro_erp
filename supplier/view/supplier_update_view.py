@@ -44,6 +44,10 @@ class supplier_update_view(template):
             if r.status_code is 200:
                 to_json = {'message':'ok'}
                 return HttpResponse(json.dumps(to_json))
+            
+            elif r.status_code == 422:
+                to_json = json.loads(r.content)['errors']
+                return HttpResponse(json.dumps(to_json), status = 422)
                 
             else:
                 template = jinja_template.get_template('internal_server_error.html')

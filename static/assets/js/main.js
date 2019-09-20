@@ -319,6 +319,125 @@ jQuery(document).ready(function($) {
     });
     
     
+    $("#customer-add-form").submit(function(e) {
+       
+           var customer_lines = new Array();
+           $('#customer_site_add_table tr').each(function(row, tr){
+            customer_lines[row-1]={
+                customer_site_code        : $(tr).find('td:eq(1)').find('input').val(),
+                customer_address     	  : $(tr).find('td:eq(2)').find('input').val(),
+                phone_number1             : $(tr).find('td:eq(3)').find('input').val(),
+                phone_number2             : $(tr).find('td:eq(4)').find('input').val(),
+                email                     : $(tr).find('td:eq(5)').find('input').val(),
+            }
+        }); 
+           var formData = {
+            customer_code            : $('input[id=customer_code]').val(),
+            customer_name             : $('input[id=customer_name]').val(),
+            customer_type            : $('#customer_type option:selected').val(),
+            description                  : $('input[id=description]').val(),
+            effective_from             : $('input[id=effective_from]').val(),
+            enabled_flag              : $('#enabled').is(':checked'),
+            remarks                    : $('input[id=remarks]').val(),
+            effective_to             : $('input[id=effective_to]').val(),
+            customer_master_sites    : customer_lines
+        };
+        
+        $.ajax({
+            type        : 'POST',
+            url         : '/customer/add/',
+            data        : JSON.stringify(formData),
+            dataType    : 'json',
+            encode      : true,
+            success        : function(data){
+                            location.href = host+"/customer/";
+                          },
+            error        : function(jqXHR, exception){
+                              if(jqXHR.status == 422){
+                                  var card = document.getElementById('card-header');
+                                   var htmlcode = '';
+                                   Object.keys(jqXHR.responseJSON).forEach(function(key){
+                                       var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+                                       var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+                                        '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+                                                        text+
+                                        '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+                                        '                                               <span aria-hidden="true">X</span>  '  + 
+                                        '                                           </button>  '  + 
+                                        '                                      </div>  ' ; 
+                                       htmlcode += htmlcd;
+                                       });
+                                   htmlcode += card.innerHTML;
+                                   card.innerHTML = htmlcode;
+                               }
+                           }
+        }).done(function() {
+                console.log('ok'); 
+        });
+        e.preventDefault();
+    });
+    
+    $("#customer-update-form").submit(function(e) {
+       
+           var customer_lines = new Array();
+           $('#customer_site_update_table tr').each(function(row, tr){
+            customer_lines[row-1]={
+                customer_site_id        	: $(tr).find('td:eq(0)').find('input').attr('name'),
+                customer_site_code         	: $(tr).find('td:eq(0)').find('input').val(),
+                customer_address     		: $(tr).find('td:eq(1)').find('input').val(),
+                phone_number1             	: $(tr).find('td:eq(2)').find('input').val(),
+                phone_number2             	: $(tr).find('td:eq(3)').find('input').val(),
+                email                     	: $(tr).find('td:eq(4)').find('input').val(),
+            }
+        }); 
+           var formData = {
+               customer_id                : $('input[id=customer_code]').attr('name'),
+            customer_code            : $('input[id=customer_code]').val(),
+            customer_name             : $('input[id=customer_name]').val(),
+            customer_type            : $('#customer_type option:selected').val(),
+            description                  : $('input[id=description]').val(),
+            effective_from             : $('input[id=effective_from]').val(),
+            enabled_flag              : $('#enabled').is(':checked'),
+            remarks                    : $('input[id=remarks]').val(),
+            effective_to             : $('input[id=effective_to]').val(),
+            customer_master_sites    : customer_lines
+        };
+        
+        $.ajax({
+            type        : 'PUT',
+            url         : '/customer/update/',
+            data        : JSON.stringify(formData),
+            dataType    : 'json',
+            encode      : true,
+            success        : function(data){
+                            location.href = host+"/customer/";
+                          },
+             error        : function(jqXHR, exception){
+                             if(jqXHR.status == 422){
+                                 var card = document.getElementById('card-header');
+                                  var htmlcode = '';
+                                  Object.keys(jqXHR.responseJSON).forEach(function(key){
+                                      var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+                                      var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+                                       '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+                                                       text+
+                                       '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+                                       '                                               <span aria-hidden="true">X</span>  '  + 
+                                       '                                           </button>  '  + 
+                                       '                                      </div>  ' ; 
+                                      htmlcode += htmlcd;
+                                  });
+                                  htmlcode += card.innerHTML;
+                                  card.innerHTML = htmlcode;
+                              }
+                          }
+        }).done(function() {
+                console.log('ok'); 
+        });
+        e.preventDefault();
+    });
+    
+    
 	$("#purchase-receipt-add-form").submit(function(e) {
 	   
 		var purchase_receipt_lines = new Array();
@@ -440,4 +559,112 @@ jQuery(document).ready(function($) {
 	    });
 	    e.preventDefault();
 	});
+	
+	   $("#sales-add-form").submit(function(e) {
+		   
+	   		var sales_lines = new Array();
+	   		$('#sales_line_add_table tr').each(function(row, tr){
+	   			sales_lines[row-1]={
+			    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
+			        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
+			        booking_unit_price 	: $(tr).find('td:eq(2)').find('input').val(),
+			        booking_quantity 	: $(tr).find('td:eq(3)').find('input').val(),
+			        unit_of_measure		: $(tr).find('td:eq(4)').find('option:selected').val()
+			    }
+			}); 
+	   		var formData = {
+	            customer_id         : $('#customer option:selected').val(),
+	            transaction_date    : $('input[id=transaction_date]').val(),
+	            sales_rep_id       	: $('p[id=seller]').text(),
+	            sales_trx_lines		: sales_lines
+	        };
+	        
+	        $.ajax({
+	            type        : 'POST',
+	            url         : '/sales/add/',
+	            data        : JSON.stringify(formData),
+	            dataType    : 'json',
+	            encode      : true,
+	            success		: function(data){
+	            				location.href = host+"/sales/";
+	            			  },
+	            error		: function(jqXHR, exception){
+	            				if(jqXHR.status == 422){
+	                 	 		var card = document.getElementById('card-header');
+	           					var htmlcode = '';
+	           					Object.keys(jqXHR.responseJSON).forEach(function(key){
+	           						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+	           						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+	           						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+	           						 				text+
+	           						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+	           						 '                                               <span aria-hidden="true">X</span>  '  + 
+	           						 '                                           </button>  '  + 
+	           						 '                                      </div>  ' ; 
+	           						htmlcode += htmlcd;
+	           		    			});
+	           					htmlcode += card.innerHTML;
+	           					card.innerHTML = htmlcode;
+	           		    		}
+	           		    	}
+	        }).done(function() {
+	                console.log('ok'); 
+	        });
+	        e.preventDefault();
+	    });
+	   $("#sales-update-form").submit(function(e) {
+		   
+	   		var sales_lines = new Array();
+	   		$('#sales_line_update_table tr').each(function(row, tr){
+			    sales_lines[row-1]={
+			    	transaction_line_id : $(tr).find('td:eq(0)').find('strong').attr('value'),
+			    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
+			        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
+			        booking_unit_price 	: $(tr).find('td:eq(2)').find('input').val(),
+			        booking_quantity 	: $(tr).find('td:eq(3)').find('input').val(),
+			        unit_of_measure		: $(tr).find('td:eq(4)').find('option:selected').val()
+			    }
+			}); 
+	   		var formData = {
+	   			sales_trx_number : $('#transaction_number').text(),
+	            order_status  		: $('#header_status option:selected').val(),
+	            customer_id         : $('#customer option:selected').val(),
+	            transaction_date    : $('input[id=transaction_date]').val(),
+	            sales_rep_id        : $('input[id=sales_rep]').attr('name'),
+	            sales_trx_lines		: sales_lines
+	        };
+	        
+	        $.ajax({
+	            type        : 'PUT',
+	            url         : '/sales/update/',
+	            data        : JSON.stringify(formData),
+	            dataType    : 'json',
+	            encode      : true,
+	            success		: function(data){
+	            				location.href = host+"/sales/";
+	            			  },
+	            error		: function(jqXHR, exception){
+	            				if(jqXHR.status == 422){
+	                 	 		var card = document.getElementById('card-header');
+	           					var htmlcode = '';
+	           					Object.keys(jqXHR.responseJSON).forEach(function(key){
+	           						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+	           						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+	           						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+	           						 				text+
+	           						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+	           						 '                                               <span aria-hidden="true">X</span>  '  + 
+	           						 '                                           </button>  '  + 
+	           						 '                                      </div>  ' ; 
+	           						htmlcode += htmlcd;
+	           		    			});
+	           					htmlcode += card.innerHTML;
+	       		    			card.innerHTML = htmlcode;
+	            				}
+	           		    	}
+	        }).done(function() {
+	                console.log('ok'); 
+	        });
+	        e.preventDefault();
+	    });
 });

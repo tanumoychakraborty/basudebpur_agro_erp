@@ -10,50 +10,36 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Purchase Order Number # </strong> {{ data["purchase_trx_number"] }}
+                                <strong>Sales Order Number # &nbsp;&nbsp;&nbsp;</strong> <strong class="card-title" v-if="headerText">{{ data['details']["sales_trx_number"] }}</strong>
                             </div>
                             <div class="card-body card-block">
                             	<div class="row form-group">
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Purchase Transaction Number</label></div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Customer</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["purchase_trx_number"] }}</p>
+                                            <p class="form-control-static">{% for customer in data['customer_list'] %}
+	                                        	{% if data['details']['customer_id'] == customer['customer_id'] %}
+	                                        	{{ customer['customer_name'] }}
+	                                        	{% endif %}
+                                            	{% endfor %}
+	                                        	</p>
+                                        </div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Transaction Date</label></div>
+                                        <div class="col-12 col-md-2">
+                                            <p class="form-control-static">{{ data['details']["transaction_date"] }}</p>
                                         </div>
                                         <div class="co-12l col-md-2"><label class=" form-control-label">Status</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["order_status"] }}</p>
-                                        </div>
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Supplier</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["suppplier_id"] }}</p>
-                                        </div>
-                                </div>
-                            	<div class="row form-group">
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Transaction Date</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["transaction_date"] }}</p>
-                                        </div>
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Amount</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["amount"] }}</p>
-                                        </div>
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Buyer</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data['buyer_id'] }}</p>
+                                            <p class="form-control-static">{% for h_stat in data['header_status'] %}
+                                        		{% if data['details']['order_status'] == h_stat['lookup_code'] %}
+                                        		{{ h_stat['meaning'] }}
+                                        		{% endif %}
+                                            	{% endfor %}</p>
                                         </div>
                                 </div>
                             	<div class="row form-group">
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Weighting Number</label></div>
+                                        <div class="col-12 col-md-2"><label class=" form-control-label">Sales Rep</label></div>
                                         <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["weighing_number"] }}</p>
-                                		</div>
-                                		<div class="col-12 col-md-2"><label class=" form-control-label">Order Type</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">{{ data["order_type"] }}</p>
-                                        </div>
-                                        
-                                        <div class="col-12 col-md-2"><label class=" form-control-label">Vehicle Number</label></div>
-                                        <div class="col-12 col-md-2">
-                                            <p class="form-control-static">     </p>
+                                            <p class="form-control-static">{{ data['details']['sales_rep_name'] }}</p>
                                         </div>
                                 </div>
                             </div>
@@ -64,44 +50,98 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Purchase Line Details</strong>
-		                                <table class="table table-striped" id="line_table">
-		                                    <thead>
-		                                        <tr>
-		                                          <th scope="col">#</th>
-		                                          <th scope="col">Item</th>
-		                                          <th scope="col">Item Description</th>
-		                                          <th scope="col">Status</th>
-		                                          <th scope="col">Booking Unit Price</th>
-							  					  <th scope="col">Booking Unit Quantity</th>
-		                                          <th scope="col">Discount</th>
-		                                          <th scope="col">Receipt Unit Price</th>
-							  					  <th scope="col">Receipt Unit Quantity</th>
-		                                          <th scope="col">Unit</th>
-		                                      	</tr>
-		                                  </thead>
-		                                  <tbody>
-		                                  {% for row in data["purchase_trx_lines"] %}
-		                                  	<tr>
+                            	<div class="row form-group">
+                                	<strong class="card-title">Sales Line Details</strong>
+                                </div>
+                            </div>
+                            <div class="card-body card-block">                                   
+	                            <div class="row form-group">
+		                        	<table class="table table-striped" id="line_table">
+		                                <thead>
+		                                    <tr>
+		                                      <th scope="col">#</th>
+		                                      <th scope="col">Item</th>
+		                                      <th scope="col">Booking Unit Price</th>
+							  				  <th scope="col">Booking Unit Quantity</th>
+		                                      <th scope="col">Unit</th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                  {% for row in data['details']["sales_trx_lines"] %}
+		                                	<tr>
 		                                  		<th scope="row">{{ row["line_number"] }}</th>
-		                                  		<td>{{ row["item_id"] }}</td>
-		                                  		<td>{{ row["item_description"] }}</td>
-		                                  		<td>{{ row["line_status"] }}</td>
+		                                  		<td>{% for itm in data['item_list'] %}
+		                                        		{% if row['item_id'] == itm['item_id'] %}
+		                                        		{{ itm['description'] }}
+		                                        		{% endif %}
+                                            			{% endfor %}</td>
 		                                  		<td>{{ row["booking_unit_price"] }}</td>
 		                                  		<td>{{ row["booking_quantity"] }}</td>
-		                                  		<td>{{ row["discount"] }}</td>
-		                                  		<td>{{ row["receipt_unit_price"] }}</td>
-		                                  		<td>{{ row["receipt_quantity"] }}</td>
-		                                  		<td>{{ row["unit_of_measure"] }}</td>
+		                                  		<td>{% for um in data['uom'] %}
+		                                        		{% if row['unit_of_measure'] == um['lookup_code'] %}
+		                                        		{{ um['meaning'] }}
+		                                        		{% endif %}
+                                            			{% endfor %}</td>
 		                                  	</tr>
 		                                  	{% endfor %}
-		                                  </tbody>
-		                            	</table>
-                        </div>
-                    </div>
-                </div>
-        	</div>
-    </div><!-- .animated -->
-</div><!-- .content -->
+		                                </tbody>
+		                            </table>
+                        		</div>
+	                		</div>
+                    	</div>
+                	</div>
+        		</div>
+        		{% if data['details']['receipt_details'] %}
+        		<div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                            	<div class="row form-group">
+                                	<strong class="card-title">Receipt Details</strong>
+                                </div>
+                            </div>
+                            <div class="card-body card-block">                                   
+	                            <div class="row form-group">
+		                        	<table class="table table-striped" id="line_table">
+		                                <thead>
+		                                    <tr>
+		                                      <th scope="col">Challan</th>
+			                                  <th scope="col">Receipt</th>
+			                                  <th scope="col">Vehicle</th>
+								              <th scope="col">Challan Date</th>
+			                                  <th scope="col">Status</th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                  {% for row in data['details']["receipt_details"] %}
+		                                	<tr>
+		                                  		<td><strong><a href="/sales/{{ data['details']["sales_trx_number"] }}/update_receipt/{{ row['challan_number'] }}/">{{ row["challan_number"] }}</a></strong></td>
+			                                  	<td>{% if row["receipt_number"] is not none %} {{ row["receipt_number"] }} {% endif %}</td>
+			                                  	<td>{% if row["vehicle_number"] is not none %} {{ row["vehicle_number"] }} {% endif %}</td>
+			                                  	<td>{% if row["challan_date"] is not none %} {{ row["challan_date"] }} {% endif %}</td>
+			                                  	<td>{{ row["receipt_header_status"] }}</td>
+		                                  	</tr>
+		                                  	{% endfor %}
+		                                </tbody>
+		                            </table>
+                        		</div>
+	                		</div>
+                    	</div>
+                	</div>
+        		</div>
+        		{% endif %}
+        		<div class="row">
+                    <div class="col-lg-12">
+                                                       
+	                            <div class="row form-group">
+			                        <div class="col col-md-4"><center>{% if data['details']['order_status'] == 'OPEN' or data['details']['order_status'] == 'BOOKED' %}<a href="/sales/{{ data['details']["sales_trx_number"] }}/add_receipt/"><button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp; Add Chalan</button></a>{% endif %}</center></div>
+			                        <div class="col col-md-4"><center><a href="/sales"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back </button></a></center></div>
+			                        <div class="col col-md-4"><center>{% if data['details']['order_status'] == 'OPEN' or data['details']['order_status'] == 'BOOKED' %}<a href="/sales/{{ data['details']["sales_trx_number"] }}/close_so/"><button type="button" class="btn btn-danger"><i class="fa fa-remove"></i>&nbsp; Close PO </button></a>{% endif %}</center></div>
+		                		</div>
+	                		
+                	</div>
+        		</div>
+    		</div><!-- .animated -->
+		</div><!-- .content -->
         
 {% endblock %}

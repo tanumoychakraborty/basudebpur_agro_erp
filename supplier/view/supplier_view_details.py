@@ -43,7 +43,7 @@ class supplier_view_details(template):
                 template = jinja_template.get_template('supplier/supplier-site-update.html')
                 return HttpResponse(template.render(request, data=data))
             else:
-                template = jinja_template.get_template('supplier/sales-site-view.html')
+                template = jinja_template.get_template('supplier/supplier-site-view.html')
                 return HttpResponse(template.render(request, data=json_data[0]))
         else:
             template = jinja_template.get_template('internal_server_error.html')

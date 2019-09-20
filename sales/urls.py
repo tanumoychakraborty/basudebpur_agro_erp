@@ -20,11 +20,21 @@ from django.contrib.auth.decorators import login_required
 from sales.view.sales_view_details import sales_view_details
 from sales.view.sales_update_view import sales_update_view
 from sales.view.print_sales_challan import print_sales_challan
+from sales.view.receipt_view_view import receipt_view_view
+from sales.view.sales_receipt_add_view import sales_receipt_add_view
+from sales.view.sales_receipt_update_view import sales_receipt_update_view
+from sales.view.sales_receipt_cancel_view import sales_receipt_cancel_view
+from sales.view.sales_close_view import sales_close_view
 
 urlpatterns = [
     path('', login_required(sales_view_view.as_view()), name='sales_view'),
+    path('receipt/', login_required(receipt_view_view.as_view()), name='receipt_view'),
+    path('<str:transaction_number>/add_receipt/', login_required(sales_receipt_add_view.as_view()), name='add_sales_receipt'),
+    path('<str:transaction_number>/update_receipt/<str:challan_number>/', login_required(sales_receipt_update_view.as_view()), name='update_sales_receipt'),
+    path('<str:transaction_number>/cancel_receipt/<str:challan_number>/', login_required(sales_receipt_cancel_view.as_view()), name='sales_receipt_cancel'),
+    path('<str:transaction_number>/print_challan/<str:challan_number>/', login_required(print_sales_challan.as_view()), name='print_sales_challan'),
     path('add/', login_required(sales_add_view.as_view()), name='sales_add'),
     path('update/', login_required(sales_update_view.as_view()), name='sales_update'),
     path('<str:transaction_number>/', login_required(sales_view_details.as_view()), name='sales_details'),
-    path('<str:transaction_number>/print_challan', login_required(print_sales_challan.as_view()), name='sales_details')
+    path('<str:transaction_number>/close_so/', login_required(sales_close_view.as_view()), name='close_so')
 ]

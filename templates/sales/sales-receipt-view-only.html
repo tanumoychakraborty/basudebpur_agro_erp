@@ -12,13 +12,13 @@
 </script>
         <div class="content">
             <div class="animated fadeIn">
-            	<form id="purchase-receipt-update-form" class="form-horizontal">
+            	<form id="sales-receipt-update-form" class="form-horizontal">
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
                             	<div class="card-header" id="card-header">
                             		
-                                	<strong id="purchase_receipt" name="{{ data['transaction_number'] }}">Purchase Receipt</strong>
+                                	<strong id="sales_receipt" name="{{ data['transaction_number'] }}">sales Receipt</strong>
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
@@ -60,7 +60,7 @@
 	                            </div>
 	                            <div class="card-body card-block">                                   
 	                                    <div class="row form-group">
-	                                    	<table class="table table-striped" id="purchase_receipt_line_add_table">
+	                                    	<table class="table table-striped" id="sales_receipt_line_add_table">
 			                                    <thead>
 			                                        <tr>
 			                                          <th scope="col">#</th>
@@ -110,9 +110,9 @@
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
-	                                        <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back {{ complete }}</button></a></center></div>
-	                                        {% if data['details']['receipt_header_status'] == 'COMPLETE' %} <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Receipt</button></a></center></div> {% endif %}
-	                                        <div class="col col-md-4"><center><a href="/purchase/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Challan</button></a></center></div>
+	                                        <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back {{ complete }}</button></a></center></div>
+	                                        {% if data['details']['receipt_header_status'] == 'COMPLETE' %} <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Receipt</button></a></center></div> {% endif %}
+	                                        <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Challan</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>

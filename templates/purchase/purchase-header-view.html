@@ -5,9 +5,8 @@
 <link rel="stylesheet" href="{{ static('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>$(function() {
+<script type="text/javascript">jQuery(function($) {
 	$.noConflict();
     $( "#from_transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
     $( "#to_transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
@@ -29,6 +28,7 @@
                                         <div class="col col-md-2"><input type="text" id="transaction_number" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="header_status" class=" form-control-label">Status</label></div>
                                         <div class="col col-md-2"><select id="header_status" class="form-control-sm form-control">
+                                        		<option value="" selected="">Any</option>
                                         	{% for h_status in data['header_status'] %}
                                                 <option value="{{ h_status['lookup_code'] }}">{{ h_status['meaning'] }}</option>
                                             {% endfor %}
@@ -102,18 +102,18 @@
             </div>
         <!-- table -->
         </div>
-    <script src="{{ static('assets/js/lib/data-table/datatables.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/jszip.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/vfs_fonts.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
-    <script src="{{ static('assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
-    <script src="{{ static('assets/js/init/datatables-init.js') }}"></script>
 
 
+	<script src="{{ static('assets/js/lib/data-table/datatables.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/dataTables.bootstrap.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/dataTables.buttons.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/buttons.bootstrap.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/jszip.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/vfs_fonts.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/buttons.html5.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/buttons.print.min.js') }}"></script>
+	<script src="{{ static('assets/js/lib/data-table/buttons.colVis.min.js') }}"></script>
+	<script src="{{ static('assets/js/init/datatables-init.js') }}"></script>
     <script>
         $('#bootstrap-data-table').DataTable( {
           				'bDestroy': true,
@@ -157,8 +157,6 @@
 											            { 'data': 'purchase_trx_number' },
 											            { 'data': 'transaction_date' },
 											            { 'data': 'supplier_name' },
-											            { 'data': 'amount' },
-											            { 'data': 'order_type' },
 											            { 'data': 'order_status' },
 											        ],
 										"columnDefs": [{

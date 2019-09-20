@@ -14,37 +14,33 @@
 </script>
         <div class="content">
             <div class="animated fadeIn">
-            	<form id="supplier-update-form" class="form-horizontal">
+            	<form id="customer-add-form" class="form-horizontal">
                 	<div class="row">
                     	<div class="col-lg-12">
                         	<div class="card">
                             	<div class="card-header" id="card-header">
-                                	<strong>Supplier Order Details</strong>
+                                	<strong>Customer Order Details</strong>
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Supplier Code</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="supplier_code" name="{{ data['details']["supplier_id"] }}" value="{{ data['details']["supplier_code"] }}" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Supplier Name</label></div>
-                                        <div class="col col-md-2"><input type="text" id="supplier_name" name="text-input" value="{{ data['details']["supplier_name"] }}" class="form-control"/></div>
-                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Supplier Type</label></div>
-                                        <div class="col-12 col-md-2"><select id="supplier_type" class="form-control-sm form-control">
-                                        	{% for s_type in data['supplier_code'] %}
-                                        		{% if data['details']['supplier_code'] == s_type['lookup_code'] %}
-                                                <option value="{{s_type['lookup_code']}}" selected="">{{ s_type['meaning'] }}</option>
-                                                {% else %}
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Customer Code</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="customer_code" name="{{ data['details']["customer_id"] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="text-input" class=" form-control-label">Customer Name</label></div>
+                                        <div class="col col-md-2"><input type="text" id="customer_name" name="text-input" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Customer Type</label></div>
+                                        <div class="col-12 col-md-2"><select id="customer_type" class="form-control-sm form-control">
+                                        	{% for s_type in data['customer_code'] %}
                                                 <option value="{{s_type['lookup_code']}}" >{{ s_type['meaning'] }}</option>
-                                                {% endif %}
                                             {% endfor %}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                     	<div class="col col-md-2"><label for="text-input" class=" form-control-label">Description</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="description" name="text-input" value="{{ data['details']["description"] }}" class="form-control"/></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="description" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="effective_from">Effective From</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="effective_from" value="{{ data['details']["effective_from"] }}">
+						                    <input type="text" class="form-control" id="effective_from" >
 						                    <div class="input-group-append" data-target="#effective_from">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
@@ -52,21 +48,17 @@
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label">Enabled</label></div>
                                         <div class="col-12 col-md-2"><div class="form-check-inline form-check">
                                                 <label for="enabled" class="form-check-label ">
-                                                	{% if data['details']["enabled_flag"] == 'Y' %}
-                                                		<input type="checkbox" id="enabled" name="enabled" value="enabled" class="form-check-input" checked="">
-                                                {% else %}
                                                 		<input type="checkbox" id="enabled" name="enabled" value="enabled" class="form-check-input">
-                                                {% endif %}
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <div class="col col-md-2"><label for="supplier" class="form-control-label">Remarks</label></div>
-                                        <div class="col-12 col-md-2"><input type="text" id="remarks" name="text-input" value="{{ data['details']['remarks'] }}" class="form-control"/></div>
+                                        <div class="col col-md-2"><label for="customer" class="form-control-label">Remarks</label></div>
+                                        <div class="col-12 col-md-2"><input type="text" id="remarks" name="text-input" class="form-control"/></div>
                                         <div class="col col-md-2"><label for="text-input" class=" form-control-label" for="effective_to">Effective To</label></div>
                                         <div class="col col-md-2 input-group">
-						                    <input type="text" class="form-control" id="effective_to" value="{{ data['details']["effective_to"] }}">
+						                    <input type="text" class="form-control" id="effective_to" >
 						                    <div class="input-group-append" data-target="#effective_to">
 						                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 						                    </div>
@@ -89,34 +81,23 @@
 	                            </div>
 	                            <div class="card-body card-block">                                   
 	                                    <div class="row form-group">
-	                                    	<table class="table table-striped" id="supplier_site_update_table">
+	                                    	<table class="table table-striped" id="customer_site_add_table">
 			                                    <thead>
 			                                        <tr>
-			                                          <th scope="col">Supplier Site Code</th>
+			                                          <th scope="col">Customer Site Code</th>
 			                                          <th scope="col">Address</th>
 			                                          <th scope="col">Phone Number 1</th>
 			                                          <th scope="col">Phone Number 2</th>
 								  					  <th scope="col">Email</th>
-			                                          <th scope="col">Inactive Date</th>
 			                                      	</tr>
 			                                  </thead>
 			                                  <tbody>
-			                                  {% for row in data["details"]["supplier_master_sites"] %}
-			                                  	<tr>
-			                                  		<td><input type="text" name="{{ row["supplier_site_id"] }}" value="{{ row["supplier_site_code"] }}"></td>
-			                                  		<td><input type="text" value="{{ row["supplier_site_address"] }}"></td>
-			                                  		<td><input type="text" value="{{ row["phone_number1"] }}"></td>
-			                                  		<td><input type="text" value="{{ row["phone_number2"] }}"></td>
-			                                  		<td><input type="text" value="{{ row["email"] }}"></td>
-			                                  		<td><input type="text" name="inactive_date" value="{{ row["inactive_date"] }}"><i class="fa fa-calendar"></i></input></td>
-			                                  	</tr>
-			                                  	{% endfor %}
 			                                  </tbody>
 			                            	</table>
 	                                    </div>
 	                                    <div class="row form-group">
 	                                        <div class="col col-md-6"><center><button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>&nbsp; Save</button></center></div>
-	                                        <div class="col col-md-6"><center><a href="/supplier"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
+	                                        <div class="col col-md-6"><center><a href="/customer"><button type="button" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp; Cancel</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>
@@ -128,7 +109,7 @@
 
 <script>
 	function addRow () {
-        var myTable = document.getElementById("supplier_site_update_table");
+        var myTable = document.getElementById("customer_site_add_table");
         var currentIndex = myTable.rows.length;
         var currentRow = myTable.insertRow(currentIndex);        
 
@@ -156,12 +137,6 @@
         email.setAttribute("type", "text");
         email.setAttribute("id", "email");
         email.setAttribute("class", "form-control");
-        
-        var inactive_date = document.createElement("input");
-        inactive_date.setAttribute("type", "text");
-        inactive_date.setAttribute("name", "inactive_date");
-        inactive_date.setAttribute("class", "form-control");
-        //inactive_date.click(function(event){$(this).datepicker();});
 
         var currentCell = currentRow.insertCell(0);
         currentCell.appendChild(site_code);
@@ -177,10 +152,6 @@
         
         var currentCell = currentRow.insertCell(4);
         currentCell.appendChild(email);
-        
-        var currentCell = currentRow.insertCell(5);
-        currentCell.appendChild(inactive_date);
-        $( "[name='inactive_date']" ).each(function(){$(this).datepicker({ dateFormat: 'yy-mm-dd' });});
     }
 </script>
 
