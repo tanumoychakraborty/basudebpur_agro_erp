@@ -136,7 +136,7 @@
 	                            <div class="row form-group">
 			                        <div class="col col-md-4"><center>{% if data['details']['order_status'] == 'OPEN' or data['details']['order_status'] == 'BOOKED' %}<a href="/sales/{{ data['details']["sales_trx_number"] }}/add_receipt/"><button type="button" class="btn btn-success"><i class="fa fa-plus"></i>&nbsp; Add Chalan</button></a>{% endif %}</center></div>
 			                        <div class="col col-md-4"><center><a href="/sales"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back </button></a></center></div>
-			                        <div class="col col-md-4"><center>{% if data['details']['order_status'] == 'OPEN' or data['details']['order_status'] == 'BOOKED' %}<a href="/sales/{{ data['details']["sales_trx_number"] }}/close_so/"><button type="button" class="btn btn-danger"><i class="fa fa-remove"></i>&nbsp; Close PO </button></a>{% endif %}</center></div>
+			                        <div class="col col-md-4"><center>{% if data['details']['order_status'] == 'OPEN' or data['details']['order_status'] == 'BOOKED' %}<a href="/sales/{{ data['details']["sales_trx_number"] }}/close_so/"><button type="button" class="btn btn-danger"><i class="fa fa-remove"></i>&nbsp; Close SO </button></a>{% endif %}</center></div>
 		                		</div>
 	                		
                 	</div>

@@ -4,6 +4,14 @@
 <!-- Content -->
 <link rel="stylesheet" href="{{ static('assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">jQuery(function($) {
+	$.noConflict();
+    $( "#from_transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    $( "#to_transaction_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+});
+</script>
         <div class="content">
         <!-- table -->
         <div class="animated fadeIn">

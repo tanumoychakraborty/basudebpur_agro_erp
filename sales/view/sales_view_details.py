@@ -13,6 +13,7 @@ from basudebpur_agro_erp.URLS import SALES_TRANSACTION, ITEM_LIST,\
 from django.views import defaults
 from basudebpur_agro_erp.permission.sales_permissions import hasUpdateSalesRecordAccess
 import json
+from basudebpur_agro_erp.util import clearDictionary
 
 class sales_view_details(template):
     '''
@@ -42,6 +43,7 @@ class sales_view_details(template):
                             row['challan_date'] = row['challan_date'].split(' ')[0]
                         if row['receipt_date']:
                             row['receipt_date'] = row['receipt_date'].split(' ')[0]
+                details = clearDictionary(json_data['sales_trx_details'][0], None)
                 data= {'user' : request.user.username,
                        'po_type' : so_type['salesOrderType'],
                        'customer_list' : customer_list['customerLists'],
@@ -49,7 +51,7 @@ class sales_view_details(template):
                        'uom' : uom['UnitOfMeasure'],
                        'header_status' : po_header_statuses['purchaseOrderHeaderStatus'],
                        'line_status' : po_line_statuses['purchaseOrderLineStatus'],
-                       'details' : json_data['sales_trx_details'][0]
+                       'details' : details
                    }
                 
                 if json_data['sales_trx_details'][0]['order_status'] == 'OPEN':

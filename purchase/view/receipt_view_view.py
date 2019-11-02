@@ -18,7 +18,7 @@ class receipt_view_view(template):
 
     def get(self, request):
         receipt_header_statuses = json.loads(requests.get(RECEIPT_HEADER_STATUS).text)
-        r = requests.get(url = RECEIPT) 
+        r = requests.get(url = RECEIPT, params={'source_transaction_type':'PURCHASE'}) 
         if r.status_code is 200:
             json_data = r.json()
             data= {'header_status' : receipt_header_statuses['lookup_details'],
@@ -32,6 +32,7 @@ class receipt_view_view(template):
     def post(self, request):        
         data = json.loads(request.body)
         search_params = data.copy()
+        search_params['source_transaction_type'] = 'PURCHASE'
         for key, value in data.items():
             if value == '':
                 search_params.pop(key)

@@ -9,7 +9,7 @@ import random
 from django.http.response import HttpResponse
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE, \
-    RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH
+    RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH, ITEM_DETAILS
 from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
@@ -59,11 +59,8 @@ class sales_receipt_update_view(template):
             #data['source_transaction_header_id'] = transaction_number
             #data['source_transaction_type'] = 'PURCHASE'            
             data['last_updated_by'] = request.user.username
-            if data['bata'] == '':
-                data.pop('bata')
-            if data['net_weight'] == '':
-                data.pop('net_weight')
             total_bags = 0
+            net_weight = 0
             all_line_has_bags = False
             
             if 'receipt_lines' in data.keys():
@@ -72,17 +69,23 @@ class sales_receipt_update_view(template):
                     line['last_updated_by'] = request.user.username
                     if 'number_of_bags' in line.keys():
                         if line['number_of_bags'] != '' and isFloat(line['number_of_bags']):
+                            item = json.loads(requests.get(ITEM_DETAILS+line['item_id']).text)
+                            line['quantity'] = float(item['item_details'][0]['conversion']) * float(line['number_of_bags'])
+                            if line['adjust'] != '' and isFloat(line['adjust']):
+                                line['quantity'] = line['quantity'] - float(line['adjust'])
                             total_bags += float(line['number_of_bags'])
+                            net_weight += line['quantity']
                             all_line_has_bags = all_line_has_bags & True
                         else:
                             line.pop('number_of_bags')
                             all_line_has_bags = all_line_has_bags & False
                     
+                    line.pop('adjust')
+                    
                     if line['unit_price'] == '':
                         line.pop('unit_price')
                     if line['item_id'] == '':
                         line.pop('item_id')
-                    line['quantity'] = 0
                     if line['load_unload_area'] == '':
                         line.pop('load_unload_area')
                     if line['discount'] == '':
@@ -91,17 +94,8 @@ class sales_receipt_update_view(template):
                         if line['receipt_line_id'] == '':
                             line.pop('receipt_line_id')
                         
-            if total_bags > 0 and 'bata' in data.keys() and 'net_weight' in data.keys() and all_line_has_bags:
-                net_weight = float(data['net_weight'])
-                weight = net_weight - float(data['bata'])
-                average_weight = weight / total_bags
-                for line in data['receipt_lines']:
-                    line['quantity'] = average_weight * float(line['number_of_bags'])
-                data['average_weight'] = average_weight
-                data['total_bags'] = total_bags
-            else:
-                data['average_weight'] = 0
-                data['total_bags'] = 0
+            data['total_bags'] = total_bags
+            data['net_weight'] = net_weight
                 
             jsondata = json.dumps(data)
             

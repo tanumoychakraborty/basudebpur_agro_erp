@@ -10,7 +10,8 @@ from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAc
 import json
 import requests
 from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE,\
-    PURCHASE_ORDER_HEADER_STATUS, RECEIPT, CREATE_CHALLAN, SALES_ORDER_HEADER_STATUS
+    PURCHASE_ORDER_HEADER_STATUS, RECEIPT, CREATE_CHALLAN, SALES_ORDER_HEADER_STATUS,\
+    RECEIPT_LINE_STATUS
 import random
 
 class sales_receipt_add_view(template):
@@ -23,7 +24,7 @@ class sales_receipt_add_view(template):
             item_list = json.loads(requests.get(ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #            po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
-            so_receipt_statuses = json.loads(requests.get(SALES_ORDER_HEADER_STATUS).text)
+            so_receipt_statuses = json.loads(requests.get(RECEIPT_LINE_STATUS).text)
 #             po_type = json.loads(requests.get(PURCHASE_ORDER_TYPE).text)
 #             supplier_list = json.loads(requests.get(SUPPLIER_LIST).text)
 #             
@@ -37,7 +38,7 @@ class sales_receipt_add_view(template):
             data['created_by'] = request.user.username
             data['last_updated_by'] = request.user.username
             data['source_transaction_header_id'] = transaction_number
-            data['source_transaction_type'] = 'PURCHASE'  
+            data['source_transaction_type'] = 'SALES'  
             challan_data = json.loads(requests.post(RECEIPT, json=data).text)
             if challan_data['challan_date']:
                 challan_data['challan_date'] = challan_data['challan_date'].split(' ')[0]

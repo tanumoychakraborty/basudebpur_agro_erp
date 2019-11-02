@@ -436,66 +436,6 @@ jQuery(document).ready(function($) {
         });
         e.preventDefault();
     });
-    
-    
-	$("#purchase-receipt-add-form").submit(function(e) {
-	   
-		var purchase_receipt_lines = new Array();
-		var trx_number = $('strong[id=purchase_receipt]').attr('name');
-		$('#purchase_receipt_line_add_table tr').each(function(row, tr){
-			purchase_receipt_lines[row-1]={
-		    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
-		        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
-		        weighing_number	: $(tr).find('td:eq(2)').find('input').val(),
-		        load_unload_area 	: $(tr).find('td:eq(3)').find('input').val(),
-		        quantity 			: $(tr).find('td:eq(4)').find('input').val(),
-		        unit_of_measure		: $(tr).find('td:eq(5)').find('option:selected').val(),
-		        unit_price 			: $(tr).find('td:eq(6)').find('input').val(),
-		        discount 			: $(tr).find('td:eq(7)').find('input').val(),
-		        receipt_line_status	: $(tr).find('td:eq(8)').find('option:selected').val()
-		    }
-		}); 
-		var formData = {
-			vehicle_number         	: $('input[id=truck_numer]').val(),
-			receipt_date		    : $('input[id=purchase_receipt_date]').val(),
-			challan_number     		: $('p[id=chalan_number]').text(),
-			bata		     		: $('p[id=bata]').text(),
-	        receipt_lines			: purchase_receipt_lines
-	    };
-    
-	    $.ajax({
-	        type        : 'POST',
-	        url         : '/purchase/'+trx_number+'/add_receipt/',
-	        data        : JSON.stringify(formData),
-	        dataType    : 'json',
-	        encode      : true,
-	        success		: function(data){
-	        				location.href = host+'/purchase/'+trx_number+'/';
-	        			  },
-	        error		: function(jqXHR, exception){
-	        				if(jqXHR.status == 422){
-		    					var card = document.getElementById('card-header');
-		    					var htmlcode = '';
-		    					Object.keys(jqXHR.responseJSON).forEach(function(key){
-		    						var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
-		    						var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
-		    						 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
-		    						 				text+
-		    						 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
-		    						 '                                               <span aria-hidden="true">X</span>  '  + 
-		    						 '                                           </button>  '  + 
-		    						 '                                      </div>  ' ; 
-		    						htmlcode += htmlcd;
-		    					});
-		    					htmlcode += card.innerHTML;
-		    					card.innerHTML = htmlcode;
-		    				}
-		    			}
-	    }).done(function() {
-	            console.log('ok'); 
-	    });
-	    e.preventDefault();
-	});
 	
 	$("#purchase-receipt-update-form").submit(function(e) {
 		   
@@ -667,4 +607,66 @@ jQuery(document).ready(function($) {
 	        });
 	        e.preventDefault();
 	    });
+
+		$("#sales-receipt-update-form").submit(function(e) {
+			   
+			var sales_receipt_lines = new Array();
+			var trx_number = $('strong[id=sales_receipt]').attr('name');
+			var challan_number = $('p[id=chalan_number]').text();
+			$('#sales_receipt_line_add_table tr').each(function(row, tr){
+				sales_receipt_lines[row-1]={
+			    	line_number		 	: $(tr).find('td:eq(0)').find('strong').text(),
+			    	receipt_line_id	 	: $(tr).find('td:eq(0)').find('strong').attr('value'),
+			        item_id 			: $(tr).find('td:eq(1)').find('option:selected').val(),
+			        description			: $(tr).find('td:eq(2)').find('input').val(),
+			        weighing_number		: $(tr).find('td:eq(3)').find('input').val(),
+			        load_unload_area 	: $(tr).find('td:eq(4)').find('input').val(),
+			        number_of_bags		: $(tr).find('td:eq(5)').find('input').val(),
+			        adjust				: $(tr).find('td:eq(7)').find('input').val(),
+			        unit_price 			: $(tr).find('td:eq(8)').find('input').val(),
+			        discount 			: $(tr).find('td:eq(9)').find('input').val(),
+			        receipt_line_status	: $(tr).find('td:eq(10)').find('option:selected').val()
+			    }
+			}); 
+			var formData = {
+				vehicle_number         	: $('input[id=truck_numer]').val(),
+				challan_date		    : $('input[id=challan_date]').val(),
+				challan_number     		: challan_number,
+		        receipt_lines			: sales_receipt_lines
+		    };
+	    
+		    $.ajax({
+		        type        : 'PUT',
+		        url         : '/sales/'+trx_number+'/update_receipt/'+challan_number+'/',
+		        data        : JSON.stringify(formData),
+		        dataType    : 'json',
+		        encode      : true,
+		        success		: function(data){
+		        				location.href = host+'/sales/'+trx_number+'/';
+		        			  },
+		    	error		: function(jqXHR, exception){
+		    					if(jqXHR.status == 422){
+		    						var card = document.getElementById('card-header');
+		    						var htmlcode = '';
+		    						Object.keys(jqXHR.responseJSON).forEach(function(key){
+		    							var text = key + '&nbsp:&nbsp' + jqXHR.responseJSON[key]
+		    							var htmlcd =  '   <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">  '  + 
+		    							 '                                           <span class="badge badge-pill badge-danger">Error</span>  '  + 
+		    							 				text+
+		    							 '                                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">  '  + 
+		    							 '                                               <span aria-hidden="true">X</span>  '  + 
+		    							 '                                           </button>  '  + 
+		    							 '                                      </div>  ' ; 
+		    							htmlcode += htmlcd;
+		    						});
+		    						htmlcode += card.innerHTML;
+		    						card.innerHTML = htmlcode;
+		    					}
+		    				}
+		    }).done(function() {
+		        console.log('ok'); 
+		    });
+		    e.preventDefault();
+		});
+
 });

@@ -18,7 +18,7 @@
                         	<div class="card">
                             	<div class="card-header" id="card-header">
                             		
-                                	<strong id="sales_receipt" name="{{ data['transaction_number'] }}">sales Receipt</strong>
+                                	<strong id="sales_receipt" name="{{ data['transaction_number'] }}">Sales Receipt</strong>
                             	</div>
                             	<div class="card-body card-block">                                    
                                     <div class="row form-group">
@@ -32,12 +32,8 @@
                                         <div class="col-12 col-md-2"><p id="truck_numer" class="form-control-static">{{ data['details']['vehicle_number'] }}</p></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Net Weight (Kg)</label></div>
                                         <div class="col-12 col-md-2"><p id="net_weight" class="form-control-static">{{ data['details']['net_weight'] }}</p></div>
-						                <div class="col col-md-2"><label for="text-input" class="form-control-label">Bata</label></div>
-                                        <div class="col-12 col-md-2"><p id="bata" class="form-control-static">{{ data['details']['bata'] }}</p></div>
-                                        <div class="col col-md-2"><label for="text-input" class="form-control-label">Average Weight (Kg)</label></div>
-                                        <div class="col-12 col-md-2"><p id="average_weight" class="form-control-static">{{ data['details']['average_weight'] }}</p></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Total Bags</label></div>
-                                        <div class="col-12 col-md-2"><p id="total_bags" class="form-control-static">{{ data['details']['"total_bags"'] }}</p></div>
+                                        <div class="col-12 col-md-2"><p id="total_bags" class="form-control-static">{{ data['details']['total_bags'] }}</p></div>
                                         <div class="col col-md-2"><label for="text-input" class="form-control-label">Receipt Date</label></div>
                                         <div class="col-12 col-md-2"><p id="bata" class="form-control-static">{{ data['details']['receipt_date'] }}</p></div>
                                     </div>
@@ -67,9 +63,10 @@
 			                                          <th scope="col">Item</th>
 			                                          <th scope="col">Description</th>
 			                                          <th scope="col">TR Number</th>
-			                                          <th scope="col">Unloading Area</th>
+			                                          <th scope="col">Loading Area</th>
 								  					  <th scope="col">Bags</th>
 			                                          <th scope="col">Quantity (Kg)</th>
+			                                          <th scope="col">Adjust</th>
 			                                          <th scope="col">Rate</th>
 			                                          <th scope="col">Discount</th>
 			                                          <th scope="col">Status</th>
@@ -93,10 +90,11 @@
 				                                  	<td>{% if row["load_unload_area"] %} {{ row["load_unload_area"] }} {% endif %}</td>
 				                                  	<td>{% if row["number_of_bags"] %} {{ row["number_of_bags"] }} {% endif %}</td>
 				                                  	<td>{% if row["quantity"] %} {{ row["quantity"] }} {% endif %}</td>
+				                                  	<td>{% if row["adjust"] %} {{ row["adjust"] }} {% endif %}</td>
 				                                  	<td>{% if row["unit_price"] %} {{ row["unit_price"] }} {% endif %}</td>
 				                                  	<td>{% if row["discount"] %} {{ row["discount"] }} {% endif %}</td>
 				                                  	<td>{% if row['receipt_line_status'] %} 
-				                                  			{% for status in data['po_receipt_statuses'] %}
+				                                  			{% for status in data['so_receipt_statuses'] %}
 					                                        		{% if row['receipt_line_status'] == status['lookup_code'] %}
 					                                                	{{ status['meaning'] }}
 					                                                {% endif %}
@@ -112,7 +110,7 @@
 	                                    <div class="row form-group">
 	                                        <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i>&nbsp; Back {{ complete }}</button></a></center></div>
 	                                        {% if data['details']['receipt_header_status'] == 'COMPLETE' %} <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Receipt</button></a></center></div> {% endif %}
-	                                        <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Challan</button></a></center></div>
+	                                        <div class="col col-md-4"><center><a href="/sales/{{ data['transaction_number'] }}/print_challan/{{ data['details']['challan_number'] }}"><button type="button" class="btn btn-warning"><i class="fa fa-print"></i>&nbsp; Challan</button></a></center></div>
 	                                	</div>
 	                            	</div>
                         	</div>

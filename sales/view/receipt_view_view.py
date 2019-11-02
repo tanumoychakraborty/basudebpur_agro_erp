@@ -18,13 +18,13 @@ class receipt_view_view(template):
 
     def get(self, request):
         receipt_header_statuses = json.loads(requests.get(RECEIPT_HEADER_STATUS).text)
-        r = requests.get(url = RECEIPT) 
+        r = requests.get(url = RECEIPT, params={'source_transaction_type':'SALES'}) 
         if r.status_code is 200:
             json_data = r.json()
             data= {'header_status' : receipt_header_statuses['lookup_details'],
                    'pos' : json_data['receipt_details']
                    }
-            template = jinja_template.get_template('purchase/purchase-search-receipt.html')
+            template = jinja_template.get_template('sales/sales-search-receipt.html')
             return HttpResponse(template.render(request, data=data))
         else:
             return HttpResponse(defaults.server_error(request))
@@ -32,6 +32,7 @@ class receipt_view_view(template):
     def post(self, request):        
         data = json.loads(request.body)
         search_params = data.copy()
+        search_params['source_transaction_type'] = 'SALES'
         for key, value in data.items():
             if value == '':
                 search_params.pop(key)

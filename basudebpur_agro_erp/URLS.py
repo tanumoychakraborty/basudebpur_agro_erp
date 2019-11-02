@@ -17,6 +17,7 @@ PURCHASE_ORDER_LINES_STATUS = API + '/api/common_lookups?lookupName=PURCHASE_ORD
 SALES_ORDER_HEADER_STATUS = API + '/api/common_lookups?lookupName=SALES_ORDER_HEADER_STATUS'
 UNIT_OF_MEASURE = API + '/api/common_lookups?lookupName=UNIT_OF_MEASURE'
 ITEM_LIST = API + '/api/inventory_items?OperationType=ITEM_LIST'
+ITEM_DETAILS = API + '/api/inventory_items?item_id='
 RECEIPT_LINE_STATUS = API + '/api/common_lookups?lookupName=RECEIPT_LINE_STATUS'
 RECEIPT_HEADER_STATUS = API + '/api/common_lookups?lookupName=RECEIPT_HEADER_STATUS'
 SUPPLIER_TYPE = API + '/api/common_lookups?lookupName=SUPPLIER_TYPE'
