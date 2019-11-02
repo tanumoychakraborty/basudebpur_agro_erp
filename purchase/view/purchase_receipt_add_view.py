@@ -9,7 +9,7 @@ from django.http.response import HttpResponse
 from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
 import json
 import requests
-from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE,\
+from basudebpur_agro_erp.URLS import PURCHASE_ITEM_LIST, UNIT_OF_MEASURE,\
     PURCHASE_ORDER_HEADER_STATUS, RECEIPT, CREATE_CHALLAN, RECEIPT_LINE_STATUS
 import random
 
@@ -20,7 +20,7 @@ class purchase_receipt_add_view(template):
 
     def get(self, request, transaction_number):
         if hasAddPurchaseRecordAccess(request.user):
-            item_list = json.loads(requests.get(ITEM_LIST).text)
+            item_list = json.loads(requests.get(PURCHASE_ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #            po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
             po_receipt_statuses = json.loads(requests.get(RECEIPT_LINE_STATUS).text)

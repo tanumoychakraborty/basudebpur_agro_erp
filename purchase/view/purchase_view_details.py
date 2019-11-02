@@ -7,7 +7,7 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, ITEM_LIST,\
+from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, PURCHASE_ITEM_LIST,\
     UNIT_OF_MEASURE, PURCHASE_ORDER_TYPE, SUPPLIER_LIST,\
     PURCHASE_ORDER_HEADER_STATUS
 from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
@@ -25,7 +25,7 @@ class purchase_view_details(template):
             json_data = r.json()
             
             if hasUpdatePurchaseRecordAccess(request.user):
-                item_list = json.loads(requests.get(ITEM_LIST).text)
+                item_list = json.loads(requests.get(PURCHASE_ITEM_LIST).text)
                 uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
                 po_header_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)
                 po_type = json.loads(requests.get(PURCHASE_ORDER_TYPE).text)

@@ -7,7 +7,7 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, ITEM_LIST,\
+from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, PURCHASE_ITEM_LIST,\
     UNIT_OF_MEASURE, PURCHASE_ORDER_TYPE, SUPPLIER_LIST,\
     PURCHASE_ORDER_HEADER_STATUS, RECEIPT_SEARCH
 from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
@@ -22,7 +22,7 @@ class print_purchase_challan(template):
 
 
     def get(self, request, transaction_number, challan_number):
-        item_list = json.loads(requests.get(ITEM_LIST).text)
+        item_list = json.loads(requests.get(PURCHASE_ITEM_LIST).text)
         uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #        po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
         po_receipt_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)

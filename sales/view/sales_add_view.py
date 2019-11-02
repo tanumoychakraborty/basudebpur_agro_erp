@@ -8,7 +8,7 @@ from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 import json
-from basudebpur_agro_erp.URLS import SALES_TRANSACTION, ITEM_LIST,\
+from basudebpur_agro_erp.URLS import SALES_TRANSACTION, SALES_ITEM_LIST,\
     UNIT_OF_MEASURE, SALES_ORDER_TYPE, CUSTOMER_LIST
 import requests
 from django.shortcuts import redirect
@@ -20,7 +20,7 @@ class sales_add_view(template):
 
     def get(self, request):
         if hasAddSalesRecordAccess(request.user):
-            item_list = json.loads(requests.get(ITEM_LIST).text)
+            item_list = json.loads(requests.get(SALES_ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #             po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
 #             po_header_statuses = requests.get(PURCHASE_ORDER_HEADER_STATUS)

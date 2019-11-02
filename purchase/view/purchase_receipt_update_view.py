@@ -8,7 +8,7 @@ import random
 
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import ITEM_LIST, UNIT_OF_MEASURE, \
+from basudebpur_agro_erp.URLS import PURCHASE_ITEM_LIST, UNIT_OF_MEASURE, \
     RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH
 from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
 from basudebpur_agro_erp.view.template import template
@@ -23,7 +23,7 @@ class purchase_receipt_update_view(template):
 
     def get(self, request, transaction_number, challan_number):
         if hasAddPurchaseRecordAccess(request.user):
-            item_list = json.loads(requests.get(ITEM_LIST).text)
+            item_list = json.loads(requests.get(PURCHASE_ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
             po_receipt_statuses = json.loads(requests.get(RECEIPT_LINE_STATUS).text)
             receipt_details = json.loads(requests.get(RECEIPT_SEARCH+'challan_number='+challan_number).text)

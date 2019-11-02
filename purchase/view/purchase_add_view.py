@@ -8,7 +8,7 @@ from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
 import json
-from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, ITEM_LIST,\
+from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, PURCHASE_ITEM_LIST,\
     UNIT_OF_MEASURE, PURCHASE_ORDER_LINES_STATUS, PURCHASE_ORDER_HEADER_STATUS,\
     PURCHASE_ORDER_TYPE, SUPPLIER_LIST
 import requests
@@ -22,7 +22,7 @@ class purchase_add_view(template):
 
     def get(self, request):
         if hasAddPurchaseRecordAccess(request.user):
-            item_list = json.loads(requests.get(ITEM_LIST).text)
+            item_list = json.loads(requests.get(PURCHASE_ITEM_LIST).text)
             uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
 #             po_line_statuses = requests.get(PURCHASE_ORDER_LINES_STATUS)
 #             po_header_statuses = requests.get(PURCHASE_ORDER_HEADER_STATUS)

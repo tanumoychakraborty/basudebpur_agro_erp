@@ -6,7 +6,7 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import SALES_TRANSACTION, ITEM_LIST,\
+from basudebpur_agro_erp.URLS import SALES_TRANSACTION, SALES_ITEM_LIST,\
     UNIT_OF_MEASURE, PURCHASE_ORDER_TYPE, SUPPLIER_LIST,\
     PURCHASE_ORDER_LINES_STATUS, PURCHASE_ORDER_HEADER_STATUS
 from django.views import defaults
@@ -28,7 +28,7 @@ class print_sales_challan(template):
             
             
             if hasUpdatePurchaseRecordAccess(request.user):
-                item_list = json.loads(requests.get(ITEM_LIST).text)
+                item_list = json.loads(requests.get(SALES_ITEM_LIST).text)
                 uom = json.loads(requests.get(UNIT_OF_MEASURE).text)
                 po_line_statuses = json.loads(requests.get(PURCHASE_ORDER_LINES_STATUS).text)
                 po_header_statuses = json.loads(requests.get(PURCHASE_ORDER_HEADER_STATUS).text)

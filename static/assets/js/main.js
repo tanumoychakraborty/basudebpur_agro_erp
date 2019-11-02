@@ -86,7 +86,7 @@ jQuery(document).ready(function($) {
 	});
 			
 	// Customizations
-	var host = "http://localhost:8000"
+	var host = "http://192.168.0.107:8000"
    
    $("#purchase-add-form").submit(function(e) {
 	   
