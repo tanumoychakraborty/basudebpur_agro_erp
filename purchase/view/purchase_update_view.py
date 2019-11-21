@@ -9,7 +9,7 @@ from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse, HttpResponseRedirect
 from basudebpur_agro_erp.permission.purchase_permissions import hasUpdatePurchaseRecordAccess
 import json
-from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, SUPPLIER_LIST,\
+from basudebpur_agro_erp.external_urls import PURCHASE_TRANSACTION, SUPPLIER_LIST,\
     PURCHASE_ORDER_HEADER_STATUS
 import requests
 from django.shortcuts import redirect

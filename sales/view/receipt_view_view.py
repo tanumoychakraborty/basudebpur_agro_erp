@@ -7,7 +7,7 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import RECEIPT, RECEIPT_HEADER_STATUS
+from basudebpur_agro_erp.external_urls import RECEIPT, RECEIPT_HEADER_STATUS
 from django.views import defaults
 import json
 

@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
 from django.views import defaults
 from django.shortcuts import redirect
-from basudebpur_agro_erp.URLS import ACCESS_RIGHT
+from basudebpur_agro_erp.external_urls import ACCESS_RIGHT
 
 
 #from login.view.util import static

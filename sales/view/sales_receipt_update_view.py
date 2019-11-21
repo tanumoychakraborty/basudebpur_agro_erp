@@ -8,7 +8,7 @@ import random
 
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import SALES_ITEM_LIST, UNIT_OF_MEASURE, \
+from basudebpur_agro_erp.external_urls import SALES_ITEM_LIST, UNIT_OF_MEASURE, \
     RECEIPT_LINE_STATUS, RECEIPT, RECEIPT_SEARCH, ITEM_DETAILS
 from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 from basudebpur_agro_erp.view.template import template

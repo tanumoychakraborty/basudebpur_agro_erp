@@ -9,7 +9,7 @@ from django.http.response import HttpResponse
 from basudebpur_agro_erp.permission.sales_permissions import hasAddSalesRecordAccess
 import json
 import requests
-from basudebpur_agro_erp.URLS import SALES_ITEM_LIST, UNIT_OF_MEASURE,\
+from basudebpur_agro_erp.external_urls import SALES_ITEM_LIST, UNIT_OF_MEASURE,\
     PURCHASE_ORDER_HEADER_STATUS, RECEIPT, CREATE_CHALLAN, SALES_ORDER_HEADER_STATUS,\
     RECEIPT_LINE_STATUS
 import random

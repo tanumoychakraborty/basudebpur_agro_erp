@@ -6,7 +6,7 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import SALES_TRANSACTION, SALES_ITEM_LIST,\
+from basudebpur_agro_erp.external_urls import SALES_TRANSACTION, SALES_ITEM_LIST,\
     UNIT_OF_MEASURE, PURCHASE_ORDER_TYPE, SUPPLIER_LIST,\
     PURCHASE_ORDER_LINES_STATUS, PURCHASE_ORDER_HEADER_STATUS
 from django.views import defaults

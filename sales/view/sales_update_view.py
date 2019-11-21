@@ -9,7 +9,7 @@ from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse, HttpResponseRedirect
 from basudebpur_agro_erp.permission.sales_permissions import hasUpdateSalesRecordAccess
 import json
-from basudebpur_agro_erp.URLS import SALES_TRANSACTION
+from basudebpur_agro_erp.external_urls import SALES_TRANSACTION
 import requests
 from django.shortcuts import redirect
 from django.views import defaults

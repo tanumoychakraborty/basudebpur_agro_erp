@@ -8,7 +8,7 @@ from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
 import json
-from basudebpur_agro_erp.URLS import PURCHASE_TRANSACTION, PURCHASE_ITEM_LIST,\
+from basudebpur_agro_erp.external_urls import PURCHASE_TRANSACTION, PURCHASE_ITEM_LIST,\
     UNIT_OF_MEASURE, PURCHASE_ORDER_LINES_STATUS, PURCHASE_ORDER_HEADER_STATUS,\
     PURCHASE_ORDER_TYPE, SUPPLIER_LIST
 import requests

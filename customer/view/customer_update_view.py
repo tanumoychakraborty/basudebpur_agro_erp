@@ -8,7 +8,7 @@ from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
 from django.http.response import HttpResponse
 import json
-from basudebpur_agro_erp.URLS import CUSTOMER
+from basudebpur_agro_erp.external_urls import CUSTOMER
 import requests
 from basudebpur_agro_erp.permission.customer_permissions import hasUpdateCustomerAccess
 

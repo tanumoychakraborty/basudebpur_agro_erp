@@ -8,7 +8,7 @@ import random
 
 from django.http.response import HttpResponse
 import requests
-from basudebpur_agro_erp.URLS import RECEIPT, RECEIPT_SEARCH
+from basudebpur_agro_erp.external_urls import RECEIPT, RECEIPT_SEARCH
 from basudebpur_agro_erp.permission.purchase_permissions import hasAddPurchaseRecordAccess
 from basudebpur_agro_erp.view.template import template
 from basudebpur_agro_erp.jinja_template import jinja_template
