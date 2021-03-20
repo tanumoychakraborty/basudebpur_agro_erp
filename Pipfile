@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 django = "==2.1.3"
 gunicorn = "==19.9"
-"jinja2" = "==2.10"
+"jinja2" = "==2.11.3"
 requests = "*"
 "psycopg2-binary" = "*"
 "xhtml2pdf" = "==0.2.3"
